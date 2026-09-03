@@ -1,0 +1,134 @@
+INFO:     127.0.0.1:50169 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50171 - "GET /api/tables HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /api/products?search=SP&pageSize=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50175 - "GET /api/categories?search=SP HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50177 - "POST /api/categories HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50179 - "POST /api/products HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50181 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50183 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50185 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50187 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50189 - "POST /api/kitchen/orders/6a980d58f87d1cfd3f9cdd0f/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50191 - "POST /api/kitchen/orders/6a980d58f87d1cfd3f9cdd0f/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50193 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50195 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50197 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50199 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50201 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50203 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50205 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50207 - "POST /api/kitchen/orders/6a980d6bf87d1cfd3f9cdd17/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50209 - "POST /api/kitchen/orders/6a980d6bf87d1cfd3f9cdd17/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50211 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50213 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50215 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50217 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50219 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50221 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50223 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50226 - "POST /api/kitchen/orders/6a980d7ef87d1cfd3f9cdd1f/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50228 - "POST /api/kitchen/orders/6a980d7ef87d1cfd3f9cdd1f/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50230 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50232 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50234 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50236 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50238 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50240 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50242 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50244 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50246 - "POST /api/kitchen/orders/6a980d92f87d1cfd3f9cdd29/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50248 - "POST /api/kitchen/orders/6a980d92f87d1cfd3f9cdd29/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50250 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50253 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50256 - "GET /api/orders/6a980d92f87d1cfd3f9cdd29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50258 - "GET /api/tables/6a980d90f87d1cfd3f9cdd28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50260 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/close HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50262 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50264 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50266 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50268 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50270 - "POST /api/kitchen/orders/6a980da9f87d1cfd3f9cdd2f/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50272 - "POST /api/kitchen/orders/6a980da9f87d1cfd3f9cdd2f/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50274 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50276 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50278 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/payments HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:50280 - "GET /api/orders/6a980da9f87d1cfd3f9cdd2f/payments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50282 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50284 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50286 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50288 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50290 - "POST /api/kitchen/orders/6a980dbdf87d1cfd3f9cdd35/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50292 - "POST /api/kitchen/orders/6a980dbdf87d1cfd3f9cdd35/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50294 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50296 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50298 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50300 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50303 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50305 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50307 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50309 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50311 - "POST /api/kitchen/orders/6a980dd2f87d1cfd3f9cdd3f/accept HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50313 - "POST /api/kitchen/orders/6a980dd2f87d1cfd3f9cdd3f/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50315 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/serve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50325 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50323 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50322 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50324 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50327 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50326 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:50334 - "GET /api/orders/6a980dd2f87d1cfd3f9cdd3f/payments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50336 - "GET /api/reports/payment-methods?tzOffsetMinutes=330 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50338 - "GET /api/tables/6a980d56f87d1cfd3f9cdd0e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50340 - "POST /api/orders/6a980d58f87d1cfd3f9cdd0f/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50345 - "DELETE /api/tables/6a980d56f87d1cfd3f9cdd0e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50350 - "GET /api/tables/6a980d69f87d1cfd3f9cdd16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50355 - "POST /api/orders/6a980d6bf87d1cfd3f9cdd17/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50357 - "DELETE /api/tables/6a980d69f87d1cfd3f9cdd16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50359 - "GET /api/tables/6a980d7bf87d1cfd3f9cdd1e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50361 - "POST /api/orders/6a980d7ef87d1cfd3f9cdd1f/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50363 - "DELETE /api/tables/6a980d7bf87d1cfd3f9cdd1e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50365 - "GET /api/tables/6a980d90f87d1cfd3f9cdd28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50367 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/close HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50369 - "POST /api/orders/6a980d92f87d1cfd3f9cdd29/cancel HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50371 - "DELETE /api/tables/6a980d90f87d1cfd3f9cdd28 HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50373 - "GET /api/tables/6a980da7f87d1cfd3f9cdd2e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50375 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/close HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50377 - "POST /api/orders/6a980da9f87d1cfd3f9cdd2f/cancel HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50379 - "DELETE /api/tables/6a980da7f87d1cfd3f9cdd2e HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50382 - "GET /api/tables/6a980dbbf87d1cfd3f9cdd34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50384 - "POST /api/orders/6a980dbdf87d1cfd3f9cdd35/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50387 - "DELETE /api/tables/6a980dbbf87d1cfd3f9cdd34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50389 - "GET /api/tables/6a980dd0f87d1cfd3f9cdd3e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50391 - "POST /api/orders/6a980dd2f87d1cfd3f9cdd3f/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50393 - "DELETE /api/tables/6a980dd0f87d1cfd3f9cdd3e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50395 - "DELETE /api/products/6a980d54f87d1cfd3f9cdd0d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50397 - "DELETE /api/categories/6a980d52f87d1cfd3f9cdd0c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58230 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58232 - "GET /api/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58230 - "POST /api/categories HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58232 - "POST /api/tables HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58230 - "POST /api/products HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58232 - "POST /api/orders HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58230 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/items HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58232 - "PATCH /api/orders/6a981498f87d1cfd3f9cdd4c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58230 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/send-kitchen HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58232 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58230 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58232 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/payments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:58230 - "GET /api/orders/6a981498f87d1cfd3f9cdd4c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58232 - "GET /api/orders/6a981498f87d1cfd3f9cdd4c/payments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58230 - "POST /api/orders/6a981498f87d1cfd3f9cdd4c/close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58232 - "DELETE /api/tables/6a981498f87d1cfd3f9cdd4a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58230 - "DELETE /api/products/6a981498f87d1cfd3f9cdd4b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58232 - "DELETE /api/categories/6a981498f87d1cfd3f9cdd49 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65384 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54891 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51003 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64899 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60694 - "GET /uploads/images/db04cf9c51c94355a7fe8061e1ab1766.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53481 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63323 - "GET /uploads/images/db04cf9c51c94355a7fe8061e1ab1766.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65002 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51792 - "GET /uploads/images/db04cf9c51c94355a7fe8061e1ab1766.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54431 - "GET /SEA-the-best-barbecue-chicken-recipe-hero-updated-9cb214fe8fe8438992e049f8be51a708 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50032 - "GET /uploads/images/db04cf9c51c94355a7fe8061e1ab1766.jpg HTTP/1.1" 404 Not Found
