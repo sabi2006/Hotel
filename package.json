@@ -1,0 +1,7 @@
+{
+  "name": "hotel",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && node -e \"require('fs').cpSync('frontend/dist', 'dist', {recursive: true})\""
+  }
+}
