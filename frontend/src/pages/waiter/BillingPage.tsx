@@ -6,11 +6,7 @@ import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/Button";
 import {
   ArmchairIcon,
-  CreditCardIcon,
-  HandCoinsIcon,
   PrinterIcon,
-  ReceiptIcon,
-  UtensilsIcon,
 } from "@/components/Icons";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
@@ -151,7 +147,6 @@ export default function BillingPage() {
         entries.map((entry) => ({
           method: entry.method,
           amount: entry.amount,
-          receivedAmount: entry.receivedAmount,
           reference: entry.reference?.trim() || undefined,
           clientRequestId: newPaymentRequestId(),
         })),

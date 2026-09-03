@@ -2,11 +2,9 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Alert } from "@/components/Alert";
-import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import {
-  ArmchairIcon,
   CheckIcon,
   CreditCardIcon,
   ReceiptIcon,
@@ -16,12 +14,11 @@ import {
 } from "@/components/Icons";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
-import { SkeletonCards } from "@/components/Skeleton";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useToast } from "@/hooks/useToast";
 import { getErrorMessage } from "@/services/api";
 import type { Order } from "@/types";
-import { formatCurrency, formatDateTime } from "@/utils/format";
+import { formatCurrency } from "@/utils/format";
 
 type FilterType = "ALL" | "UNPAID" | "PARTIAL" | "PAID";
 

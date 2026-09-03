@@ -7,7 +7,6 @@ import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { ArmchairIcon, BellIcon, FilterIcon } from "@/components/Icons";
 import { SkeletonTiles } from "@/components/Skeleton";
-import { useAuth } from "@/hooks/useAuth";
 import { useRealtime } from "@/hooks/useRealtime";
 import { useRipple } from "@/hooks/useRipple";
 import { useToast } from "@/hooks/useToast";
@@ -20,7 +19,6 @@ import { formatCurrency, formatOrderNumber } from "@/utils/format";
 type FilterKey = "ALL" | "FREE" | "OCCUPIED" | "READY";
 
 export default function WaiterTablesPage() {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
   const spawnRipple = useRipple();

@@ -28,7 +28,6 @@ import { getErrorMessage } from "@/services/api";
 import { categoriesService, productsService } from "@/services/catalog";
 import { ordersService } from "@/services/orders";
 import { RealtimeEvent } from "@/services/realtime";
-import { resolveImageUrl } from "@/services/uploads";
 import { CANCELLATION_REASON_LABELS } from "@/types";
 import type { CancellationReason, Category, Order, OrderItem, Product } from "@/types";
 import { formatCurrency } from "@/utils/format";

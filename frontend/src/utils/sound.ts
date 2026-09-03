@@ -12,6 +12,10 @@ class SoundManager {
   private isUnlocked = false;
   private recentOrderSounds = new Map<string, number>();
 
+  public get audioUnlocked(): boolean {
+    return this.isUnlocked;
+  }
+
   constructor() {
     // Set up auto-unlock on first user gesture
     if (typeof window !== "undefined") {

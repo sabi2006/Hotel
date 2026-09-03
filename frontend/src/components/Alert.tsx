@@ -16,16 +16,27 @@ const TONE_ICONS: Record<Tone, string> = {
   warning: "🔔",
 };
 
-export function Alert({ tone = "info", children }: { tone?: Tone; children: ReactNode }) {
+export function Alert({
+  tone = "info",
+  children,
+  action,
+}: {
+  tone?: Tone;
+  children: ReactNode;
+  action?: ReactNode;
+}) {
   return (
     <div
       role="alert"
-      className={`flex animate-rise items-start gap-3 rounded-xl px-4 py-3 text-xs sm:text-sm font-medium ring-1 shadow-2xs ${TONE_CLASSES[tone]}`}
+      className={`flex animate-rise items-start justify-between gap-3 rounded-xl px-4 py-3 text-xs sm:text-sm font-medium ring-1 shadow-2xs ${TONE_CLASSES[tone]}`}
     >
-      <span aria-hidden className="mt-0.5 shrink-0 text-base">
-        {TONE_ICONS[tone]}
-      </span>
-      <div className="min-w-0 flex-1 leading-relaxed">{children}</div>
+      <div className="flex items-start gap-3 min-w-0 flex-1">
+        <span aria-hidden className="mt-0.5 shrink-0 text-base">
+          {TONE_ICONS[tone]}
+        </span>
+        <div className="min-w-0 flex-1 leading-relaxed">{children}</div>
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   );
 }

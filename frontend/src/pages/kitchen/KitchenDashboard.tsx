@@ -6,7 +6,7 @@ import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { FoodTypeDot } from "@/components/FoodTypeDot";
 import { ChefHatIcon, RefreshCwIcon, Volume2Icon, VolumeXIcon } from "@/components/Icons";
-import { Input, Select } from "@/components/Input";
+import { Select } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { Spinner } from "@/components/Spinner";
 import { useRealtime } from "@/hooks/useRealtime";

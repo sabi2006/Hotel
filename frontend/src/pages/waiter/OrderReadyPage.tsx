@@ -2,12 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Alert } from "@/components/Alert";
-import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { FoodTypeDot } from "@/components/FoodTypeDot";
 import {
-  ArmchairIcon,
   BellIcon,
   CheckIcon,
   ClockIcon,
@@ -16,7 +14,6 @@ import {
   UtensilsIcon,
   Volume2Icon,
   VolumeXIcon,
-  XIcon,
 } from "@/components/Icons";
 import { Modal } from "@/components/Modal";
 import { SkeletonCards } from "@/components/Skeleton";
@@ -43,7 +40,7 @@ export default function OrderReadyPage() {
     toggleSound,
   } = useNotifications();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [servingOrderId, setServingOrderId] = useState<string | null>(null);
