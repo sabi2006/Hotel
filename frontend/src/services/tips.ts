@@ -45,6 +45,12 @@ export const tipsService = {
     return data;
   },
 
+  /** Just enough of a waiter record to show their QR at the table. */
+  async waiterTipQr(waiterId: string): Promise<WaiterTipQr> {
+    const { data } = await api.get<WaiterTipQr>(`/users/${waiterId}/tip-qr`);
+    return data;
+  },
+
   /** Alias for add */
   async record(orderId: string, payload: TipPayload): Promise<TipSummary> {
     return this.add(orderId, payload);
