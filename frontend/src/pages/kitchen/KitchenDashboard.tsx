@@ -88,6 +88,13 @@ export default function KitchenDashboard() {
     // oxlint-disable-next-line react/set-state-in-effect
     void load();
     soundManager.unlockAudio();
+    setIsLive(true);
+
+    const pollInterval = setInterval(() => {
+      void load();
+    }, 6000);
+
+    return () => clearInterval(pollInterval);
   }, [load]);
 
   useEffect(() => {

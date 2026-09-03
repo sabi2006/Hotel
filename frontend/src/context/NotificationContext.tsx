@@ -83,6 +83,16 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       void loadReadyOrders();
       void loadCloseOrders();
     }
+
+    const interval = setInterval(() => {
+      void loadNotifications();
+      if (user?.role === "WAITER") {
+        void loadReadyOrders();
+        void loadCloseOrders();
+      }
+    }, 8000);
+
+    return () => clearInterval(interval);
   }, [loadNotifications, loadReadyOrders, loadCloseOrders, user?.role]);
 
   useEffect(() => {
