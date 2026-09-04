@@ -27,7 +27,7 @@ import { useToast } from "@/hooks/useToast";
 import { getErrorMessage } from "@/services/api";
 import { categoriesService, productsService } from "@/services/catalog";
 import { ordersService } from "@/services/orders";
-import { RealtimeEvent } from "@/services/realtime";
+import { RealtimeEvent, realtime } from "@/services/realtime";
 import { CANCELLATION_REASON_LABELS } from "@/types";
 import type { CancellationReason, Category, Order, OrderItem, Product } from "@/types";
 import { formatCurrency } from "@/utils/format";
@@ -158,6 +158,18 @@ export default function OrderPage() {
     try {
       const updated = await ordersService.sendToKitchen(orderId);
       setOrder(updated);
+      realtime.broadcast(RealtimeEvent.ORDER_NEW, {
+        orderId: updated._id,
+        orderNumber: updated.orderNumber,
+        invoiceNumber: updated.invoiceNumber,
+        tableId: updated.tableId,
+        tableNumber: updated.tableNumber,
+        waiterId: updated.waiterId,
+        waiterName: updated.waiterName,
+        orderStatus: updated.orderStatus,
+        itemCount: updated.items.filter((i) => i.sentToKitchenAt !== null).length,
+        grandTotal: updated.grandTotal,
+      });
       toast.success(
         "Sent to the kitchen",
         `Order #${updated.orderNumber} for table ${updated.tableNumber}.`,

@@ -100,7 +100,10 @@ async def kitchen_board(
     """The four columns of the kitchen display, in one call."""
     cursor = (
         get_database()
-        .orders.find({"orderStatus": {"$in": KITCHEN_STATUSES}})
+        .orders.find({
+            "orderStatus": {"$nin": [OrderStatus.CANCELLED.value, OrderStatus.CLOSED.value]},
+            "items.sentToKitchenAt": {"$ne": None},
+        })
         .sort("sentToKitchenAt", 1)
     )
 

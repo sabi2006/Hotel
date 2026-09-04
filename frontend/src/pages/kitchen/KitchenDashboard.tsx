@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 import { Alert } from "@/components/Alert";
@@ -62,6 +62,8 @@ export default function KitchenDashboard() {
   const [isCancelling, setIsCancelling] = useState(false);
   const [activeColumnFilter, setActiveColumnFilter] = useState<"ALL" | "new" | "preparing" | "ready" | "completed">("ALL");
 
+  const knownNewOrderIdsRef = useRef<Set<string> | null>(null);
+
   const spawnRipple = useRipple();
 
   const toggleSound = () => {
@@ -75,14 +77,35 @@ export default function KitchenDashboard() {
 
   const load = useCallback(async () => {
     try {
-      setBoard(await kitchenService.board());
+      const data = await kitchenService.board();
+      setBoard(data);
       setError(null);
+      setIsLive(true);
+
+      const currentNewIds = new Set((data.new ?? []).map((o) => o._id));
+      if (knownNewOrderIdsRef.current !== null) {
+        // Find any newly arrived orders
+        const freshOrders = (data.new ?? []).filter((o) => !knownNewOrderIdsRef.current!.has(o._id));
+        if (freshOrders.length > 0) {
+          const first = freshOrders[0];
+          setFlashOrderId(first._id);
+          void soundManager.playNewOrderChime(first._id);
+          toast.push({
+            tone: "info",
+            title: `🔔 New Order · Table ${first.tableNumber}`,
+            description: `Order #${first.orderNumber || first.invoiceNumber || ""} from ${first.waiterName || "Waiter"} (${first.items?.length || 0} items)`,
+            duration: 7000,
+          });
+          setTimeout(() => setFlashOrderId(null), 6000);
+        }
+      }
+      knownNewOrderIdsRef.current = currentNewIds;
     } catch (caught) {
       setError(getErrorMessage(caught, "Could not load the kitchen board"));
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [toast]);
 
   useEffect(() => {
     // oxlint-disable-next-line react/set-state-in-effect
@@ -92,7 +115,7 @@ export default function KitchenDashboard() {
 
     const pollInterval = setInterval(() => {
       void load();
-    }, 6000);
+    }, 2500);
 
     return () => clearInterval(pollInterval);
   }, [load]);
@@ -126,7 +149,7 @@ export default function KitchenDashboard() {
       setTimeout(() => setFlashOrderId(null), 6000);
     }
 
-    // Every order event changes the board, so refetch the authoritative view.
+    // Every order event changes the board, so refetch the authoritative view immediately.
     void load();
   });
 

@@ -30,7 +30,6 @@ export interface OrderEventPayload {
   createdAt?: string;
 }
 
-
 export interface RealtimeMessage {
   event: string;
   payload: OrderEventPayload & { rooms?: string[] };
@@ -51,11 +50,10 @@ function socketUrl(token: string): string {
 }
 
 /**
- * One shared WebSocket for the whole app.
+ * One shared WebSocket + BroadcastChannel client for the whole app.
  *
- * Panels subscribe and unsubscribe as they mount; the socket opens on the first
- * listener and closes when the last one goes away. Reconnects use exponential
- * backoff so a restarted backend does not spin the browser.
+ * BroadcastChannel provides zero-latency cross-tab synchronization even when
+ * WebSocket is unavailable on serverless hosts like Vercel.
  */
 class RealtimeClient {
   private socket: WebSocket | null = null;
@@ -64,6 +62,47 @@ class RealtimeClient {
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private attempts = 0;
   private shouldReconnect = true;
+  private broadcastChannel: BroadcastChannel | null = null;
+
+  constructor() {
+    if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+      try {
+        this.broadcastChannel = new BroadcastChannel("hotel_realtime_events");
+        this.broadcastChannel.onmessage = (event) => {
+          if (event.data && typeof event.data === "object") {
+            this.emit(event.data as RealtimeMessage);
+          }
+        };
+      } catch {
+        // BroadcastChannel optional fallback
+      }
+    }
+  }
+
+  broadcast(event: string, payload: Partial<OrderEventPayload>): void {
+    const message: RealtimeMessage = {
+      event,
+      payload: payload as OrderEventPayload,
+    };
+    this.emit(message);
+    if (this.broadcastChannel) {
+      try {
+        this.broadcastChannel.postMessage(message);
+      } catch {
+        // BroadcastChannel post error ignored
+      }
+    }
+  }
+
+  private emit(message: RealtimeMessage): void {
+    this.listeners.forEach((listener) => {
+      try {
+        listener(message);
+      } catch {
+        // listener error ignored
+      }
+    });
+  }
 
   subscribe(listener: Listener): () => void {
     this.listeners.add(listener);
@@ -82,33 +121,38 @@ class RealtimeClient {
     if (!token) return;
 
     this.shouldReconnect = true;
-    const socket = new WebSocket(socketUrl(token));
-    this.socket = socket;
+    try {
+      const socket = new WebSocket(socketUrl(token));
+      this.socket = socket;
 
-    socket.onopen = () => {
-      this.attempts = 0;
-      this.pingTimer = setInterval(() => {
-        if (socket.readyState === WebSocket.OPEN) socket.send("ping");
-      }, PING_INTERVAL_MS);
-    };
+      socket.onopen = () => {
+        this.attempts = 0;
+        this.emit({ event: RealtimeEvent.CONNECTED, payload: {} as any });
+        this.pingTimer = setInterval(() => {
+          if (socket.readyState === WebSocket.OPEN) socket.send("ping");
+        }, PING_INTERVAL_MS);
+      };
 
-    socket.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data as string) as RealtimeMessage;
-        if (message.event === "pong") return;
-        this.listeners.forEach((listener) => listener(message));
-      } catch {
-        // A malformed frame is not worth tearing the connection down for.
-      }
-    };
+      socket.onmessage = (event) => {
+        try {
+          const message = JSON.parse(event.data as string) as RealtimeMessage;
+          if (message.event === "pong") return;
+          this.emit(message);
+        } catch {
+          // A malformed frame is not worth tearing the connection down for.
+        }
+      };
 
-    socket.onclose = () => {
-      this.clearTimers();
-      this.socket = null;
-      if (this.shouldReconnect && this.listeners.size > 0) this.scheduleReconnect();
-    };
+      socket.onclose = () => {
+        this.clearTimers();
+        this.socket = null;
+        if (this.shouldReconnect && this.listeners.size > 0) this.scheduleReconnect();
+      };
 
-    socket.onerror = () => socket.close();
+      socket.onerror = () => socket.close();
+    } catch {
+      // WebSocket connection error handled gracefully
+    }
   }
 
   private scheduleReconnect(): void {
