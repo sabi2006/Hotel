@@ -1,7 +1,10 @@
 {
   "name": "hotel",
   "private": true,
+  "workspaces": [
+    "frontend"
+  ],
   "scripts": {
-    "build": "cd frontend && npm install --include=dev && npm run build && node -e \"require('fs').cpSync('frontend/dist', 'dist', {recursive: true})\""
+    "build": "npm run build --workspace=frontend && node -e \"require('fs').cpSync('frontend/dist', 'dist', {recursive: true})\""
   }
 }
