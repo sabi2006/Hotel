@@ -10,6 +10,8 @@ export default defineConfig({
     alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) },
   },
   build: {
+    outDir: "../dist",
+    emptyOutDir: true,
     chunkSizeWarningLimit: 1500,
   },
   server: {
