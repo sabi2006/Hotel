@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
     "api/**/*.py": {
       "includeFiles": "backend/**"
@@ -19,3 +21,4 @@
     }
   ]
 }
+
