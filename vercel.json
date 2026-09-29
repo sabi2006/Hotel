@@ -3,7 +3,8 @@
   "outputDirectory": "dist",
   "functions": {
     "api/**/*.py": {
-      "includeFiles": "backend/**"
+      "includeFiles": "backend/**",
+      "excludeFiles": "{node_modules/**,frontend/**,dist/**,.kilo/**,backend/*.log}"
     }
   },
   "rewrites": [
