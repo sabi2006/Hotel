@@ -37,8 +37,8 @@ export default function LoginPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div>
-        <h2 className="text-xl font-bold text-slate-900">Sign in</h2>
-        <p className="mt-1 text-sm text-slate-500">Use your staff account to continue.</p>
+        <h2 className="text-xl font-bold text-ink">Sign in</h2>
+        <p className="mt-1 text-sm text-muted">Use your staff account to continue.</p>
       </div>
 
       {error && <Alert tone="error">{error}</Alert>}
@@ -65,7 +65,7 @@ export default function LoginPage() {
         Sign in
       </Button>
 
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-muted">
         New staff member?{" "}
         <Link to="/register" className="font-semibold text-brand-600 hover:text-brand-700">
           Create an account

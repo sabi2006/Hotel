@@ -173,10 +173,10 @@ export default function ProductsPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Menu Items &amp; Products
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-slate-500">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Manage food catalog dishes, prices, GST tax rates, photos, and live availability.
           </p>
         </div>
@@ -243,10 +243,10 @@ export default function ProductsPage() {
           action={<Button onClick={openCreate}>Add First Product</Button>}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Dish Details</th>
                   <th className="px-5 py-3.5">Category</th>
@@ -257,44 +257,44 @@ export default function ProductsPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-[#FAF8F5] transition-colors">
+                  <tr key={product._id} className="hover:bg-surface-soft transition-colors">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="size-11 shrink-0 overflow-hidden rounded-xl ring-1 ring-[#E8E3D8] bg-[#FAF8F5]">
+                        <div className="size-11 shrink-0 overflow-hidden rounded-xl ring-1 ring-line bg-surface-soft">
                           <ProductImage
                             src={product.image}
                             alt={product.name}
                             className="size-full object-cover"
-                            fallbackClassName="size-full flex items-center justify-center bg-[#FAF6EE] text-lg"
+                            fallbackClassName="size-full flex items-center justify-center bg-surface-soft text-lg"
                           />
                         </div>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <FoodTypeDot foodType={product.foodType} />
-                            <span className="font-bold text-[#1F2220] text-sm">{product.name}</span>
+                            <span className="font-bold text-ink text-sm">{product.name}</span>
                           </div>
                           {product.description && (
-                            <div className="truncate text-xs text-[#6F716D] font-normal">
+                            <div className="truncate text-xs text-muted font-normal">
                               {product.description}
                             </div>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 font-semibold text-[#5F615D]">
-                      <span className="rounded-lg bg-[#FAF8F5] px-2.5 py-1 text-xs font-semibold text-[#5F615D] ring-1 ring-[#E8E3D8]">
+                    <td className="px-5 py-3.5 font-semibold text-muted">
+                      <span className="rounded-lg bg-surface-soft px-2.5 py-1 text-xs font-semibold text-muted ring-1 ring-line">
                         {product.categoryName ?? "—"}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-[#5F615D] font-medium">
+                    <td className="px-5 py-3.5 text-muted font-medium">
                       {MEAL_TYPE_LABELS[product.mealType]}
                     </td>
-                    <td className="px-5 py-3.5 text-right font-extrabold text-[#1F2220] tabular-nums">
+                    <td className="px-5 py-3.5 text-right font-extrabold text-ink tabular-nums">
                       {formatCurrency(product.price)}
                     </td>
-                    <td className="px-5 py-3.5 text-right text-[#5F615D] tabular-nums font-medium">
+                    <td className="px-5 py-3.5 text-right text-muted tabular-nums font-medium">
                       {product.gstPercentage}%
                     </td>
                     <td className="px-5 py-3.5">
@@ -304,11 +304,11 @@ export default function ProductsPage() {
                         className={[
                           "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-bold transition ring-1 cursor-pointer",
                           product.isAvailable
-                            ? "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD] hover:bg-[#D4EBDC]"
-                            : "bg-[#FAF8F5] text-[#8E908C] ring-[#E8E3D8] hover:bg-[#F3ECE0]",
+                            ? "bg-success-soft text-success ring-success-line hover:bg-success-line"
+                            : "bg-surface-soft text-subtle ring-line hover:bg-brand-100",
                         ].join(" ")}
                       >
-                        <span className={`size-1.5 rounded-full ${product.isAvailable ? "bg-[#276B49]" : "bg-[#8E908C]"}`} />
+                        <span className={`size-1.5 rounded-full ${product.isAvailable ? "bg-success" : "bg-subtle"}`} />
                         {product.isAvailable ? "In Stock" : "Unavailable"}
                       </button>
                     </td>
@@ -453,12 +453,12 @@ export default function ProductsPage() {
             />
           </div>
 
-          <label className="flex items-center gap-3 text-xs font-bold text-slate-700 sm:col-span-2 select-none cursor-pointer pt-1">
+          <label className="flex items-center gap-3 text-xs font-bold text-ink-soft sm:col-span-2 select-none cursor-pointer pt-1">
             <input
               type="checkbox"
               checked={form.isAvailable}
               onChange={(e) => setForm({ ...form, isAvailable: e.target.checked })}
-              className="size-4 rounded-md border-slate-300 text-brand-600 focus:ring-brand-600"
+              className="size-4 rounded-md border-line-strong text-brand-600 focus:ring-brand-600"
             />
             <span>Available for Ordering on POS Right Now</span>
           </label>

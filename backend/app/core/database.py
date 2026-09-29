@@ -1,5 +1,6 @@
 """MongoDB connection handling using the PyMongo async driver."""
 
+import asyncio
 import logging
 
 from pymongo import AsyncMongoClient
@@ -59,41 +60,49 @@ def get_database() -> AsyncDatabase:
 
 
 async def ensure_indexes() -> None:
-    """Indexes required by the modules implemented so far."""
+    """Indexes required by the modules implemented so far.
+
+    They are independent, so they are created concurrently: on a cold start that
+    is one round trip of latency instead of about thirty in a row.
+    """
     db = get_database()
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index([("role", 1), ("isActive", 1)])
+    await asyncio.gather(
+        db.users.create_index("email", unique=True),
+        db.users.create_index([("role", 1), ("isActive", 1)]),
 
-    await db.categories.create_index("name", unique=True)
-    await db.categories.create_index("displayOrder")
+        db.categories.create_index("name", unique=True),
+        db.categories.create_index("displayOrder"),
 
-    await db.products.create_index("name")
-    await db.products.create_index([("categoryId", 1), ("isAvailable", 1)])
+        db.products.create_index("name"),
+        db.products.create_index([("categoryId", 1), ("isAvailable", 1)]),
 
-    await db.tables.create_index("tableNumber", unique=True)
-    await db.tables.create_index("status")
+        db.tables.create_index("tableNumber", unique=True),
+        db.tables.create_index("status"),
 
-    await db.orders.create_index("orderNumber", unique=True)
-    await db.orders.create_index("invoiceNumber", unique=True)
-    await db.orders.create_index([("tableId", 1), ("orderStatus", 1)])
-    await db.orders.create_index([("waiterId", 1), ("createdAt", -1)])
-    await db.orders.create_index("createdAt")
+        db.orders.create_index("orderNumber", unique=True),
+        db.orders.create_index("invoiceNumber", unique=True),
+        db.orders.create_index([("tableId", 1), ("orderStatus", 1)]),
+        db.orders.create_index([("waiterId", 1), ("createdAt", -1)]),
+        db.orders.create_index("createdAt"),
+        # Open-orders lists, the kitchen board and table reconciliation all filter
+        # on status and sort by time; without this each poll scans every order.
+        db.orders.create_index([("orderStatus", 1), ("createdAt", -1)]),
 
-    await db.payments.create_index("orderId")
-    await db.payments.create_index([("paidAt", -1)])
-    await db.payments.create_index([("method", 1), ("isVoided", 1)])
-    # Sparse, so the many payments taken without a key do not collide on null.
-    # This is what actually stops two simultaneous taps both inserting.
-    await db.payments.create_index("clientRequestId", unique=True, sparse=True)
+        db.payments.create_index("orderId"),
+        db.payments.create_index([("paidAt", -1)]),
+        db.payments.create_index([("method", 1), ("isVoided", 1)]),
+        # Sparse, so the many payments taken without a key do not collide on null.
+        # This is what actually stops two simultaneous taps both inserting.
+        db.payments.create_index("clientRequestId", unique=True, sparse=True),
 
-    await db.tips.create_index("orderId")
-    await db.tips.create_index([("waiterId", 1), ("createdAt", -1)])
-    await db.tips.create_index([("createdAt", -1)])
+        db.tips.create_index("orderId"),
+        db.tips.create_index([("waiterId", 1), ("createdAt", -1)]),
+        db.tips.create_index([("createdAt", -1)]),
 
-    await db.auditLogs.create_index([("createdAt", -1)])
-    await db.auditLogs.create_index([("entityType", 1), ("entityId", 1)])
-    await db.auditLogs.create_index("action")
+        db.auditLogs.create_index([("createdAt", -1)]),
+        db.auditLogs.create_index([("entityType", 1), ("entityId", 1)]),
+        db.auditLogs.create_index("action"),
 
-    await db.notifications.create_index([("recipientUserId", 1), ("createdAt", -1)])
-    await db.notifications.create_index([("recipientUserId", 1), ("isRead", 1)])
-
+        db.notifications.create_index([("recipientUserId", 1), ("createdAt", -1)]),
+        db.notifications.create_index([("recipientUserId", 1), ("isRead", 1)]),
+    )

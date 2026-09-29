@@ -118,10 +118,10 @@ export default function WaiterTablesPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1F2220] font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Take Order · Table Selection
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-[#6F716D]">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Tap a free table to start an order, or tap an occupied table to add food items.
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function WaiterTablesPage() {
             variant="primary"
             size="sm"
             onClick={() => setFilter("READY")}
-            className="shrink-0 bg-emerald-700 hover:bg-emerald-800 shadow-md shadow-emerald-950/20 gap-2"
+            className="shrink-0 bg-success hover:bg-success-strong shadow-sm gap-2"
           >
             <BellIcon size={16} />
             <span>{counts.ready} Ready to Serve</span>
@@ -140,19 +140,19 @@ export default function WaiterTablesPage() {
       </header>
 
       {/* Summary Metrics Bar */}
-      <div className="card grid grid-cols-3 divide-x divide-[#F0EBE1] overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+      <div className="card grid grid-cols-3 divide-x divide-surface-sunken overflow-hidden shadow-xs bg-white border border-line">
         {[
-          { label: "Free Tables", value: counts.free, accent: "text-[#276B49]", bg: "bg-[#276B49]", icon: "🟢" },
-          { label: "Occupied", value: counts.occupied, accent: "text-[#9E6523]", bg: "bg-[#9E6523]", icon: "🟡" },
-          { label: "Food Ready", value: counts.ready, accent: "text-brand-700", bg: "bg-brand-600", icon: "🔔" },
+          { label: "Free Tables", value: counts.free, accent: "text-success", bg: "bg-success", icon: null },
+          { label: "Occupied", value: counts.occupied, accent: "text-warning", bg: "bg-warning", icon: null },
+          { label: "Food Ready", value: counts.ready, accent: "text-brand-700", bg: "bg-brand-600", icon: null },
         ].map((stat) => (
           <div key={stat.label} className="relative px-4 py-4 sm:px-6 sm:py-4 select-none">
             <span aria-hidden className={`absolute inset-x-0 top-0 h-1 ${stat.bg}`} />
             <div className="flex items-center justify-between">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 {stat.label}
               </p>
-              <span className="text-xs">{stat.icon}</span>
+              <span aria-hidden className={`size-2 rounded-full ${stat.bg}`} />
             </div>
             <p className={`mt-1 text-2xl font-extrabold tabular-nums sm:text-3xl font-sans ${stat.accent}`}>
               {stat.value}
@@ -162,10 +162,10 @@ export default function WaiterTablesPage() {
       </div>
 
       {error && (
-        <div className="card flex flex-wrap items-center justify-between gap-3 border-l-4 border-l-[#C24138] p-4 bg-white border-[#EBE7DF]">
+        <div className="card flex flex-wrap items-center justify-between gap-3 border-l-4 border-l-danger p-4 bg-white border-line">
           <div>
-            <p className="text-sm font-bold text-[#1F2220]">Something went wrong</p>
-            <p className="mt-0.5 text-xs text-[#6F716D]">{error}</p>
+            <p className="text-sm font-bold text-ink">Something went wrong</p>
+            <p className="mt-0.5 text-xs text-muted">{error}</p>
           </div>
           <Button variant="secondary" size="sm" onClick={() => void load()}>
             Try again
@@ -182,15 +182,15 @@ export default function WaiterTablesPage() {
             className={[
               "pressable flex shrink-0 items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition select-none",
               filter === option.key
-                ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-                : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                ? "bg-ink text-white shadow-sm"
+                : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
             ].join(" ")}
           >
             <span>{option.label}</span>
             <span
               className={[
                 "rounded-full px-2 py-0.5 text-[11px] font-bold tabular-nums",
-                filter === option.key ? "bg-white/20 text-white" : "bg-[#F3ECE0] text-[#805C2B]",
+                filter === option.key ? "bg-white/20 text-white" : "bg-brand-100 text-brand-700",
               ].join(" ")}
             >
               {option.count}
@@ -238,14 +238,14 @@ export default function WaiterTablesPage() {
                 }`}
                 className={[
                   "ripple-host pressable-tile pressable group relative flex min-h-44 flex-col cursor-pointer",
-                  "rounded-2xl p-4 text-left ring-1 transition-all select-none",
+                  "rounded-xl p-4 text-left ring-1 transition-all select-none",
                   "focus-ring",
-                  "hover:-translate-y-1 hover:shadow-lg disabled:opacity-70 disabled:hover:translate-y-0",
+                  "hover:-translate-y-1 hover:shadow-sm disabled:opacity-70",
                   isReady
-                    ? "bg-gradient-to-br from-[#EBF5EE] to-white ring-[#BCE2CD] hover:ring-[#8AC8A5] shadow-xs"
+                    ? "bg-success-soft ring-success-line hover:ring-success-line shadow-xs"
                     : isOccupied
-                      ? "bg-gradient-to-br from-[#FEF7EE]/60 to-white ring-[#FADFB8] hover:ring-[#E6BA80] shadow-xs"
-                      : "bg-white ring-[#E8E3D8] hover:ring-brand-400 hover:bg-[#FAF8F3] shadow-2xs",
+                      ? "bg-warning-soft ring-warning-line hover:ring-warning-line shadow-xs"
+                      : "bg-white ring-line hover:ring-brand-400 hover:bg-surface-soft shadow-2xs",
                 ].join(" ")}
               >
                 {/* Left side accent rail */}
@@ -254,38 +254,36 @@ export default function WaiterTablesPage() {
                   className={[
                     "absolute inset-y-3 left-0 w-1 rounded-r-full transition-all duration-200",
                     isReady
-                      ? "bg-[#276B49]"
+                      ? "bg-success"
                       : isOccupied
-                        ? "bg-[#9E6523]"
-                        : "bg-[#E8E3D8] group-hover:bg-brand-500",
+                        ? "bg-warning"
+                        : "bg-line group-hover:bg-brand-500",
                   ].join(" ")}
                 />
 
                 <div className="flex items-start justify-between gap-2 pl-2">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#8E908C]">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-subtle">
                       Table
                     </span>
-                    <p className="text-2xl font-extrabold leading-none tracking-tight text-[#1F2220] font-sans">
+                    <p className="text-2xl font-extrabold leading-none tracking-tight text-ink font-sans">
                       {table.tableNumber}
                     </p>
-                    <p className="mt-1 text-xs text-[#8E908C] font-medium">{table.capacity} seats</p>
+                    <p className="mt-1 text-xs text-subtle font-medium">{table.capacity} seats</p>
                   </div>
 
                   {isReady ? (
                     <span
                       aria-hidden
-                      className="flex size-7 items-center justify-center rounded-xl bg-[#EBF5EE] text-[#276B49] animate-bounce text-sm shadow-xs ring-1 ring-[#BCE2CD]"
-                    >
-                      🔔
-                    </span>
+                      className="flex size-7 items-center justify-center rounded-xl bg-success-soft text-success text-sm shadow-xs ring-1 ring-success-line"
+                    ><BellIcon size={14} /></span>
                   ) : isBusy ? (
                     <span
                       aria-hidden
-                      className="size-4 animate-spin rounded-full border-2 border-[#D8CEBE] border-t-[#202322]"
+                      className="size-4 animate-spin rounded-full border-2 border-line-strong border-t-ink"
                     />
                   ) : (
-                    <span className="text-xs font-semibold text-[#B8B9B5] group-hover:text-[#5F615D] transition">
+                    <span className="text-xs font-semibold text-subtle group-hover:text-muted transition">
                       #{table.tableNumber}
                     </span>
                   )}
@@ -307,11 +305,11 @@ export default function WaiterTablesPage() {
                             ? "Kitchen Prep"
                             : "Occupied"}
                       </Badge>
-                      <div className="flex items-baseline justify-between border-t border-[#F0EBE1] pt-1.5 text-xs">
-                        <span className="font-semibold text-[#8E908C] truncate">
+                      <div className="flex items-baseline justify-between border-t border-surface-sunken pt-1.5 text-xs">
+                        <span className="font-semibold text-subtle truncate">
                           {order.invoiceNumber || formatOrderNumber(order.orderNumber)}
                         </span>
-                        <span className="font-extrabold text-[#1F2220] tabular-nums">
+                        <span className="font-extrabold text-ink tabular-nums">
                           {formatCurrency(order.grandTotal)}
                         </span>
                       </div>

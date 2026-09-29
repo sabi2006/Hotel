@@ -8,10 +8,10 @@ interface FieldProps {
 }
 
 const CONTROL_CLASSES =
-  "block w-full rounded-xl border-0 bg-white px-3.5 py-2.5 text-[#1F2220] shadow-2xs ring-1 ring-inset " +
-  "ring-[#E8E3D8] placeholder:text-[#9E9F9B] transition-all duration-150 " +
-  "hover:ring-[#D8CEBE] focus:ring-2 focus:ring-inset focus:ring-brand-500 " +
-  "disabled:cursor-not-allowed disabled:bg-[#FAF8F5] disabled:text-[#9E9F9B] text-sm";
+  "block w-full rounded-lg border-0 bg-white px-3 py-2.5 text-ink ring-1 ring-inset " +
+  "ring-line placeholder:text-subtle transition-shadow duration-150 " +
+  "hover:ring-line-strong focus:ring-2 focus:ring-inset focus:ring-brand-500 " +
+  "disabled:cursor-not-allowed disabled:bg-surface-soft disabled:text-subtle text-sm";
 
 function FieldShell({
   label,
@@ -23,18 +23,15 @@ function FieldShell({
   return (
     <div className="w-full">
       {label && (
-        <label htmlFor={htmlFor} className="mb-1.5 block text-xs font-bold text-[#424541] uppercase tracking-wider">
+        <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium text-ink-soft">
           {label}
         </label>
       )}
       {children}
       {error ? (
-        <p className="mt-1.5 animate-rise text-xs font-semibold text-[#C24138] flex items-center gap-1">
-          <span>⚠️</span>
-          <span>{error}</span>
-        </p>
+        <p className="mt-1.5 text-xs font-medium text-danger">{error}</p>
       ) : hint ? (
-        <p className="mt-1.5 text-xs text-[#6F716D]">{hint}</p>
+        <p className="mt-1.5 text-xs text-muted">{hint}</p>
       ) : null}
     </div>
   );
@@ -56,7 +53,7 @@ export function Input({
         aria-invalid={Boolean(error)}
         className={[
           CONTROL_CLASSES,
-          error ? "ring-[#C24138] focus:ring-[#C24138] bg-red-50/20" : "",
+          error ? "ring-danger focus:ring-danger bg-danger-soft/40" : "",
           className,
         ].join(" ")}
       />
@@ -82,7 +79,7 @@ export function Select({
         className={[
           CONTROL_CLASSES,
           "cursor-pointer",
-          error ? "ring-[#C24138] focus:ring-[#C24138] bg-red-50/20" : "",
+          error ? "ring-danger focus:ring-danger bg-danger-soft/40" : "",
           className,
         ].join(" ")}
       >
@@ -108,7 +105,7 @@ export function Textarea({
         aria-invalid={Boolean(error)}
         className={[
           CONTROL_CLASSES,
-          error ? "ring-[#C24138] focus:ring-[#C24138] bg-red-50/20" : "",
+          error ? "ring-danger focus:ring-danger bg-danger-soft/40" : "",
           className,
         ].join(" ")}
       />

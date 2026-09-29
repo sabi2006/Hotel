@@ -86,10 +86,10 @@ export default function PaymentsPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
           Payment Transactions
         </h1>
-        <p className="mt-0.5 text-xs font-medium text-slate-500">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Audit trail of all tenders collected across Cash, UPI, and Card.
         </p>
       </header>
@@ -110,19 +110,19 @@ export default function PaymentsPage() {
           label="Cash Tenders"
           value={formatCurrency(totalBy("CASH"))}
           tone="emerald"
-          icon={<HandCoinsIcon size={20} className="text-emerald-600" />}
+          icon={<HandCoinsIcon size={20} className="text-success" />}
         />
         <StatCard
           label="UPI Digital"
           value={formatCurrency(totalBy("UPI"))}
           tone="sky"
-          icon={<CreditCardIcon size={20} className="text-sky-600" />}
+          icon={<CreditCardIcon size={20} className="text-info" />}
         />
         <StatCard
           label="Card POS"
           value={formatCurrency(totalBy("CARD"))}
           tone="amber"
-          icon={<CreditCardIcon size={20} className="text-amber-600" />}
+          icon={<CreditCardIcon size={20} className="text-warning" />}
         />
       </div>
 
@@ -150,12 +150,12 @@ export default function PaymentsPage() {
             ))}
           </Select>
         </div>
-        <label className="flex items-center gap-2 pb-2.5 text-xs font-bold text-slate-700 select-none cursor-pointer">
+        <label className="flex items-center gap-2 pb-2.5 text-xs font-bold text-ink-soft select-none cursor-pointer">
           <input
             type="checkbox"
             checked={includeVoided}
             onChange={(e) => setIncludeVoided(e.target.checked)}
-            className="size-4 rounded-md border-slate-300 text-brand-600 focus:ring-brand-600"
+            className="size-4 rounded-md border-line-strong text-brand-600 focus:ring-brand-600"
           />
           <span>Show Voided Payments</span>
         </label>
@@ -170,10 +170,10 @@ export default function PaymentsPage() {
           icon={<CreditCardIcon size={28} />}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm select-none">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm select-none">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Invoice &amp; Ref</th>
                   <th className="px-5 py-3.5">Table</th>
@@ -184,41 +184,41 @@ export default function PaymentsPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {visible.map((payment) => (
                   <tr
                     key={payment._id}
-                    className={payment.isVoided ? "bg-red-50/40 text-[#8E908C]" : "hover:bg-[#FAF8F5] transition-colors"}
+                    className={payment.isVoided ? "bg-danger-soft/40 text-subtle" : "hover:bg-surface-soft transition-colors"}
                   >
                     <td className="px-5 py-3.5">
-                      <div className={`font-bold ${payment.isVoided ? "line-through text-[#8E908C]" : "text-[#1F2220]"}`}>
+                      <div className={`font-bold ${payment.isVoided ? "line-through text-subtle" : "text-ink"}`}>
                         {payment.invoiceNumber}
                       </div>
                       {payment.reference && (
-                        <div className="text-xs text-[#6F716D] font-medium">Ref: {payment.reference}</div>
+                        <div className="text-xs text-muted font-medium">Ref: {payment.reference}</div>
                       )}
                       {payment.isVoided && (
-                        <div className="text-[11px] font-bold text-[#C24138] mt-0.5">
+                        <div className="text-[11px] font-bold text-danger mt-0.5">
                           Voided by {payment.voidedByName}: {payment.voidReason}
                         </div>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 font-bold text-[#424541]">Table {payment.tableNumber}</td>
+                    <td className="px-5 py-3.5 font-bold text-ink-soft">Table {payment.tableNumber}</td>
                     <td className="px-5 py-3.5">
-                      <span className="rounded-lg bg-[#FAF8F5] px-2.5 py-1 text-xs font-bold text-[#5F615D] ring-1 ring-[#E8E3D8]">
+                      <span className="rounded-lg bg-surface-soft px-2.5 py-1 text-xs font-bold text-muted ring-1 ring-line">
                         {PAYMENT_METHOD_LABELS[payment.method]}
                       </span>
                     </td>
-                    <td className={`px-5 py-3.5 text-right font-extrabold tabular-nums text-sm ${payment.isVoided ? "line-through text-[#8E908C]" : "text-[#1F2220]"}`}>
+                    <td className={`px-5 py-3.5 text-right font-extrabold tabular-nums text-sm ${payment.isVoided ? "line-through text-subtle" : "text-ink"}`}>
                       {formatCurrency(payment.amount)}
                       {payment.changeGiven ? (
-                        <span className="block text-[11px] font-medium text-[#8E908C]">
+                        <span className="block text-[11px] font-medium text-subtle">
                           change {formatCurrency(payment.changeGiven)}
                         </span>
                       ) : null}
                     </td>
-                    <td className="px-5 py-3.5 font-medium text-[#5F615D]">{payment.receivedByName}</td>
-                    <td className="px-5 py-3.5 text-[#8E908C] font-medium">{formatDateTime(payment.paidAt)}</td>
+                    <td className="px-5 py-3.5 font-medium text-muted">{payment.receivedByName}</td>
+                    <td className="px-5 py-3.5 text-subtle font-medium">{formatDateTime(payment.paidAt)}</td>
                     <td className="px-5 py-3.5 text-right">
                       {!payment.isVoided && (
                         <Button
@@ -258,7 +258,7 @@ export default function PaymentsPage() {
         }
       >
         <div className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Voiding payment of <strong>{formatCurrency(voidTarget?.amount ?? 0)}</strong> on {voidTarget?.invoiceNumber} will restore this balance onto the order bill. The audit entry is preserved permanently.
           </p>
           <Input

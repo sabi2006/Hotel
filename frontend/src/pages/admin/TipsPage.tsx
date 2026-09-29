@@ -93,10 +93,10 @@ export default function TipsPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
           Staff Tips &amp; Gratuity
         </h1>
-        <p className="mt-0.5 text-xs font-medium text-slate-500">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Direct staff rewards tracked separately from restaurant food revenue.
         </p>
       </header>
@@ -110,42 +110,40 @@ export default function TipsPage() {
           label="Total Staff Tips"
           value={formatCurrency(total)}
           tone="amber"
-          icon={<HandCoinsIcon size={20} className="text-amber-600" />}
+          icon={<HandCoinsIcon size={20} className="text-warning" />}
           hint={`${live.length} tip contributions`}
         />
         <StatCard
           label="Cash Tips"
           value={formatCurrency(cashTotal)}
           tone="emerald"
-          icon={<HandCoinsIcon size={20} className="text-emerald-600" />}
+          icon={<HandCoinsIcon size={20} className="text-success" />}
         />
         <StatCard
           label="Digital UPI Tips"
           value={formatCurrency(total - cashTotal)}
           tone="sky"
-          icon={<CreditCardIcon size={20} className="text-sky-600" />}
+          icon={<CreditCardIcon size={20} className="text-info" />}
         />
       </div>
 
       {/* Leaderboard per Waiter */}
       {byWaiter.length > 0 && (
-        <section className="card p-5 space-y-3 shadow-xs bg-white border border-[#EBE7DF]">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-[#8E908C] font-sans">
+        <section className="card p-5 space-y-3 shadow-xs bg-white border border-line">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-subtle font-sans">
             Tips Distribution by Waiter
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {byWaiter.map(([name, amount]) => (
               <div
                 key={name}
-                className="flex items-center justify-between p-3.5 rounded-xl bg-[#FEF7EE] ring-1 ring-[#FADFB8]"
+                className="flex items-center justify-between p-3.5 rounded-xl bg-warning-soft ring-1 ring-warning-line"
               >
                 <div className="flex items-center gap-2.5">
-                  <span className="flex size-7 items-center justify-center rounded-lg bg-[#FAF6EE] font-bold text-[#9E6523] text-xs ring-1 ring-[#FADFB8]">
-                    🤝
-                  </span>
-                  <span className="text-xs font-bold text-[#1F2220]">{name}</span>
+                  <span className="flex size-7 items-center justify-center rounded-lg bg-surface-soft font-bold text-warning text-xs ring-1 ring-warning-line"><HandCoinsIcon size={20} /></span>
+                  <span className="text-xs font-bold text-ink">{name}</span>
                 </div>
-                <span className="text-sm font-extrabold text-[#9E6523] tabular-nums font-sans">
+                <span className="text-sm font-extrabold text-warning tabular-nums font-sans">
                   {formatCurrency(amount)}
                 </span>
               </div>
@@ -155,7 +153,7 @@ export default function TipsPage() {
       )}
 
       {/* Filter Controls */}
-      <div className="card p-4 flex flex-wrap gap-4 items-end shadow-2xs bg-white border border-[#EBE7DF]">
+      <div className="card p-4 flex flex-wrap gap-4 items-end shadow-2xs bg-white border border-line">
         <div className="min-w-56">
           <Select
             label="Filter by Waiter"
@@ -170,12 +168,12 @@ export default function TipsPage() {
             ))}
           </Select>
         </div>
-        <label className="flex items-center gap-2 pb-2.5 text-xs font-bold text-[#5F615D] select-none cursor-pointer">
+        <label className="flex items-center gap-2 pb-2.5 text-xs font-bold text-muted select-none cursor-pointer">
           <input
             type="checkbox"
             checked={includeVoided}
             onChange={(e) => setIncludeVoided(e.target.checked)}
-            className="size-4 rounded-md border-[#E8E3D8] text-brand-700 focus:ring-brand-700"
+            className="size-4 rounded-md border-line text-brand-700 focus:ring-brand-700"
           />
           <span>Show Voided Tips</span>
         </label>
@@ -190,10 +188,10 @@ export default function TipsPage() {
           icon={<HandCoinsIcon size={28} />}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm select-none">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm select-none">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Staff Recipient</th>
                   <th className="px-5 py-3.5">Invoice &amp; Table</th>
@@ -203,32 +201,32 @@ export default function TipsPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {tips.map((tip) => (
-                  <tr key={tip._id} className={tip.isVoided ? "bg-red-50/40" : "hover:bg-[#FAF8F5] transition-colors"}>
+                  <tr key={tip._id} className={tip.isVoided ? "bg-danger-soft/40" : "hover:bg-surface-soft transition-colors"}>
                     <td className="px-5 py-3.5">
-                      <div className={`font-bold ${tip.isVoided ? "line-through text-[#8E908C]" : "text-[#1F2220]"}`}>
+                      <div className={`font-bold ${tip.isVoided ? "line-through text-subtle" : "text-ink"}`}>
                         {tip.waiterName}
                       </div>
                       {tip.isVoided && (
-                        <div className="text-[11px] font-bold text-[#C24138]">
+                        <div className="text-[11px] font-bold text-danger">
                           Voided by {tip.voidedByName}: {tip.voidReason}
                         </div>
                       )}
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="font-bold text-[#424541]">{tip.invoiceNumber}</span>
-                      <span className="block text-[11px] text-[#8E908C]">Table {tip.tableNumber}</span>
+                      <span className="font-bold text-ink-soft">{tip.invoiceNumber}</span>
+                      <span className="block text-[11px] text-subtle">Table {tip.tableNumber}</span>
                     </td>
                     <td className="px-5 py-3.5">
-                      <span className="rounded-lg bg-[#FEF7EE] px-2.5 py-1 text-xs font-bold text-[#9E6523] ring-1 ring-[#FADFB8]">
+                      <span className="rounded-lg bg-warning-soft px-2.5 py-1 text-xs font-bold text-warning ring-1 ring-warning-line">
                         {TIP_METHOD_LABELS[tip.method]}
                       </span>
                     </td>
-                    <td className={`px-5 py-3.5 text-right font-extrabold tabular-nums text-sm ${tip.isVoided ? "line-through text-[#8E908C]" : "text-[#1F2220]"}`}>
+                    <td className={`px-5 py-3.5 text-right font-extrabold tabular-nums text-sm ${tip.isVoided ? "line-through text-subtle" : "text-ink"}`}>
                       {formatCurrency(tip.amount)}
                     </td>
-                    <td className="px-5 py-3.5 text-[#8E908C] font-medium">{formatDateTime(tip.createdAt)}</td>
+                    <td className="px-5 py-3.5 text-subtle font-medium">{formatDateTime(tip.createdAt)}</td>
                     <td className="px-5 py-3.5 text-right">
                       {!tip.isVoided && (
                         <Button
@@ -268,7 +266,7 @@ export default function TipsPage() {
         }
       >
         <div className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Voiding tip of <strong>{formatCurrency(voidTarget?.amount ?? 0)}</strong> recorded for {voidTarget?.waiterName} will adjust their tip earnings. The record is permanently kept for audit compliance.
           </p>
           <Input

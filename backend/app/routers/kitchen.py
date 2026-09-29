@@ -28,6 +28,13 @@ KITCHEN_STATUSES = [
     OrderStatus.SERVED.value,
 ]
 
+# Everything the board may show: any order that is not cancelled or closed.
+BOARD_STATUSES = [
+    status_.value
+    for status_ in OrderStatus
+    if status_ not in (OrderStatus.CANCELLED, OrderStatus.CLOSED)
+]
+
 
 def _sent_items(order: dict) -> list[dict]:
     """Only items the waiter has actually sent are the kitchen's business."""
@@ -98,13 +105,15 @@ async def kitchen_board(
     completedLimit: int = Query(default=20, ge=0, le=100),
 ) -> KitchenBoard:
     """The four columns of the kitchen display, in one call."""
+    # An explicit $in (rather than $nin) lets Mongo use the (orderStatus, createdAt)
+    # index instead of scanning every order ever taken. Oldest ticket first.
     cursor = (
         get_database()
         .orders.find({
-            "orderStatus": {"$nin": [OrderStatus.CANCELLED.value, OrderStatus.CLOSED.value]},
+            "orderStatus": {"$in": BOARD_STATUSES},
             "items.sentToKitchenAt": {"$ne": None},
         })
-        .sort("sentToKitchenAt", 1)
+        .sort("createdAt", 1)
     )
 
     board: dict[str, list[OrderPublic]] = {

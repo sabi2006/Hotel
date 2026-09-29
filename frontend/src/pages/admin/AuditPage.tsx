@@ -13,31 +13,31 @@ import { AUDIT_ACTION_LABELS } from "@/services/audit";
 import { formatDateTime } from "@/utils/format";
 
 const ACTION_CLASSES: Record<string, string> = {
-  PAYMENT_ADDED: "bg-emerald-50 text-emerald-800 ring-emerald-200",
-  PAYMENT_VOIDED: "bg-red-50 text-red-800 ring-red-200",
-  PAYMENT_EDITED: "bg-amber-50 text-amber-800 ring-amber-200",
-  TIP_ADDED: "bg-amber-50 text-amber-800 ring-amber-200",
-  TIP_VOIDED: "bg-red-50 text-red-800 ring-red-200",
-  ORDER_CANCELLED: "bg-red-50 text-red-800 ring-red-200",
-  ORDER_CLOSED: "bg-slate-100 text-slate-700 ring-slate-200",
-  ORDER_CREATED: "bg-sky-50 text-sky-800 ring-sky-200",
-  ORDER_ITEM_DELETED: "bg-orange-50 text-orange-800 ring-orange-200",
+  PAYMENT_ADDED: "bg-success-soft text-success-strong ring-success-line",
+  PAYMENT_VOIDED: "bg-danger-soft text-danger-strong ring-danger-line",
+  PAYMENT_EDITED: "bg-warning-soft text-warning-strong ring-warning-line",
+  TIP_ADDED: "bg-warning-soft text-warning-strong ring-warning-line",
+  TIP_VOIDED: "bg-danger-soft text-danger-strong ring-danger-line",
+  ORDER_CANCELLED: "bg-danger-soft text-danger-strong ring-danger-line",
+  ORDER_CLOSED: "bg-surface-sunken text-ink-soft ring-line",
+  ORDER_CREATED: "bg-info-soft text-info-strong ring-info-line",
+  ORDER_ITEM_DELETED: "bg-warning-soft text-warning-strong ring-warning-line",
   PRODUCT_PRICE_CHANGED: "bg-violet-50 text-violet-800 ring-violet-200",
-  USER_CREATED: "bg-sky-50 text-sky-800 ring-sky-200",
-  USER_DISABLED: "bg-red-50 text-red-800 ring-red-200",
-  USER_PASSWORD_RESET: "bg-amber-50 text-amber-800 ring-amber-200",
+  USER_CREATED: "bg-info-soft text-info-strong ring-info-line",
+  USER_DISABLED: "bg-danger-soft text-danger-strong ring-danger-line",
+  USER_PASSWORD_RESET: "bg-warning-soft text-warning-strong ring-warning-line",
 };
 
 function ValueList({ label, value }: { label: string; value: Record<string, unknown> | null }) {
   if (!value || Object.keys(value).length === 0) return null;
   return (
-    <div className="bg-slate-50 p-2 rounded-lg ring-1 ring-slate-200/60">
-      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{label}</span>
+    <div className="bg-surface-soft p-2 rounded-lg ring-1 ring-line/60">
+      <span className="text-[10px] font-bold uppercase tracking-wider text-subtle">{label}</span>
       <ul className="mt-0.5 space-y-0.5">
         {Object.entries(value).map(([key, entry]) => (
-          <li key={key} className="text-xs text-slate-600">
-            <span className="font-semibold text-slate-500">{key}:</span>{" "}
-            <span className="font-bold text-slate-900">{String(entry)}</span>
+          <li key={key} className="text-xs text-muted">
+            <span className="font-semibold text-muted">{key}:</span>{" "}
+            <span className="font-bold text-ink">{String(entry)}</span>
           </li>
         ))}
       </ul>
@@ -94,11 +94,11 @@ export default function AuditPage() {
       <header>
         <div className="flex items-center gap-2">
           <ShieldCheckIcon size={24} className="text-brand-600" />
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Compliance &amp; Security Audit Logs
           </h1>
         </div>
-        <p className="mt-0.5 text-xs font-medium text-slate-500">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Append-only immutable record of all financial events, cancellations, voids, and staff operations.
         </p>
       </header>
@@ -157,8 +157,8 @@ export default function AuditPage() {
         <>
           <div className="card overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-slate-100 text-xs sm:text-sm">
-                <thead className="bg-slate-50/80 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm">
+                <thead className="bg-surface-soft/80 text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                   <tr>
                     <th className="px-5 py-3.5">Timestamp</th>
                     <th className="px-5 py-3.5">Action</th>
@@ -167,31 +167,31 @@ export default function AuditPage() {
                     <th className="px-5 py-3.5">Change Details</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
+                <tbody className="divide-y divide-surface-sunken bg-white">
                   {entries.map((entry) => (
-                    <tr key={entry._id} className="align-top hover:bg-slate-50/80 transition-colors">
-                      <td className="whitespace-nowrap px-5 py-3.5 font-medium text-slate-500 text-xs">
+                    <tr key={entry._id} className="align-top hover:bg-surface-soft/80 transition-colors">
+                      <td className="whitespace-nowrap px-5 py-3.5 font-medium text-muted text-xs">
                         {formatDateTime(entry.createdAt)}
                       </td>
                       <td className="px-5 py-3.5">
                         <span
                           className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ring-1 ${
-                            ACTION_CLASSES[entry.action] ?? "bg-slate-100 text-slate-700 ring-slate-200"
+                            ACTION_CLASSES[entry.action] ?? "bg-surface-sunken text-ink-soft ring-line"
                           }`}
                         >
                           {AUDIT_ACTION_LABELS[entry.action] ?? entry.action}
                         </span>
                       </td>
                       <td className="px-5 py-3.5">
-                        <div className="font-bold text-slate-900">
+                        <div className="font-bold text-ink">
                           {entry.entityLabel ?? entry.entityId ?? "—"}
                         </div>
-                        <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{entry.entityType}</div>
+                        <div className="text-[11px] font-semibold uppercase tracking-wider text-subtle">{entry.entityType}</div>
                       </td>
                       <td className="px-5 py-3.5">
-                        <div className="font-bold text-slate-800">{entry.userName}</div>
+                        <div className="font-bold text-ink">{entry.userName}</div>
                         {entry.userRole && (
-                          <div className="text-xs text-slate-400 font-medium">{entry.userRole}</div>
+                          <div className="text-xs text-subtle font-medium">{entry.userRole}</div>
                         )}
                       </td>
                       <td className="px-5 py-3.5">
@@ -199,7 +199,7 @@ export default function AuditPage() {
                           <ValueList label="Previous State" value={entry.oldValue} />
                           <ValueList label="Updated State" value={entry.newValue} />
                           {entry.note && (
-                            <p className="text-xs italic text-amber-800 bg-amber-50 p-1.5 rounded-md font-medium">
+                            <p className="text-xs italic text-warning-strong bg-warning-soft p-1.5 rounded-md font-medium">
                               Note: {entry.note}
                             </p>
                           )}
@@ -212,7 +212,7 @@ export default function AuditPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-500 px-1">
+          <div className="flex items-center justify-between text-xs font-semibold text-muted px-1">
             <span>
               Showing {total} record{total === 1 ? "" : "s"} · Page {page} of {lastPage}
             </span>

@@ -6,19 +6,19 @@ import type { Toast, ToastTone } from "@/context/toast-context";
 
 const TONE_STYLES: Record<ToastTone, { ring: string; icon: string; bar: string; glyph: string }> = {
   success: {
-    ring: "ring-emerald-200",
-    icon: "bg-emerald-100 text-emerald-700",
-    bar: "bg-emerald-500",
+    ring: "ring-success-line",
+    icon: "bg-success-line text-success",
+    bar: "bg-success",
     glyph: "✓",
   },
-  error: { ring: "ring-red-200", icon: "bg-red-100 text-red-700", bar: "bg-red-500", glyph: "!" },
+  error: { ring: "ring-danger-line", icon: "bg-danger-line text-danger", bar: "bg-danger", glyph: "!" },
   warning: {
-    ring: "ring-amber-200",
-    icon: "bg-amber-100 text-amber-700",
-    bar: "bg-amber-500",
+    ring: "ring-warning-line",
+    icon: "bg-warning-line text-warning",
+    bar: "bg-warning",
     glyph: "!",
   },
-  info: { ring: "ring-sky-200", icon: "bg-sky-100 text-sky-700", bar: "bg-sky-500", glyph: "i" },
+  info: { ring: "ring-info-line", icon: "bg-info-line text-info", bar: "bg-info", glyph: "i" },
 };
 
 /** An error is read, not glanced at, so it gets longer on screen. */
@@ -78,7 +78,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <div
               key={toast.id}
               role={toast.tone === "error" ? "alert" : "status"}
-              className={`pointer-events-auto w-full max-w-sm animate-sheet-up overflow-hidden rounded-xl bg-white shadow-lg ring-1 ${style.ring} sm:animate-pop`}
+              className={`pointer-events-auto w-full max-w-sm animate-sheet-up overflow-hidden rounded-xl bg-white shadow-lg ring-1 ${style.ring} sm:`}
             >
               <div className="flex items-start gap-3 p-3.5">
                 <span
@@ -89,23 +89,23 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 </span>
 
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-slate-900">{toast.title}</p>
+                  <p className="text-sm font-semibold text-ink">{toast.title}</p>
                   {toast.description && (
-                    <p className="mt-0.5 text-sm text-slate-500">{toast.description}</p>
+                    <p className="mt-0.5 text-sm text-muted">{toast.description}</p>
                   )}
                 </div>
 
                 <button
                   onClick={() => dismiss(toast.id)}
                   aria-label="Dismiss notification"
-                  className="pressable -m-1 rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                  className="pressable -m-1 rounded-md p-1 text-subtle hover:bg-surface-sunken hover:text-muted"
                 >
                   ✕
                 </button>
               </div>
 
               {/* The bar drains for exactly as long as the toast will live. */}
-              <div className="h-0.5 bg-slate-100">
+              <div className="h-0.5 bg-surface-sunken">
                 <div
                   className={`h-full origin-left ${style.bar}`}
                   style={{ animation: `toast-drain ${toast.duration}ms linear forwards` }}

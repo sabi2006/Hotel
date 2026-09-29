@@ -1,139 +1,122 @@
 @import "tailwindcss";
 
+/*
+ * Spice Garden design system — simple & professional.
+ *
+ * One neutral scale, one brand accent (muted bronze) and four status colours.
+ * Pages use the semantic tokens below (text-ink, bg-surface, border-line, …)
+ * instead of hard-coded hex values, so the look can change from this one file.
+ */
 @theme {
-  /* Warm Luxury Restaurant Brand Palette (Champagne / Warm Bronze / Muted Gold) */
+  /* Brand accent — muted bronze */
   --color-brand-50: #FAF7F2;
   --color-brand-100: #F3ECE0;
   --color-brand-200: #E6D6C0;
   --color-brand-300: #D4BD9B;
   --color-brand-400: #C4A478;
-  --color-brand-500: #B58D54;
-  --color-brand-600: #9C743D;
-  --color-brand-700: #805C2B;
-  --color-brand-800: #664821;
-  --color-brand-900: #4D3618;
+  --color-brand-500: #A9824A;
+  --color-brand-600: #8F6B36;
+  --color-brand-700: #75572B;
+  --color-brand-800: #5C4422;
+  --color-brand-900: #463419;
   --color-brand-950: #2A1C0B;
 
-  /* Sophisticated Graphite Charcoal */
-  --color-charcoal-50: #F7F7F6;
-  --color-charcoal-100: #EDEDEB;
-  --color-charcoal-200: #DCDDDA;
-  --color-charcoal-300: #B8B9B5;
-  --color-charcoal-400: #868884;
-  --color-charcoal-500: #5F615D;
-  --color-charcoal-600: #424541;
-  --color-charcoal-700: #2F322E;
-  --color-charcoal-800: #202322;
-  --color-charcoal-900: #181A19;
-  --color-charcoal-950: #111312;
+  /* Neutral charcoal scale */
+  --color-charcoal-50: #F7F8F7;
+  --color-charcoal-100: #EEF0EF;
+  --color-charcoal-200: #DFE2E0;
+  --color-charcoal-300: #C3C7C4;
+  --color-charcoal-400: #8B908D;
+  --color-charcoal-500: #626764;
+  --color-charcoal-600: #454A47;
+  --color-charcoal-700: #313532;
+  --color-charcoal-800: #232624;
+  --color-charcoal-900: #1A1C1B;
+  --color-charcoal-950: #121413;
 
-  /* Legacy navy alias mapped to deep rich charcoal */
-  --color-navy-800: #202322;
-  --color-navy-900: #181A19;
-  --color-navy-950: #111312;
+  /* Legacy alias */
+  --color-navy-800: #232624;
+  --color-navy-900: #1A1C1B;
+  --color-navy-950: #121413;
 
-  --font-sans: "Manrope", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Semantic: text */
+  --color-ink: #1A1C1B;          /* primary text, dark surfaces */
+  --color-ink-soft: #3A3E3B;     /* secondary headings */
+  --color-muted: #5E6360;        /* body secondary text */
+  --color-subtle: #8B908D;       /* captions, placeholders, icons */
 
-  /* Motion vocabulary */
+  /* Semantic: surfaces & lines */
+  --color-canvas: #F5F6F5;       /* app background */
+  --color-surface: #FFFFFF;      /* cards */
+  --color-surface-soft: #F9FAF9; /* table headers, inset panels */
+  --color-surface-sunken: #F0F2F1;/* hover, chips, tracks */
+  --color-line: #E3E6E4;         /* default border */
+  --color-line-strong: #CDD2CF;  /* hover / emphasised border */
+
+  /* Semantic: status */
+  --color-success: #1F7A4D;
+  --color-success-strong: #17603C;
+  --color-success-soft: #EDF7F1;
+  --color-success-line: #C5E4D2;
+
+  --color-warning: #9A6420;
+  --color-warning-strong: #7E511A;
+  --color-warning-soft: #FDF6EC;
+  --color-warning-line: #F1D9B5;
+
+  --color-danger: #B9382F;
+  --color-danger-strong: #9C2F27;
+  --color-danger-soft: #FCF1F0;
+  --color-danger-line: #F2C9C5;
+
+  --color-info: #35607F;
+  --color-info-strong: #2A4D67;
+  --color-info-soft: #F0F5F9;
+  --color-info-line: #CFE0ED;
+
+  --color-purple: #6B4F8C;
+  --color-purple-soft: #F5F2F9;
+  --color-purple-line: #DDD3EB;
+
+  --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Motion — short and quiet */
   --ease-snap: cubic-bezier(0.2, 0, 0, 1);
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-overshoot: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ease-overshoot: cubic-bezier(0.2, 0, 0, 1);
 
-  --animate-fade-in: fade-in 0.2s var(--ease-settle) both;
-  --animate-rise: rise 0.28s var(--ease-settle) both;
-  --animate-pop: pop 0.22s var(--ease-overshoot) both;
-  --animate-sheet-up: sheet-up 0.26s var(--ease-settle) both;
-  --animate-drawer-in: drawer-in 0.25s var(--ease-settle) both;
+  --animate-fade-in: fade-in 0.15s var(--ease-settle) both;
+  --animate-rise: fade-in 0.15s var(--ease-settle) both;
+  --animate-pop: fade-in 0.15s var(--ease-settle) both;
+  --animate-sheet-up: sheet-up 0.2s var(--ease-settle) both;
+  --animate-drawer-in: drawer-in 0.2s var(--ease-settle) both;
   --animate-ripple: ripple 0.55s var(--ease-snap) forwards;
-  --animate-attention: attention 1.6s ease-in-out infinite;
-  --animate-pulse-subtle: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-attention: none;
+  --animate-pulse-subtle: none;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes sheet-up {
-  from {
-    opacity: 0;
-    transform: translateY(16px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes drawer-in {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
 }
 
 @keyframes ripple {
-  to {
-    transform: scale(2.6);
-    opacity: 0;
-  }
+  to { transform: scale(2.6); opacity: 0; }
 }
 
 @keyframes toast-drain {
-  from {
-    transform: scaleX(1);
-  }
-  to {
-    transform: scaleX(0);
-  }
-}
-
-@keyframes attention {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.75;
-    transform: scale(1.04);
-  }
-}
-
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
 }
 
 html,
@@ -144,30 +127,26 @@ body,
 
 body {
   font-family: var(--font-sans);
-  background-color: #F6F4EE;
-  color: #1F2220;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  letter-spacing: -0.01em;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-sans);
-  letter-spacing: -0.025em;
+  letter-spacing: -0.015em;
 }
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
 }
 
-/* Touch responsiveness optimization */
+/* Touch responsiveness */
 button,
 a,
 [role="button"] {
   -webkit-tap-highlight-color: transparent;
-  user-select: none;
 }
 
 /* Safe area insets for notched mobile devices */
@@ -188,130 +167,84 @@ a,
   -webkit-overflow-scrolling: touch;
 }
 
-/* Custom scrollbars */
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #D8D2C6;
+  background: var(--color-line-strong);
   border-radius: 9999px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #BFAF9C;
+  background: var(--color-subtle);
 }
 
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #D8D2C6 transparent;
-}
-
-/* Dedicated dark scrollbar for sidebar nav */
-.sidebar-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-.sidebar-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 9999px;
-}
-.sidebar-scrollbar::-webkit-scrollbar-thumb {
-  background: #383C3A;
-  border-radius: 9999px;
-}
-.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #525754;
-}
+.custom-scrollbar,
 .sidebar-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #383C3A transparent;
+  scrollbar-color: var(--color-line-strong) transparent;
 }
 
 @layer components {
+  /* Kept as hooks for existing markup; feedback is a colour change, not motion. */
   .pressable {
-    transition: transform 150ms var(--ease-snap), box-shadow 150ms var(--ease-snap), background-color 150ms ease, border-color 150ms ease;
-  }
-
-  .pressable:active {
-    transform: scale(0.97);
-  }
-
-  .pressable-tile:active {
-    transform: scale(0.985);
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
   }
 
   .ripple-host {
     position: relative;
     overflow: hidden;
-    isolation: isolate;
   }
 
+  /* Ripple ink is intentionally disabled for a calmer UI. */
   .ripple-ink {
-    position: absolute;
-    border-radius: 9999px;
-    transform: scale(0);
-    pointer-events: none;
-    background-color: currentColor;
-    opacity: 0.2;
-    animation: var(--animate-ripple);
+    display: none;
   }
 
-  /* Luxury Hospitality Card Styles */
   .card {
-    border-radius: 1.125rem;
-    background-color: #FFFFFF;
-    border: 1px solid #EBE7DE;
-    box-shadow: 0 1px 3px 0 rgba(28, 31, 30, 0.03), 0 3px 12px -2px rgba(28, 31, 30, 0.03);
+    border-radius: 0.75rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 1px 2px 0 rgb(18 20 19 / 0.04);
   }
 
   .card-interactive {
     cursor: pointer;
-    border-radius: 1.125rem;
-    background-color: #FFFFFF;
-    border: 1px solid #EBE7DE;
-    box-shadow: 0 1px 3px 0 rgba(28, 31, 30, 0.03), 0 3px 10px -2px rgba(28, 31, 30, 0.03);
-    transition: all 180ms var(--ease-snap);
+    border-radius: 0.75rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 1px 2px 0 rgb(18 20 19 / 0.04);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
   }
 
   .card-interactive:hover {
-    border-color: #D8CEBE;
-    box-shadow: 0 10px 24px -5px rgba(28, 31, 30, 0.08), 0 6px 12px -4px rgba(28, 31, 30, 0.03);
-    transform: translateY(-2px);
-  }
-
-  .card-interactive:active {
-    transform: translateY(0) scale(0.985);
+    border-color: var(--color-line-strong);
+    box-shadow: 0 2px 8px -2px rgb(18 20 19 / 0.08);
   }
 
   .card-charcoal {
-    border-radius: 1.125rem;
-    background: linear-gradient(145deg, #1D201F 0%, #131514 100%);
-    border: 1px solid #323634;
-    color: #FAF8F5;
-    box-shadow: 0 4px 20px -2px rgba(17, 19, 18, 0.25);
+    border-radius: 0.75rem;
+    background-color: var(--color-ink);
+    border: 1px solid var(--color-charcoal-800);
+    color: #FFFFFF;
   }
 
-  /* Focus ring utility with warm bronze glow */
   .focus-ring {
     outline: none;
   }
   .focus-ring:focus-visible {
-    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px #B58D54;
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--color-brand-500);
   }
 
-  /* Staggered grid entrance */
   .stagger > * {
-    animation: var(--animate-rise);
-    animation-delay: calc(var(--stagger-index, 0) * 28ms);
+    animation: var(--animate-fade-in);
   }
 }
 
-/* Reduced motion preference support */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -320,16 +253,5 @@ a,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .pressable:active,
-  .pressable-tile:active,
-  .card-interactive:hover,
-  .card-interactive:active {
-    transform: none;
-  }
-
-  .ripple-ink {
-    display: none;
   }
 }

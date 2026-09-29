@@ -4,14 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@/components/Alert";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
-import {
-  CheckIcon,
-  CreditCardIcon,
-  ReceiptIcon,
-  RefreshCwIcon,
-  SearchIcon,
-  UtensilsIcon,
-} from "@/components/Icons";
+import { CheckCircleIcon, CheckIcon, ClockIcon, CreditCardIcon, ReceiptIcon, RefreshCwIcon, SearchIcon, UtensilsIcon } from "@/components/Icons";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -136,7 +129,7 @@ export default function CloseOrderPage() {
             <span className="flex size-8 items-center justify-center rounded-xl bg-brand-100 text-brand-700 shadow-xs">
               <CheckIcon size={18} />
             </span>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+            <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
               Close Order
             </h1>
             {closeOrdersCount > 0 && (
@@ -145,7 +138,7 @@ export default function CloseOrderPage() {
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs font-medium text-slate-500">
+          <p className="mt-1 text-xs font-medium text-muted">
             Complete payment, tips, and close served orders to free tables.
           </p>
         </div>
@@ -172,44 +165,40 @@ export default function CloseOrderPage() {
 
       {/* Summary Metrics Strip */}
       {closeOrdersCount > 0 && (
-        <div className="card grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#F0EBE1] overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-surface-sunken overflow-hidden shadow-xs bg-white border border-line">
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-brand-700 text-white shadow-md shadow-brand-950/20 text-lg font-bold">
-              📑
-            </div>
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm text-lg font-bold"><ReceiptIcon size={20} /></div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Served Orders
               </p>
-              <p className="text-2xl font-black tabular-nums text-[#1F2220] font-sans">
+              <p className="text-2xl font-black tabular-nums text-ink font-sans">
                 {closeOrdersCount} {closeOrdersCount === 1 ? "Order" : "Orders"}
               </p>
             </div>
           </div>
 
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[#FAF8F5] text-[#5F615D] ring-1 ring-[#E8E3D8] text-lg font-bold">
-              💰
-            </div>
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface-soft text-muted ring-1 ring-line text-lg font-bold"><CreditCardIcon size={20} /></div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Total Bill Value
               </p>
-              <p className="text-2xl font-black tabular-nums text-[#1F2220] font-sans">
+              <p className="text-2xl font-black tabular-nums text-ink font-sans">
                 {formatCurrency(counts.totalGrand)}
               </p>
             </div>
           </div>
 
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className={`flex size-11 shrink-0 items-center justify-center rounded-2xl text-lg font-bold ${counts.totalRemaining > 0 ? "bg-[#FEF7EE] text-[#9E6523] ring-1 ring-[#FADFB8]" : "bg-[#EBF5EE] text-[#276B49] ring-1 ring-[#BCE2CD]"}`}>
-              {counts.totalRemaining > 0 ? "⏳" : "✓"}
+            <div className={`flex size-11 shrink-0 items-center justify-center rounded-xl text-lg font-bold ${counts.totalRemaining > 0 ? "bg-warning-soft text-warning ring-1 ring-warning-line" : "bg-success-soft text-success ring-1 ring-success-line"}`}>
+              {counts.totalRemaining > 0 ? <ClockIcon size={20} /> : <CheckIcon size={20} />}
             </div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Remaining Balance
               </p>
-              <p className={`text-2xl font-black tabular-nums font-sans ${counts.totalRemaining > 0 ? "text-[#9E6523]" : "text-[#276B49]"}`}>
+              <p className={`text-2xl font-black tabular-nums font-sans ${counts.totalRemaining > 0 ? "text-warning" : "text-success"}`}>
                 {formatCurrency(counts.totalRemaining)}
               </p>
             </div>
@@ -230,15 +219,15 @@ export default function CloseOrderPage() {
                 className={[
                   "pressable flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-bold transition select-none",
                   filter === tab.key
-                    ? "bg-[#202322] text-white shadow-sm shadow-charcoal-950/20"
-                    : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                    ? "bg-ink text-white shadow-sm"
+                    : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
                 ].join(" ")}
               >
                 <span>{tab.label}</span>
                 <span
                   className={[
                     "rounded-full px-1.5 py-0.2 text-[10px] font-extrabold tabular-nums",
-                    filter === tab.key ? "bg-white/20 text-white" : "bg-[#F3ECE0] text-[#805C2B]",
+                    filter === tab.key ? "bg-white/20 text-white" : "bg-brand-100 text-brand-700",
                   ].join(" ")}
                 >
                   {tab.count}
@@ -264,7 +253,7 @@ export default function CloseOrderPage() {
         <EmptyState
           title="No orders waiting to close"
           description="All served orders have been settled and closed. When food is delivered to a table, it will appear here for final billing."
-          icon={<span className="text-3xl">✓</span>}
+          icon={<CheckCircleIcon size={22} />}
           action={
             <div className="flex items-center gap-3">
               <Link to="/waiter/tables">
@@ -313,10 +302,10 @@ export default function CloseOrderPage() {
                 className={[
                   "card group relative flex flex-col justify-between overflow-hidden p-5 transition-all duration-200 select-none bg-white",
                   isFullyPaid
-                    ? "border-2 border-[#BCE2CD] shadow-sm hover:shadow-lg"
+                    ? "border-2 border-success-line shadow-sm hover:shadow-sm"
                     : isPartial
-                      ? "border-2 border-[#FADFB8] shadow-sm hover:shadow-lg"
-                      : "border border-[#EBE7DF] shadow-xs hover:border-[#D8CEBE] hover:shadow-md",
+                      ? "border-2 border-warning-line shadow-sm hover:shadow-sm"
+                      : "border border-line shadow-xs hover:border-line-strong hover:shadow-sm",
                   "animate-[pop_0.3s_var(--ease-settle)_both]",
                 ].join(" ")}
               >
@@ -324,33 +313,33 @@ export default function CloseOrderPage() {
                 <div
                   className={`absolute inset-x-0 top-0 h-1.5 ${
                     isFullyPaid
-                      ? "bg-gradient-to-r from-[#276B49] to-teal-600"
+                      ? "bg-success"
                       : isPartial
-                        ? "bg-gradient-to-r from-[#C58A3A] to-amber-600"
-                        : "bg-gradient-to-r from-brand-500 to-brand-700"
+                        ? "bg-warning"
+                        : "bg-brand-500"
                   }`}
                 />
 
                 <div>
                   {/* Card Header: Table & Status */}
-                  <div className="flex items-start justify-between gap-2 border-b border-[#F0EBE1] pb-3.5">
+                  <div className="flex items-start justify-between gap-2 border-b border-surface-sunken pb-3.5">
                     <div className="flex items-center gap-3">
                       <div
-                        className={`flex size-12 shrink-0 items-center justify-center rounded-2xl font-black text-base shadow-sm ring-2 ${
+                        className={`flex size-12 shrink-0 items-center justify-center rounded-xl font-black text-base shadow-sm ring-2 ${
                           isFullyPaid
-                            ? "bg-[#276B49] text-white ring-[#CFE7D9]"
+                            ? "bg-success text-white ring-success-line"
                             : isPartial
-                              ? "bg-[#9E6523] text-white ring-[#FADFB8]"
-                              : "bg-[#202322] text-white ring-[#323634]"
+                              ? "bg-warning text-white ring-warning-line"
+                              : "bg-ink text-white ring-charcoal-700"
                         }`}
                       >
                         T{order.tableNumber}
                       </div>
                       <div className="min-w-0">
-                        <span className="text-base font-extrabold text-[#1F2220] font-sans truncate">
+                        <span className="text-base font-extrabold text-ink font-sans truncate">
                           Table {order.tableNumber}
                         </span>
-                        <p className="text-xs font-bold text-[#8E908C] truncate">
+                        <p className="text-xs font-bold text-subtle truncate">
                           {order.invoiceNumber || `#${order.orderNumber}`}
                         </p>
                       </div>
@@ -358,16 +347,16 @@ export default function CloseOrderPage() {
 
                     <div className="text-right shrink-0">
                       {isFullyPaid ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EBF5EE] px-2.5 py-1 text-[11px] font-extrabold text-[#276B49] ring-1 ring-[#BCE2CD]">
-                          <CheckIcon size={12} className="text-[#276B49] stroke-[3]" />
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-2.5 py-1 text-[11px] font-extrabold text-success ring-1 ring-success-line">
+                          <CheckIcon size={12} className="text-success stroke-[3]" />
                           FULLY PAID
                         </span>
                       ) : isPartial ? (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[#FEF7EE] px-2.5 py-1 text-[11px] font-bold text-[#9E6523] ring-1 ring-[#FADFB8]">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-warning-soft px-2.5 py-1 text-[11px] font-bold text-warning ring-1 ring-warning-line">
                           PARTIALLY PAID
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-[#F0F5F9] px-2.5 py-1 text-[11px] font-bold text-[#365D7B] ring-1 ring-[#CFE0ED]">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-info-soft px-2.5 py-1 text-[11px] font-bold text-info ring-1 ring-info-line">
                           PENDING PAYMENT
                         </span>
                       )}
@@ -376,20 +365,20 @@ export default function CloseOrderPage() {
 
                   {/* Customer / Items Preview */}
                   <div className="mt-3.5 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs text-[#8E908C] font-medium">
+                    <div className="flex items-center justify-between text-xs text-subtle font-medium">
                       <span>{order.items.length} dishes served</span>
                       <span>Waiter: {order.waiterName}</span>
                     </div>
 
-                    <div className="rounded-xl bg-[#FAF8F5] p-2.5 ring-1 ring-[#E8E3D8] max-h-24 overflow-y-auto custom-scrollbar text-xs">
+                    <div className="rounded-xl bg-surface-soft p-2.5 ring-1 ring-line max-h-24 overflow-y-auto custom-scrollbar text-xs">
                       {order.items.slice(0, 3).map((item) => (
-                        <div key={item.itemId} className="flex justify-between py-0.5 text-[#424541]">
+                        <div key={item.itemId} className="flex justify-between py-0.5 text-ink-soft">
                           <span className="truncate">{item.name} × {item.quantity}</span>
-                          <span className="font-semibold tabular-nums text-[#6F716D]">{formatCurrency(item.total)}</span>
+                          <span className="font-semibold tabular-nums text-muted">{formatCurrency(item.total)}</span>
                         </div>
                       ))}
                       {order.items.length > 3 && (
-                        <p className="text-[10px] text-[#8E908C] font-bold mt-0.5">
+                        <p className="text-[10px] text-subtle font-bold mt-0.5">
                           + {order.items.length - 3} more items...
                         </p>
                       )}
@@ -400,27 +389,27 @@ export default function CloseOrderPage() {
                   <div
                     className={`mt-3.5 rounded-xl p-3 space-y-1.5 text-xs ring-1 ${
                       isFullyPaid
-                        ? "bg-[#EBF5EE]/80 ring-[#BCE2CD] text-[#1E5C3B]"
+                        ? "bg-success-soft/80 ring-success-line text-success-strong"
                         : isPartial
-                          ? "bg-[#FEF7EE]/80 ring-[#FADFB8] text-[#805C2B]"
-                          : "bg-[#FAF8F5] ring-[#E8E3D8] text-[#1F2220]"
+                          ? "bg-warning-soft/80 ring-warning-line text-brand-700"
+                          : "bg-surface-soft ring-line text-ink"
                     }`}
                   >
-                    <div className="flex justify-between font-medium text-[#5F615D]">
+                    <div className="flex justify-between font-medium text-muted">
                       <span>Grand Total</span>
-                      <span className="font-bold text-[#1F2220] tabular-nums">{formatCurrency(order.grandTotal)}</span>
+                      <span className="font-bold text-ink tabular-nums">{formatCurrency(order.grandTotal)}</span>
                     </div>
-                    <div className="flex justify-between font-medium text-[#5F615D]">
+                    <div className="flex justify-between font-medium text-muted">
                       <span>Amount Paid</span>
-                      <span className="font-bold text-[#276B49] tabular-nums">{formatCurrency(order.amountPaid)}</span>
+                      <span className="font-bold text-success tabular-nums">{formatCurrency(order.amountPaid)}</span>
                     </div>
-                    <div className="flex justify-between border-t border-[#E8E3D8] pt-1 text-xs font-extrabold">
+                    <div className="flex justify-between border-t border-line pt-1 text-xs font-extrabold">
                       <span>Remaining</span>
                       <span
                         className={`tabular-nums ${
                           isFullyPaid
-                            ? "text-[#276B49] font-bold"
-                            : "text-[#9E6523] font-bold"
+                            ? "text-success font-bold"
+                            : "text-warning font-bold"
                         }`}
                       >
                         {isFullyPaid ? "₹0.00 (Settled)" : formatCurrency(remaining)}
@@ -430,7 +419,7 @@ export default function CloseOrderPage() {
                 </div>
 
                 {/* Card Action Buttons */}
-                <div className="mt-5 border-t border-[#F0EBE1] pt-4">
+                <div className="mt-5 border-t border-surface-sunken pt-4">
                   {isFullyPaid ? (
                     <div className="grid grid-cols-2 gap-2.5">
                       <Button
@@ -446,7 +435,7 @@ export default function CloseOrderPage() {
                         variant="primary"
                         size="sm"
                         onClick={() => setOrderToClose(order)}
-                        className="w-full justify-center bg-[#276B49] hover:bg-[#1E5C3B] text-white font-extrabold shadow-md shadow-emerald-950/20 text-xs gap-1.5"
+                        className="w-full justify-center bg-success hover:bg-success-strong text-white font-extrabold shadow-sm text-xs gap-1.5"
                       >
                         <CheckIcon size={15} />
                         <span>Close Order</span>
@@ -493,7 +482,7 @@ export default function CloseOrderPage() {
                 size="sm"
                 disabled={isClosing}
                 onClick={() => void handleConfirmClose()}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 font-bold shadow-md shadow-emerald-950/20"
+                className="bg-success hover:bg-success text-white gap-1.5 font-bold shadow-sm"
               >
                 {isClosing ? (
                   <span className="size-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -506,46 +495,46 @@ export default function CloseOrderPage() {
           }
         >
           <div className="space-y-4">
-            <div className="rounded-xl bg-emerald-50/80 p-4 border border-emerald-200">
+            <div className="rounded-xl bg-success-soft/80 p-4 border border-success-line">
               <div className="flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-500 text-white font-bold text-base shadow-sm">
+                <div className="flex size-10 items-center justify-center rounded-xl bg-success text-white font-bold text-base shadow-sm">
                   ✓
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-emerald-950">
+                  <h4 className="text-sm font-bold text-success-strong">
                     Order is fully paid and ready to close
                   </h4>
-                  <p className="text-xs text-emerald-800 mt-0.5">
+                  <p className="text-xs text-success-strong mt-0.5">
                     Closing will finalize the bill and free Table {orderToClose.tableNumber} for new guests.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="rounded-xl bg-slate-50 p-3.5 space-y-2 text-xs">
-              <div className="flex justify-between text-slate-600">
+            <div className="rounded-xl bg-surface-soft p-3.5 space-y-2 text-xs">
+              <div className="flex justify-between text-muted">
                 <span>Invoice #</span>
-                <span className="font-bold text-slate-900">{orderToClose.invoiceNumber || `#${orderToClose.orderNumber}`}</span>
+                <span className="font-bold text-ink">{orderToClose.invoiceNumber || `#${orderToClose.orderNumber}`}</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-muted">
                 <span>Table</span>
-                <span className="font-bold text-slate-900">Table {orderToClose.tableNumber}</span>
+                <span className="font-bold text-ink">Table {orderToClose.tableNumber}</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-muted">
                 <span>Total Amount</span>
-                <span className="font-bold text-slate-900 tabular-nums">{formatCurrency(orderToClose.grandTotal)}</span>
+                <span className="font-bold text-ink tabular-nums">{formatCurrency(orderToClose.grandTotal)}</span>
               </div>
-              <div className="flex justify-between text-emerald-700 font-bold border-t border-slate-200 pt-2">
+              <div className="flex justify-between text-success font-bold border-t border-line pt-2">
                 <span>Total Paid</span>
                 <span className="tabular-nums">{formatCurrency(orderToClose.amountPaid)}</span>
               </div>
-              <div className="flex justify-between text-slate-500 font-medium">
+              <div className="flex justify-between text-muted font-medium">
                 <span>Remaining</span>
                 <span className="tabular-nums">₹0.00</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-muted">
               Are you sure you want to close this order and release Table {orderToClose.tableNumber}? All invoice and payment records will be preserved in order history.
             </p>
           </div>

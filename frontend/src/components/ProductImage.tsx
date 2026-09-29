@@ -17,7 +17,7 @@ export function ProductImage({
   src,
   alt = "Dish photo",
   className = "size-full object-cover",
-  fallbackClassName = "size-full flex items-center justify-center bg-slate-100 text-slate-400 text-xl",
+  fallbackClassName = "size-full flex items-center justify-center bg-surface-sunken text-subtle text-xl",
   fallbackIcon = "🍽️",
   aspectRatio = "auto",
   loading = "lazy",
@@ -49,7 +49,7 @@ export function ProductImage({
       {/* Subtle skeleton placeholder while image loads */}
       {!isLoaded && (
         <div
-          className="absolute inset-0 animate-pulse bg-slate-100"
+          className="absolute inset-0 bg-surface-sunken"
           aria-hidden="true"
         />
       )}

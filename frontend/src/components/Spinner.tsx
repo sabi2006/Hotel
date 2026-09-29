@@ -1,9 +1,9 @@
 export function Spinner({ label = "Loading" }: { label?: string }) {
   return (
-    <div className="flex items-center justify-center gap-3 py-10 text-slate-500">
+    <div role="status" className="flex items-center justify-center gap-3 py-10 text-muted">
       <span
         aria-hidden
-        className="size-5 animate-spin rounded-full border-2 border-slate-300 border-t-brand-600"
+        className="size-5 animate-spin rounded-full border-2 border-line-strong border-t-brand-600"
       />
       <span className="text-sm">{label}...</span>
     </div>
@@ -12,8 +12,13 @@ export function Spinner({ label = "Loading" }: { label?: string }) {
 
 export function FullScreenLoader({ label = "Loading" }: { label?: string }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100">
+    <div className="flex min-h-screen items-center justify-center bg-canvas">
       <Spinner label={label} />
     </div>
   );
+}
+
+/** In-page fallback while a lazily loaded route downloads. */
+export function PageLoader() {
+  return <Spinner label="Loading" />;
 }

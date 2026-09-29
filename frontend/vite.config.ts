@@ -12,7 +12,19 @@ export default defineConfig({
   build: {
     outDir: "../dist",
     emptyOutDir: true,
-    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        // Framework code changes rarely, so it gets its own long-cached chunk.
+        manualChunks(id: string) {
+          if (!id.includes("node_modules")) return undefined;
+          if (/[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/.test(id)) {
+            return "vendor-react";
+          }
+          if (/[\\/]node_modules[\\/]axios[\\/]/.test(id)) return "vendor-axios";
+          return undefined;
+        },
+      },
+    },
   },
   server: {
     port: 5173,

@@ -60,14 +60,14 @@ function WhatsAppShareForm({
       }
     >
       <div className="space-y-4">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted">
           Enter the customer WhatsApp number. The bill opens in WhatsApp ready to send.
         </p>
 
         <div>
           <label
             htmlFor="wa-phone"
-            className="mb-1.5 block text-sm font-medium text-slate-700"
+            className="mb-1.5 block text-sm font-medium text-ink-soft"
           >
             WhatsApp number
           </label>
@@ -77,7 +77,7 @@ function WhatsAppShareForm({
               aria-label="Country code"
               value={countryCode}
               onChange={(event) => setCountryCode(event.target.value)}
-              className="w-32 shrink-0 cursor-pointer rounded-lg border-0 bg-white px-2 py-2.5 text-sm text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-brand-600"
+              className="w-32 shrink-0 cursor-pointer rounded-lg border-0 bg-white px-2 py-2.5 text-sm text-ink shadow-sm ring-1 ring-inset ring-line-strong focus:ring-2 focus:ring-inset focus:ring-brand-600"
             >
               {PHONE_COUNTRIES.map((country) => (
                 <option key={country.code} value={country.code}>
@@ -99,19 +99,19 @@ function WhatsAppShareForm({
               placeholder="9876543210"
               aria-invalid={showError}
               className={[
-                "block w-full rounded-lg border-0 bg-white px-3 py-2.5 text-lg tabular-nums text-slate-900",
+                "block w-full rounded-lg border-0 bg-white px-3 py-2.5 text-lg tabular-nums text-ink",
                 "shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset",
                 showError
-                  ? "ring-red-400 focus:ring-red-500"
-                  : "ring-slate-300 focus:ring-brand-600",
+                  ? "ring-danger focus:ring-danger"
+                  : "ring-line-strong focus:ring-brand-600",
               ].join(" ")}
             />
           </div>
 
           {showError ? (
-            <p className="mt-1.5 animate-rise text-sm text-red-600">{check.error}</p>
+            <p className="mt-1.5 text-sm text-danger">{check.error}</p>
           ) : (
-            <p className="mt-1.5 text-sm text-slate-500">
+            <p className="mt-1.5 text-sm text-muted">
               {check.isValid ? `Will open +${check.normalised}` : "Digits only, no spaces needed."}
             </p>
           )}
@@ -126,7 +126,7 @@ function WhatsAppShareForm({
             {isPreviewOpen ? "Hide" : "Preview"} the message
           </button>
           {isPreviewOpen && (
-            <pre className="mt-2 max-h-56 animate-rise overflow-y-auto whitespace-pre-wrap rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-700 ring-1 ring-inset ring-slate-200">
+            <pre className="mt-2 max-h-56 overflow-y-auto whitespace-pre-wrap rounded-lg bg-surface-soft p-3 text-xs leading-relaxed text-ink-soft ring-1 ring-inset ring-line">
               {message}
             </pre>
           )}

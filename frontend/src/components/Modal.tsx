@@ -45,7 +45,7 @@ export function Modal({ isOpen, title, onClose, children, footer, size = "md" }:
       {/* Backdrop */}
       <div
         aria-hidden="true"
-        className="fixed inset-0 animate-fade-in bg-slate-950/65 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 animate-fade-in bg-ink/50"
         onClick={onClose}
       />
 
@@ -55,22 +55,22 @@ export function Modal({ isOpen, title, onClose, children, footer, size = "md" }:
         aria-modal="true"
         aria-label={title}
         className={[
-          "relative flex max-h-[92dvh] w-full flex-col rounded-t-3xl bg-white shadow-2xl ring-1 ring-slate-900/10 sm:rounded-2xl",
-          "animate-sheet-up sm:animate-pop z-10 overflow-hidden",
+          "relative flex max-h-[92dvh] w-full flex-col rounded-t-xl bg-white shadow-lg ring-1 ring-line sm:rounded-xl",
+          "animate-sheet-up z-10 overflow-hidden",
           SIZE_CLASSES[size],
         ].join(" ")}
       >
         {/* Grab handle for mobile */}
-        <div className="mx-auto mt-2.5 h-1.5 w-12 rounded-full bg-slate-200 sm:hidden" />
+        <div className="mx-auto mt-2.5 h-1 w-10 rounded-full bg-line-strong sm:hidden" />
 
         {/* Modal Header */}
-        <header className="flex items-center justify-between border-b border-[#F0EBE1] bg-[#FAF8F5] px-4 sm:px-6 py-3.5 sm:py-4">
-          <h2 className="text-base sm:text-lg font-extrabold text-[#1F2220] font-sans truncate">{title}</h2>
+        <header className="flex items-center justify-between border-b border-line px-4 sm:px-6 py-3.5">
+          <h2 className="text-base sm:text-lg font-semibold text-ink truncate">{title}</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="pressable flex size-8 items-center justify-center rounded-xl text-[#8E908C] hover:bg-[#F3ECE0] hover:text-[#1F2220] transition"
+            className="flex size-8 items-center justify-center rounded-lg text-subtle hover:bg-surface-sunken hover:text-ink transition-colors focus-ring"
           >
             <XIcon size={18} />
           </button>
@@ -81,7 +81,7 @@ export function Modal({ isOpen, title, onClose, children, footer, size = "md" }:
 
         {/* Modal Footer */}
         {footer && (
-          <footer className="flex flex-wrap items-center justify-end gap-2.5 sm:gap-3 border-t border-[#F0EBE1] bg-[#FAF8F5] px-4 sm:px-6 py-3.5 sm:py-4 pb-safe">
+          <footer className="flex flex-wrap items-center justify-end gap-2.5 sm:gap-3 border-t border-line bg-surface-soft px-4 sm:px-6 py-3.5 sm:py-4 pb-safe">
             {footer}
           </footer>
         )}

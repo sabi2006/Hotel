@@ -119,10 +119,10 @@ export default function CategoriesPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Menu Categories
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-slate-500">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Organize restaurant menu sections and display priority for waiters.
           </p>
         </div>
@@ -145,10 +145,10 @@ export default function CategoriesPage() {
           action={<Button onClick={openCreate}>Create First Category</Button>}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Display Order</th>
                   <th className="px-5 py-3.5">Category Name</th>
@@ -157,17 +157,17 @@ export default function CategoriesPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {categories.map((category) => (
-                  <tr key={category._id} className="hover:bg-[#FAF8F5] transition-colors">
-                    <td className="px-5 py-3.5 font-bold text-[#8E908C] tabular-nums">#{category.displayOrder}</td>
+                  <tr key={category._id} className="hover:bg-surface-soft transition-colors">
+                    <td className="px-5 py-3.5 font-bold text-subtle tabular-nums">#{category.displayOrder}</td>
                     <td className="px-5 py-3.5">
-                      <div className="font-bold text-[#1F2220]">{category.name}</div>
+                      <div className="font-bold text-ink">{category.name}</div>
                       {category.description && (
-                        <div className="text-xs text-[#6F716D] font-normal">{category.description}</div>
+                        <div className="text-xs text-muted font-normal">{category.description}</div>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 font-semibold text-[#5F615D]">
+                    <td className="px-5 py-3.5 font-semibold text-muted">
                       {category.productCount} dish{category.productCount === 1 ? "" : "es"}
                     </td>
                     <td className="px-5 py-3.5">
@@ -175,11 +175,11 @@ export default function CategoriesPage() {
                         className={[
                           "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1",
                           category.isActive
-                            ? "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD]"
-                            : "bg-[#FAF8F5] text-[#8E908C] ring-[#E8E3D8]",
+                            ? "bg-success-soft text-success ring-success-line"
+                            : "bg-surface-soft text-subtle ring-line",
                         ].join(" ")}
                       >
-                        <span className={`size-1.5 rounded-full ${category.isActive ? "bg-[#276B49]" : "bg-[#8E908C]"}`} />
+                        <span className={`size-1.5 rounded-full ${category.isActive ? "bg-success" : "bg-subtle"}`} />
                         {category.isActive ? "Active" : "Hidden"}
                       </span>
                     </td>
@@ -242,12 +242,12 @@ export default function CategoriesPage() {
             onChange={(e) => setForm({ ...form, displayOrder: Number(e.target.value) })}
             hint="Lower numbers appear first on POS screens"
           />
-          <label className="flex items-center gap-3 text-xs font-bold text-slate-700 select-none cursor-pointer pt-1">
+          <label className="flex items-center gap-3 text-xs font-bold text-ink-soft select-none cursor-pointer pt-1">
             <input
               type="checkbox"
               checked={form.isActive ?? true}
               onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-              className="size-4 rounded-md border-slate-300 text-brand-600 focus:ring-brand-600"
+              className="size-4 rounded-md border-line-strong text-brand-600 focus:ring-brand-600"
             />
             <span>Active &amp; Visible to Waiters on POS</span>
           </label>

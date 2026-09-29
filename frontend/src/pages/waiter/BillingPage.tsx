@@ -299,20 +299,20 @@ export default function BillingPage() {
         <div className="flex items-center gap-3.5">
           <button
             onClick={() => navigate(`/waiter/order/${orderId}`)}
-            className="pressable flex size-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 text-sm font-bold"
+            className="pressable flex size-9 items-center justify-center rounded-xl bg-surface-sunken text-ink-soft hover:bg-line text-sm font-bold"
             title="Back to Order"
           >
             ←
           </button>
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-extrabold text-slate-900 font-sans">
+              <h1 className="text-xl font-extrabold text-ink font-sans">
                 Billing &amp; Settlement · Table {order.tableNumber}
               </h1>
               <OrderStatusBadge status={order.orderStatus} />
             </div>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              Invoice: <span className="font-bold text-slate-700">{order.invoiceNumber}</span> · Waiter: {order.waiterName}
+            <p className="text-xs text-muted font-medium mt-0.5">
+              Invoice: <span className="font-bold text-ink-soft">{order.invoiceNumber}</span> · Waiter: {order.waiterName}
             </p>
           </div>
         </div>
@@ -332,21 +332,21 @@ export default function BillingPage() {
         {/* Left: Invoice Receipt Card */}
         <section className="print-only-bill card p-6 sm:p-8 lg:col-span-3 space-y-5 shadow-sm bg-white">
           {/* Restaurant Header */}
-          <div className="border-b border-dashed border-slate-200 pb-5 text-center flex flex-col items-center">
+          <div className="border-b border-dashed border-line pb-5 text-center flex flex-col items-center">
             <BrandLogo variant="full" size="md" className="mb-2 max-w-[170px]" />
-            <h2 className="text-xl font-extrabold tracking-tight text-slate-900 font-sans">
+            <h2 className="text-xl font-extrabold tracking-tight text-ink font-sans">
               {settings?.restaurantName ?? "SPICE GARDEN"}
             </h2>
             <p className="text-[10px] font-bold text-brand-700 uppercase tracking-widest mt-0.5">
               Hospitality &amp; Point of Sale
             </p>
             {settings?.addressLine1 && (
-              <p className="text-xs text-slate-500 mt-1 font-medium">{settings.addressLine1}</p>
+              <p className="text-xs text-muted mt-1 font-medium">{settings.addressLine1}</p>
             )}
-            {settings?.city && <p className="text-xs text-slate-500 font-medium">{settings.city}</p>}
-            {settings?.phone && <p className="text-xs text-slate-500 font-medium">Phone: {settings.phone}</p>}
+            {settings?.city && <p className="text-xs text-muted font-medium">{settings.city}</p>}
+            {settings?.phone && <p className="text-xs text-muted font-medium">Phone: {settings.phone}</p>}
             {settings?.gstNumber && (
-              <p className="mt-1 text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <p className="mt-1 text-xs font-bold text-ink-soft uppercase tracking-wider">
                 GSTIN: {settings.gstNumber}
               </p>
             )}
@@ -354,33 +354,33 @@ export default function BillingPage() {
 
           {/* Invoice Metadata */}
           <dl className="grid grid-cols-2 gap-y-1.5 py-1 text-xs sm:text-sm">
-            <dt className="text-slate-500">Invoice Number</dt>
-            <dd className="text-right font-bold text-slate-900">{order.invoiceNumber}</dd>
-            <dt className="text-slate-500">Date &amp; Time</dt>
-            <dd className="text-right font-medium text-slate-700">{formatDateTime(order.createdAt)}</dd>
-            <dt className="text-slate-500">Table Number</dt>
-            <dd className="text-right font-bold text-slate-900">Table {order.tableNumber}</dd>
-            <dt className="text-slate-500">Staff / Waiter</dt>
-            <dd className="text-right font-medium text-slate-700">{order.waiterName}</dd>
+            <dt className="text-muted">Invoice Number</dt>
+            <dd className="text-right font-bold text-ink">{order.invoiceNumber}</dd>
+            <dt className="text-muted">Date &amp; Time</dt>
+            <dd className="text-right font-medium text-ink-soft">{formatDateTime(order.createdAt)}</dd>
+            <dt className="text-muted">Table Number</dt>
+            <dd className="text-right font-bold text-ink">Table {order.tableNumber}</dd>
+            <dt className="text-muted">Staff / Waiter</dt>
+            <dd className="text-right font-medium text-ink-soft">{order.waiterName}</dd>
             {order.customer.name && (
               <>
-                <dt className="text-slate-500">Customer Name</dt>
-                <dd className="text-right font-semibold text-slate-900">{order.customer.name}</dd>
+                <dt className="text-muted">Customer Name</dt>
+                <dd className="text-right font-semibold text-ink">{order.customer.name}</dd>
               </>
             )}
             {order.customer.phone && (
               <>
-                <dt className="text-slate-500">Customer Phone</dt>
-                <dd className="text-right font-semibold text-slate-900">{order.customer.phone}</dd>
+                <dt className="text-muted">Customer Phone</dt>
+                <dd className="text-right font-semibold text-ink">{order.customer.phone}</dd>
               </>
             )}
           </dl>
 
           {/* Items Table */}
-          <div className="overflow-x-auto border-y border-dashed border-slate-200 py-3">
+          <div className="overflow-x-auto border-y border-dashed border-line py-3">
             <table className="min-w-full text-xs sm:text-sm">
               <thead>
-                <tr className="text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <tr className="text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                   <th className="pb-2">Item Description</th>
                   <th className="pb-2 text-center">Qty</th>
                   <th className="pb-2 text-right">Price</th>
@@ -388,18 +388,18 @@ export default function BillingPage() {
                   <th className="pb-2 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-surface-sunken">
                 {activeItems.map((item) => (
-                  <tr key={item.itemId} className="font-medium text-slate-800">
-                    <td className="py-2.5 pr-2 font-bold text-slate-900">{item.name}</td>
-                    <td className="py-2.5 text-center text-slate-600">{item.quantity}</td>
-                    <td className="py-2.5 text-right text-slate-600 tabular-nums">
+                  <tr key={item.itemId} className="font-medium text-ink">
+                    <td className="py-2.5 pr-2 font-bold text-ink">{item.name}</td>
+                    <td className="py-2.5 text-center text-muted">{item.quantity}</td>
+                    <td className="py-2.5 text-right text-muted tabular-nums">
                       {formatCurrency(item.price)}
                     </td>
-                    <td className="py-2.5 text-right text-slate-500 tabular-nums text-xs">
+                    <td className="py-2.5 text-right text-muted tabular-nums text-xs">
                       {item.gstPercentage}%
                     </td>
-                    <td className="py-2.5 text-right font-bold text-slate-900 tabular-nums">
+                    <td className="py-2.5 text-right font-bold text-ink tabular-nums">
                       {formatCurrency(item.total)}
                     </td>
                   </tr>
@@ -410,35 +410,35 @@ export default function BillingPage() {
 
           {/* Totals Summary */}
           <dl className="space-y-1.5 pt-1 text-xs sm:text-sm">
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-muted">
               <dt>Subtotal</dt>
-              <dd className="font-semibold tabular-nums text-slate-900">{formatCurrency(order.subtotal)}</dd>
+              <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.subtotal)}</dd>
             </div>
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-muted">
               <dt>GST Amount</dt>
-              <dd className="font-semibold tabular-nums text-slate-900">{formatCurrency(order.gstAmount)}</dd>
+              <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.gstAmount)}</dd>
             </div>
             {order.discount > 0 && (
-              <div className="flex justify-between text-emerald-700 font-bold">
+              <div className="flex justify-between text-success font-bold">
                 <dt>Discount Applied</dt>
                 <dd className="tabular-nums">−{formatCurrency(order.discount)}</dd>
               </div>
             )}
-            <div className="flex justify-between border-t border-slate-900/10 pt-2.5 text-base font-extrabold text-slate-900">
+            <div className="flex justify-between border-t border-ink/10 pt-2.5 text-base font-extrabold text-ink">
               <dt>Grand Total</dt>
               <dd className="tabular-nums text-brand-600 text-lg">{formatCurrency(order.grandTotal)}</dd>
             </div>
             {summary.amountPaid > 0 && (
               <>
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-muted">
                   <dt>Amount Paid</dt>
-                  <dd className="font-bold tabular-nums text-emerald-700">{formatCurrency(summary.amountPaid)}</dd>
+                  <dd className="font-bold tabular-nums text-success">{formatCurrency(summary.amountPaid)}</dd>
                 </div>
                 <div className="flex justify-between font-extrabold pt-1">
-                  <dt className={summary.amountDue > 0 ? "text-red-600" : "text-emerald-600"}>
+                  <dt className={summary.amountDue > 0 ? "text-danger" : "text-success"}>
                     {summary.amountDue > 0 ? "Balance Remaining" : "Status: Fully Settled"}
                   </dt>
-                  <dd className={`tabular-nums ${summary.amountDue > 0 ? "text-red-600" : "text-emerald-600"}`}>
+                  <dd className={`tabular-nums ${summary.amountDue > 0 ? "text-danger" : "text-success"}`}>
                     {formatCurrency(summary.amountDue)}
                   </dd>
                 </div>
@@ -446,7 +446,7 @@ export default function BillingPage() {
             )}
           </dl>
 
-          <p className="border-t border-dashed border-slate-200 pt-4 text-center text-xs text-slate-400 font-medium">
+          <p className="border-t border-dashed border-line pt-4 text-center text-xs text-subtle font-medium">
             {settings?.invoiceFooterNote ?? "Thank you for dining with us! Please visit again."}
           </p>
         </section>
@@ -455,16 +455,16 @@ export default function BillingPage() {
         <section className="no-print space-y-4 lg:col-span-2 select-none">
           {/* Payment Box */}
           <div className="card p-5 space-y-4 shadow-sm">
-            <div className="flex items-baseline justify-between border-b border-slate-100 pb-3">
+            <div className="flex items-baseline justify-between border-b border-surface-sunken pb-3">
               <div>
-                <h2 className="text-base font-bold text-slate-900 font-sans">Payment Collection</h2>
-                <p className="text-xs text-slate-500 font-medium">
+                <h2 className="text-base font-bold text-ink font-sans">Payment Collection</h2>
+                <p className="text-xs text-muted font-medium">
                   {summary.amountDue > 0 ? "Outstanding balance" : "Invoice settled in full"}
                 </p>
               </div>
               <span
                 className={`text-xl font-extrabold tabular-nums font-sans ${
-                  summary.amountDue > 0 ? "text-red-600" : "text-emerald-600"
+                  summary.amountDue > 0 ? "text-danger" : "text-success"
                 }`}
               >
                 {formatCurrency(summary.amountDue)}
@@ -483,8 +483,8 @@ export default function BillingPage() {
                       className={[
                         "pressable rounded-xl px-3 py-2.5 text-xs font-bold transition",
                         method === option
-                          ? "bg-brand-600 text-white shadow-md shadow-brand-950/20"
-                          : "bg-slate-100 text-slate-700 hover:bg-slate-200",
+                          ? "bg-brand-600 text-white shadow-sm"
+                          : "bg-surface-sunken text-ink-soft hover:bg-line",
                       ].join(" ")}
                     >
                       {PAYMENT_METHOD_LABELS[option]}
@@ -496,11 +496,11 @@ export default function BillingPage() {
                 <button
                   type="button"
                   onClick={() => setIsSplitOpen(true)}
-                  className="pressable flex w-full items-center justify-between rounded-xl bg-slate-900 px-4 py-3 text-left text-xs font-bold text-white hover:bg-slate-800 shadow-sm"
+                  className="pressable flex w-full items-center justify-between rounded-xl bg-ink px-4 py-3 text-left text-xs font-bold text-white hover:bg-ink shadow-sm"
                 >
                   <div>
                     <p className="font-bold">Split Across Multiple Methods</p>
-                    <p className="text-[11px] font-medium text-slate-400 mt-0.5">Part Cash, Part UPI, Part Card</p>
+                    <p className="text-[11px] font-medium text-subtle mt-0.5">Part Cash, Part UPI, Part Card</p>
                   </div>
                   <span className="text-base">→</span>
                 </button>
@@ -528,7 +528,7 @@ export default function BillingPage() {
                       hint="Optional — calculates change to return"
                     />
                     {changeDue > 0 && (
-                      <div className="rounded-xl bg-amber-50 p-3 ring-1 ring-amber-200 text-xs font-bold text-amber-900 flex justify-between">
+                      <div className="rounded-xl bg-warning-soft p-3 ring-1 ring-warning-line text-xs font-bold text-warning-strong flex justify-between">
                         <span>Change to return:</span>
                         <span className="text-sm font-extrabold">{formatCurrency(changeDue)}</span>
                       </div>
@@ -537,8 +537,8 @@ export default function BillingPage() {
                 )}
 
                 {method === "UPI" && (
-                  <div className="space-y-2.5 rounded-xl bg-sky-50/80 p-3.5 ring-1 ring-sky-200">
-                    <p className="text-xs text-sky-950 font-medium">
+                  <div className="space-y-2.5 rounded-xl bg-info-soft/80 p-3.5 ring-1 ring-info-line">
+                    <p className="text-xs text-info-strong font-medium">
                       Display the restaurant QR code, wait for customer confirmation, then record payment.
                     </p>
                     <Button
@@ -579,7 +579,7 @@ export default function BillingPage() {
           {/* Payments Taken History */}
           {summary.payments.length > 0 && (
             <div className="card p-5 space-y-3 shadow-sm">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-subtle">
                 Payment History ({summary.payments.length})
               </h3>
               <ul className="space-y-2">
@@ -589,22 +589,22 @@ export default function BillingPage() {
                     className={[
                       "flex items-start justify-between gap-2 rounded-xl p-3 text-xs ring-1",
                       payment.isVoided
-                        ? "bg-red-50/60 ring-red-200"
-                        : "bg-slate-50 ring-slate-200/80",
+                        ? "bg-danger-soft/60 ring-danger-line"
+                        : "bg-surface-soft ring-line/80",
                     ].join(" ")}
                   >
                     <div>
-                      <p className={`font-bold text-sm ${payment.isVoided ? "text-slate-400 line-through" : "text-slate-900"}`}>
+                      <p className={`font-bold text-sm ${payment.isVoided ? "text-subtle line-through" : "text-ink"}`}>
                         {PAYMENT_METHOD_LABELS[payment.method]}
                       </p>
-                      <p className="text-[11px] text-slate-500 font-medium">
+                      <p className="text-[11px] text-muted font-medium">
                         By {payment.receivedByName} · {formatDateTime(payment.paidAt)}
                       </p>
                       {payment.reference && (
-                        <p className="text-[11px] text-slate-400">Ref: {payment.reference}</p>
+                        <p className="text-[11px] text-subtle">Ref: {payment.reference}</p>
                       )}
                     </div>
-                    <span className={`font-extrabold text-sm tabular-nums ${payment.isVoided ? "text-slate-400 line-through" : "text-slate-900"}`}>
+                    <span className={`font-extrabold text-sm tabular-nums ${payment.isVoided ? "text-subtle line-through" : "text-ink"}`}>
                       {formatCurrency(payment.amount)}
                     </span>
                   </li>
@@ -615,14 +615,14 @@ export default function BillingPage() {
 
           {/* Waiter Tip Box */}
           <div className="card p-5 space-y-3 shadow-sm">
-            <div className="flex items-baseline justify-between border-b border-slate-100 pb-2.5">
+            <div className="flex items-baseline justify-between border-b border-surface-sunken pb-2.5">
               <div>
-                <h3 className="text-sm font-bold text-slate-900 font-sans">
+                <h3 className="text-sm font-bold text-ink font-sans">
                   Staff Tip ({order.waiterName})
                 </h3>
-                <p className="text-[11px] text-slate-400">Direct gratuity for staff service</p>
+                <p className="text-[11px] text-subtle">Direct gratuity for staff service</p>
               </div>
-              <span className="font-extrabold text-amber-700 tabular-nums">
+              <span className="font-extrabold text-warning tabular-nums">
                 {formatCurrency(tips?.totalTips ?? 0)}
               </span>
             </div>
@@ -637,10 +637,10 @@ export default function BillingPage() {
                   setIsTipOpen(true);
                 }}
               >
-                💵 Cash Tip
+                Cash Tip
               </Button>
               <Button variant="secondary" size="sm" onClick={() => void openWaiterQr()}>
-                📱 Waiter QR
+                Waiter QR
               </Button>
             </div>
           </div>
@@ -651,12 +651,12 @@ export default function BillingPage() {
               fullWidth
               size="lg"
               onClick={() => setIsShareOpen(true)}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-950/20 gap-2"
+              className="bg-success hover:bg-success text-white shadow-sm gap-2"
             >
               <span>💬</span>
               <span>Send Bill via WhatsApp</span>
             </Button>
-            <p className="mt-2 text-center text-[11px] text-slate-400">
+            <p className="mt-2 text-center text-[11px] text-subtle">
               Opens WhatsApp with preformatted digital invoice.
             </p>
           </div>
@@ -664,9 +664,9 @@ export default function BillingPage() {
           {/* Close Order Box */}
           <div className="card p-5 space-y-3 shadow-sm">
             {readyToServe.length > 0 && (
-              <div className="rounded-xl bg-emerald-50 p-3.5 ring-1 ring-emerald-200">
-                <p className="text-xs font-bold text-emerald-900">
-                  🔔 {readyToServe.length} item{readyToServe.length === 1 ? " is" : "s are"} ready but not marked served
+              <div className="rounded-xl bg-success-soft p-3.5 ring-1 ring-success-line">
+                <p className="text-xs font-bold text-success-strong">
+                  {readyToServe.length} item{readyToServe.length === 1 ? " is" : "s are"} ready but not marked served
                 </p>
                 <Button
                   fullWidth
@@ -682,8 +682,8 @@ export default function BillingPage() {
             )}
 
             {stillCooking.length > 0 && (
-              <div className="rounded-xl bg-amber-50 p-3 ring-1 ring-amber-200">
-                <p className="text-xs font-bold text-amber-900">
+              <div className="rounded-xl bg-warning-soft p-3 ring-1 ring-warning-line">
+                <p className="text-xs font-bold text-warning-strong">
                   Kitchen is still preparing {stillCooking.length} item{stillCooking.length === 1 ? "" : "s"}
                 </p>
               </div>
@@ -696,19 +696,19 @@ export default function BillingPage() {
               disabled={!canClose}
               isLoading={isClosing}
               onClick={() => void handleClose()}
-              className="shadow-md"
+              className="shadow-sm"
             >
               <ArmchairIcon size={18} />
               <span>Close Order &amp; Free Table {order.tableNumber}</span>
             </Button>
 
             {!summary.isFullyPaid ? (
-              <p className="text-center text-[11px] font-medium text-slate-500">
-                ⚠️ Settle the full bill amount before closing the order.
+              <p className="text-center text-[11px] font-medium text-muted">
+                Settle the full bill amount before closing the order.
               </p>
             ) : unservedItems.length > 0 ? (
-              <p className="text-center text-[11px] font-medium text-slate-500">
-                ⚠️ Deliver all prepared items to table before releasing.
+              <p className="text-center text-[11px] font-medium text-muted">
+                Deliver all prepared items to table before releasing.
               </p>
             ) : null}
           </div>
@@ -767,7 +767,7 @@ export default function BillingPage() {
                   "rounded-xl px-3 py-2.5 text-xs font-bold transition",
                   tipMethod === option
                     ? "bg-brand-600 text-white shadow-sm"
-                    : "bg-slate-100 text-slate-700 hover:bg-slate-200",
+                    : "bg-surface-sunken text-ink-soft hover:bg-line",
                 ].join(" ")}
               >
                 {TIP_METHOD_LABELS[option]}
@@ -823,7 +823,7 @@ export default function BillingPage() {
             <img
               src={waiterQr.tipQrImage}
               alt={`Tip QR for ${waiterQr.name}`}
-              className="mx-auto max-h-72 rounded-2xl ring-1 ring-slate-200 shadow-md"
+              className="mx-auto max-h-72 rounded-xl ring-1 ring-line shadow-sm"
             />
           ) : (
             <Alert tone="warning">
@@ -831,8 +831,8 @@ export default function BillingPage() {
             </Alert>
           )}
           {waiterQr?.tipUpiId && (
-            <p className="text-xs text-slate-600 font-medium">
-              UPI ID: <span className="font-bold text-slate-900">{waiterQr.tipUpiId}</span>
+            <p className="text-xs text-muted font-medium">
+              UPI ID: <span className="font-bold text-ink">{waiterQr.tipUpiId}</span>
             </p>
           )}
         </div>
@@ -844,7 +844,7 @@ export default function BillingPage() {
           {settings?.upiId ? (
             <div className="flex flex-col items-center justify-center">
               {/* Dynamic QR Code */}
-              <div className="p-3 bg-white rounded-2xl ring-1 ring-slate-200 shadow-md">
+              <div className="p-3 bg-white rounded-xl ring-1 ring-line shadow-sm">
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(
                     `upi://pay?pa=${settings.upiId}&pn=${encodeURIComponent(
@@ -858,13 +858,13 @@ export default function BillingPage() {
                 />
               </div>
 
-              <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-emerald-800 bg-emerald-50 px-3.5 py-1.5 rounded-full ring-1 ring-emerald-200 font-bold">
-                <span>⚡ Auto-fills exact bill amount</span>
+              <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-success-strong bg-success-soft px-3.5 py-1.5 rounded-full ring-1 ring-success-line font-bold">
+                <span>Auto-fills exact bill amount</span>
                 <span className="tabular-nums font-extrabold">{formatCurrency(Number(amount) || summary.amountDue)}</span>
               </div>
             </div>
           ) : settings?.upiQrImage ? (
-            <div className="p-2 bg-white rounded-2xl ring-1 ring-slate-200 shadow-md">
+            <div className="p-2 bg-white rounded-xl ring-1 ring-line shadow-sm">
               <img
                 src={resolveImageUrl(settings.upiQrImage) ?? settings.upiQrImage}
                 alt="Restaurant UPI QR Standee"
@@ -878,10 +878,10 @@ export default function BillingPage() {
           )}
 
           {settings?.upiId && (
-            <div className="flex items-center justify-between gap-2 text-xs bg-slate-50 py-2 px-3.5 rounded-xl ring-1 ring-slate-200 text-left">
+            <div className="flex items-center justify-between gap-2 text-xs bg-surface-soft py-2 px-3.5 rounded-xl ring-1 ring-line text-left">
               <div>
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">UPI ID (VPA)</p>
-                <p className="font-mono font-bold text-slate-900 select-all">{settings.upiId}</p>
+                <p className="text-[10px] font-bold text-subtle uppercase tracking-wider">UPI ID (VPA)</p>
+                <p className="font-mono font-bold text-ink select-all">{settings.upiId}</p>
               </div>
               <button
                 type="button"
@@ -891,16 +891,16 @@ export default function BillingPage() {
                     toast.success("UPI ID copied to clipboard!");
                   }
                 }}
-                className="pressable rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100"
+                className="pressable rounded-lg bg-white px-2.5 py-1 text-xs font-bold text-ink-soft ring-1 ring-line hover:bg-surface-sunken"
               >
                 Copy
               </button>
             </div>
           )}
 
-          <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
-            <span className="text-xs text-slate-500 font-medium">Payable Balance:</span>
-            <span className="text-lg font-black text-slate-900 tabular-nums">
+          <div className="border-t border-surface-sunken pt-3 flex items-center justify-between">
+            <span className="text-xs text-muted font-medium">Payable Balance:</span>
+            <span className="text-lg font-black text-ink tabular-nums">
               {formatCurrency(Number(amount) || summary.amountDue)}
             </span>
           </div>

@@ -120,22 +120,22 @@ function SplitPaymentForm({
     >
       <div className="space-y-4">
         {/* The three numbers a waiter needs, in the order they think about them. */}
-        <div className="grid grid-cols-3 divide-x divide-[#F0EBE1] overflow-hidden rounded-xl bg-[#FAF8F5] ring-1 ring-[#E8E3D8]">
+        <div className="grid grid-cols-3 divide-x divide-surface-sunken overflow-hidden rounded-xl bg-surface-soft ring-1 ring-line">
           {[
-            { label: "Bill total", value: grandTotal, tone: "text-[#1F2220]" },
+            { label: "Bill total", value: grandTotal, tone: "text-ink" },
             {
               label: alreadyPaid > 0 ? "Paid so far" : "Entering now",
               value: alreadyPaid > 0 ? alreadyPaid : toRupees(enteredPaise),
-              tone: "text-[#1F2220]",
+              tone: "text-ink",
             },
             {
               label: "Remaining",
               value: toRupees(Math.max(0, remainingPaise)),
-              tone: isOver ? "text-[#C24138]" : settlesBill ? "text-[#276B49]" : "text-[#9E6523]",
+              tone: isOver ? "text-danger" : settlesBill ? "text-success" : "text-warning",
             },
           ].map((cell) => (
             <div key={cell.label} className="px-3 py-3 text-center">
-              <p className="text-[11px] font-bold uppercase tracking-wide text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wide text-subtle">
                 {cell.label}
               </p>
               <p className={`mt-1 text-lg font-black tabular-nums font-sans ${cell.tone}`}>
@@ -155,15 +155,15 @@ function SplitPaymentForm({
 
         <div className="space-y-3">
           {rows.map((row, index) => (
-            <div key={row.key} className="rounded-xl bg-white p-3 ring-1 ring-[#E8E3D8]">
+            <div key={row.key} className="rounded-xl bg-white p-3 ring-1 ring-line">
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wide text-[#8E908C]">
+                <span className="text-xs font-bold uppercase tracking-wide text-subtle">
                   Payment {index + 1}
                 </span>
                 {rows.length > 1 && (
                   <button
                     onClick={() => setRows((current) => current.filter((r) => r.key !== row.key))}
-                    className="pressable rounded-md px-2 py-1 text-xs font-bold text-[#C24138] hover:bg-red-50"
+                    className="pressable rounded-md px-2 py-1 text-xs font-bold text-danger hover:bg-danger-soft"
                   >
                     Remove
                   </button>
@@ -181,8 +181,8 @@ function SplitPaymentForm({
                       className={[
                         "pressable flex-1 sm:flex-initial sm:min-w-16 rounded-lg px-2.5 sm:px-3 py-2 text-xs sm:text-sm font-bold transition text-center",
                         row.method === method
-                          ? "bg-[#202322] text-white shadow-sm shadow-charcoal-950/20"
-                          : "bg-[#FAF8F5] text-[#5F615D] hover:bg-[#F3ECE0] hover:text-[#1F2220] ring-1 ring-[#E8E3D8]",
+                          ? "bg-ink text-white shadow-sm"
+                          : "bg-surface-soft text-muted hover:bg-brand-100 hover:text-ink ring-1 ring-line",
                       ].join(" ")}
                     >
                       {PAYMENT_METHOD_LABELS[method]}
@@ -191,7 +191,7 @@ function SplitPaymentForm({
                 </div>
 
                 <div className="relative">
-                  <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-[#8E908C]">
+                  <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-sm text-subtle">
                     ₹
                   </span>
                   <input
@@ -202,7 +202,7 @@ function SplitPaymentForm({
                     value={row.amount}
                     onChange={(event) => update(row.key, { amount: event.target.value })}
                     aria-label={`Payment ${index + 1} amount`}
-                    className="block w-full rounded-lg border-0 bg-white py-2 pl-7 pr-3 text-right text-lg font-semibold tabular-nums text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-brand-600"
+                    className="block w-full rounded-lg border-0 bg-white py-2 pl-7 pr-3 text-right text-lg font-semibold tabular-nums text-ink shadow-sm ring-1 ring-inset ring-line-strong focus:ring-2 focus:ring-inset focus:ring-brand-600"
                   />
                 </div>
               </div>
@@ -217,7 +217,7 @@ function SplitPaymentForm({
                       : "Card reference (optional)"
                   }
                   aria-label={`Payment ${index + 1} reference`}
-                  className="mt-2 block w-full rounded-lg border-0 bg-white px-3 py-1.5 text-sm text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-brand-600"
+                  className="mt-2 block w-full rounded-lg border-0 bg-white px-3 py-1.5 text-sm text-ink shadow-sm ring-1 ring-inset ring-line-strong focus:ring-2 focus:ring-inset focus:ring-brand-600"
                 />
               )}
             </div>

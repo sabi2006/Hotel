@@ -126,11 +126,11 @@ export default function ReportsPage() {
         <div>
           <div className="flex items-center gap-2">
             <BarChartIcon size={24} className="text-brand-600" />
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+            <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
               Analytics &amp; Performance Reports
             </h1>
           </div>
-          <p className="mt-0.5 text-xs font-medium text-slate-500">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Revenue trends, peak hours, menu popularity, waiter efficiency, and kitchen speed.
           </p>
         </div>
@@ -139,7 +139,7 @@ export default function ReportsPage() {
       {error && <Alert tone="error">{error}</Alert>}
 
       {/* Date Presets Bar */}
-      <div className="card p-3 sm:p-4 space-y-3 shadow-2xs bg-white border border-[#EBE7DF]">
+      <div className="card p-3 sm:p-4 space-y-3 shadow-2xs bg-white border border-line">
         <div className="-mx-1 flex items-center gap-2 overflow-x-auto px-1 pb-1 no-scrollbar sm:flex-wrap">
           {PRESETS.map((option) => (
             <button
@@ -150,8 +150,8 @@ export default function ReportsPage() {
               className={[
                 "pressable shrink-0 rounded-xl px-3.5 py-2 text-xs font-bold transition select-none",
                 preset === option
-                  ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-                  : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                  ? "bg-ink text-white shadow-sm"
+                  : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
               ].join(" ")}
             >
               {PERIOD_LABELS[option]}
@@ -160,7 +160,7 @@ export default function ReportsPage() {
         </div>
 
         {preset === "custom" && (
-          <div className="flex flex-wrap gap-3 pt-2 border-t border-slate-100">
+          <div className="flex flex-wrap gap-3 pt-2 border-t border-surface-sunken">
             <div className="min-w-44">
               <Input
                 label="Date Range From"
@@ -198,7 +198,7 @@ export default function ReportsPage() {
               label="Revenue Collected"
               value={formatCurrency(data.summary.totalCollected)}
               tone="emerald"
-              icon={<CreditCardIcon size={20} className="text-emerald-600" />}
+              icon={<CreditCardIcon size={20} className="text-success" />}
               hint={
                 data.summary.pendingAmount > 0
                   ? `${formatCurrency(data.summary.pendingAmount)} still due`
@@ -209,14 +209,14 @@ export default function ReportsPage() {
               label="Average Order Value"
               value={formatCurrency(data.summary.averageOrderValue)}
               tone="sky"
-              icon={<UtensilsIcon size={20} className="text-sky-600" />}
+              icon={<UtensilsIcon size={20} className="text-info" />}
               hint={`${data.summary.itemsSold} items sold`}
             />
             <StatCard
               label="Staff Tips Collected"
               value={formatCurrency(data.summary.totalTips)}
               tone="amber"
-              icon={<HandCoinsIcon size={20} className="text-amber-600" />}
+              icon={<HandCoinsIcon size={20} className="text-warning" />}
               hint="Direct gratuity"
             />
           </div>
@@ -353,13 +353,13 @@ export default function ReportsPage() {
             <div className="card p-5 space-y-3 shadow-xs">
               <div className="flex items-center gap-2">
                 <UsersIcon size={18} className="text-brand-600" />
-                <h2 className="text-sm font-bold uppercase tracking-wider text-slate-700 font-sans">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-ink-soft font-sans">
                   Waiter Sales &amp; Tip Metrics
                 </h2>
               </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full text-xs sm:text-sm">
-                  <thead className="text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  <thead className="text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                     <tr>
                       <th className="py-2.5">Waiter</th>
                       <th className="py-2.5 text-right">Orders</th>
@@ -368,25 +368,25 @@ export default function ReportsPage() {
                       <th className="py-2.5 text-right">Tips</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-surface-sunken">
                     {data.waiters.length === 0 ? (
                       <tr>
-                        <td colSpan={5} className="py-6 text-center text-slate-400 font-medium">
+                        <td colSpan={5} className="py-6 text-center text-subtle font-medium">
                           No waiter activity in this timeframe
                         </td>
                       </tr>
                     ) : (
                       data.waiters.map((row) => (
                         <tr key={row.waiterId}>
-                          <td className="py-2.5 font-bold text-slate-900">{row.name}</td>
-                          <td className="py-2.5 text-right text-slate-600 font-medium">{row.orders}</td>
-                          <td className="py-2.5 text-right font-extrabold text-slate-900 tabular-nums">
+                          <td className="py-2.5 font-bold text-ink">{row.name}</td>
+                          <td className="py-2.5 text-right text-muted font-medium">{row.orders}</td>
+                          <td className="py-2.5 text-right font-extrabold text-ink tabular-nums">
                             {formatCurrency(row.sales)}
                           </td>
-                          <td className="py-2.5 text-right text-slate-600 tabular-nums">
+                          <td className="py-2.5 text-right text-muted tabular-nums">
                             {formatCurrency(row.averageOrderValue)}
                           </td>
-                          <td className="py-2.5 text-right font-bold text-amber-600 tabular-nums">
+                          <td className="py-2.5 text-right font-bold text-warning tabular-nums">
                             {formatCurrency(row.tips)}
                           </td>
                         </tr>
@@ -402,32 +402,32 @@ export default function ReportsPage() {
               <div className="card p-5 space-y-3 shadow-xs">
                 <div className="flex items-center gap-2">
                   <ChefHatIcon size={18} className="text-brand-600" />
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-slate-700 font-sans">
+                  <h2 className="text-sm font-bold uppercase tracking-wider text-ink-soft font-sans">
                     Kitchen Preparation Turnaround
                   </h2>
                 </div>
                 <dl className="grid grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div className="p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200/70">
-                    <dt className="text-slate-500 font-medium">Orders Prepared</dt>
-                    <dd className="mt-1 text-lg font-extrabold text-slate-900 font-sans">
+                  <div className="p-3 bg-surface-soft rounded-xl ring-1 ring-line/70">
+                    <dt className="text-muted font-medium">Orders Prepared</dt>
+                    <dd className="mt-1 text-lg font-extrabold text-ink font-sans">
                       {data.kitchen.ordersPrepared} tickets
                     </dd>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200/70">
-                    <dt className="text-slate-500 font-medium">Avg Kitchen Pickup</dt>
-                    <dd className="mt-1 text-lg font-extrabold text-slate-900 font-sans">
+                  <div className="p-3 bg-surface-soft rounded-xl ring-1 ring-line/70">
+                    <dt className="text-muted font-medium">Avg Kitchen Pickup</dt>
+                    <dd className="mt-1 text-lg font-extrabold text-ink font-sans">
                       {minutesLabel(data.kitchen.averageAcceptMinutes)}
                     </dd>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200/70">
-                    <dt className="text-slate-500 font-medium">Avg Cook Time</dt>
-                    <dd className="mt-1 text-lg font-extrabold text-slate-900 font-sans">
+                  <div className="p-3 bg-surface-soft rounded-xl ring-1 ring-line/70">
+                    <dt className="text-muted font-medium">Avg Cook Time</dt>
+                    <dd className="mt-1 text-lg font-extrabold text-ink font-sans">
                       {minutesLabel(data.kitchen.averagePrepMinutes)}
                     </dd>
                   </div>
-                  <div className="p-3 bg-slate-50 rounded-xl ring-1 ring-slate-200/70">
-                    <dt className="text-slate-500 font-medium">Slowest Ticket Time</dt>
-                    <dd className="mt-1 text-lg font-extrabold text-slate-900 font-sans">
+                  <div className="p-3 bg-surface-soft rounded-xl ring-1 ring-line/70">
+                    <dt className="text-muted font-medium">Slowest Ticket Time</dt>
+                    <dd className="mt-1 text-lg font-extrabold text-ink font-sans">
                       {minutesLabel(data.kitchen.slowestPrepMinutes)}
                     </dd>
                   </div>

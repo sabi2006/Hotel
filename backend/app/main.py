@@ -233,6 +233,10 @@ def _serialisable_errors(errors: list[dict]) -> list[dict]:
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
     response = await call_next(request)
+    # Uploaded images have random, never-reused filenames, so they can be cached
+    # forever; "no-store" made every dish photo re-download on every screen.
+    if request.url.path.startswith("/uploads/") and response.status_code == 200:
+        response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
     for header, value in SECURITY_HEADERS.items():
         response.headers.setdefault(header, value)
     return response

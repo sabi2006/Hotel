@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BellIcon } from "@/components/Icons";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -94,16 +95,16 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
             left: window.innerWidth < 640 ? "12px" : "auto",
           }}
           className={[
-            "fixed z-[101] w-auto sm:w-96 max-w-[calc(100vw-24px)] rounded-2xl bg-white shadow-2xl ring-1 ring-[#202322]/15 border border-[#EBE7DF]",
-            "animate-pop flex flex-col max-h-[calc(100dvh-85px)] overflow-hidden",
+            "fixed z-[101] w-auto sm:w-96 max-w-[calc(100vw-24px)] rounded-xl bg-white shadow-lg ring-1 ring-ink/15 border border-line",
+            " flex flex-col max-h-[calc(100dvh-85px)] overflow-hidden",
           ].join(" ")}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[#F0EBE1] bg-[#FAF8F5] px-4 py-3">
+          <div className="flex items-center justify-between border-b border-surface-sunken bg-surface-soft px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="text-base font-extrabold text-[#1F2220] font-sans">Notifications</span>
+              <span className="text-base font-extrabold text-ink font-sans">Notifications</span>
               {unreadCount > 0 && (
-                <span className="rounded-full bg-[#EBF5EE] px-2 py-0.5 text-xs font-bold text-[#276B49] ring-1 ring-[#BCE2CD]">
+                <span className="rounded-full bg-success-soft px-2 py-0.5 text-xs font-bold text-success ring-1 ring-success-line">
                   {unreadCount} unread
                 </span>
               )}
@@ -119,18 +120,18 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
                 className={[
                   "pressable rounded-lg px-2.5 py-1 text-xs font-bold transition ring-1",
                   isSoundEnabled
-                    ? "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD] hover:bg-[#D4EBDC]"
-                    : "bg-white text-[#8E908C] ring-[#E8E3D8] hover:bg-[#F3ECE0]",
+                    ? "bg-success-soft text-success ring-success-line hover:bg-success-line"
+                    : "bg-white text-subtle ring-line hover:bg-brand-100",
                 ].join(" ")}
               >
-                {isSoundEnabled ? "🔊 Sound ON" : "🔇 Sound OFF"}
+                {isSoundEnabled ? "Sound ON" : "Sound OFF"}
               </button>
 
               {unreadCount > 0 && (
                 <button
                   type="button"
                   onClick={() => void markAllAsRead()}
-                  className="pressable rounded-lg px-2.5 py-1 text-xs font-bold text-brand-700 hover:bg-[#FAF6EE]"
+                  className="pressable rounded-lg px-2.5 py-1 text-xs font-bold text-brand-700 hover:bg-surface-soft"
                 >
                   Mark all read
                 </button>
@@ -139,12 +140,12 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
           </div>
 
           {/* List of Notifications */}
-          <div className="flex-1 overflow-y-auto divide-y divide-[#F0EBE1]">
+          <div className="flex-1 overflow-y-auto divide-y divide-surface-sunken">
             {notifications.length === 0 ? (
               <div className="px-6 py-12 text-center">
-                <span className="text-3xl">🔕</span>
-                <p className="mt-2 text-sm font-bold text-[#1F2220]">No notifications yet</p>
-                <p className="mt-1 text-xs text-[#8E908C]">
+                <BellIcon size={24} />
+                <p className="mt-2 text-sm font-bold text-ink">No notifications yet</p>
+                <p className="mt-1 text-xs text-subtle">
                   When the kitchen finishes preparing your food, you'll receive real-time alerts here.
                 </p>
               </div>
@@ -157,38 +158,36 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
                   className={[
                     "w-full text-left px-4 py-3.5 flex items-start gap-3 transition group cursor-pointer",
                     notif.isRead
-                      ? "bg-white hover:bg-[#FAF8F5]"
-                      : "bg-[#EBF5EE]/50 hover:bg-[#EBF5EE]/90 font-medium",
+                      ? "bg-white hover:bg-surface-soft"
+                      : "bg-success-soft/50 hover:bg-success-soft/90 font-medium",
                   ].join(" ")}
                 >
                   <span
                     className={[
                       "flex size-9 shrink-0 items-center justify-center rounded-xl text-base",
                       notif.isRead
-                        ? "bg-[#FAF8F5] text-[#8E908C]"
-                        : "bg-[#EBF5EE] text-[#276B49] ring-1 ring-[#BCE2CD] shadow-sm",
+                        ? "bg-surface-soft text-subtle"
+                        : "bg-success-soft text-success ring-1 ring-success-line shadow-sm",
                     ].join(" ")}
-                  >
-                    🔔
-                  </span>
+                  ><BellIcon size={16} /></span>
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-1">
-                      <p className="text-sm font-bold text-[#1F2220] truncate">
+                      <p className="text-sm font-bold text-ink truncate">
                         Table {notif.tableNumber} {notif.invoiceNumber ? `· ${notif.invoiceNumber}` : notif.orderNumber ? `· #${notif.orderNumber}` : ""}
                       </p>
-                      <span className="text-[11px] text-[#8E908C] shrink-0 font-normal">
+                      <span className="text-[11px] text-subtle shrink-0 font-normal">
                         {timeAgo(notif.createdAt)}
                       </span>
                     </div>
 
                     <div className="mt-0.5 flex items-center gap-2">
-                      <span className="inline-flex rounded-full bg-[#EBF5EE] px-2 py-0.2 text-[11px] font-bold text-[#276B49]">
+                      <span className="inline-flex rounded-full bg-success-soft px-2 py-0.2 text-[11px] font-bold text-success">
                         Ready to serve
                       </span>
                     </div>
 
-                    <p className="mt-1 text-xs text-[#5F615D] line-clamp-2">
+                    <p className="mt-1 text-xs text-muted line-clamp-2">
                       {notif.message}
                     </p>
                   </div>
@@ -196,7 +195,7 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
                   {!notif.isRead && (
                     <span
                       aria-label="Unread"
-                      className="mt-2 size-2.5 shrink-0 rounded-full bg-[#276B49] ring-2 ring-[#BCE2CD] shadow-sm"
+                      className="mt-2 size-2.5 shrink-0 rounded-full bg-success ring-2 ring-success-line shadow-sm"
                     />
                   )}
                 </button>
@@ -223,24 +222,22 @@ export function NotificationBell({ dark = false }: NotificationBellProps) {
           "ripple-host pressable relative flex size-10 items-center justify-center rounded-xl transition-colors select-none",
           dark
             ? isOpen
-              ? "bg-[#252827] text-white shadow-sm ring-1 ring-[#323634]"
-              : "text-[#FAF8F5] hover:bg-[#202322] hover:text-white"
+              ? "bg-charcoal-800 text-white shadow-sm ring-1 ring-charcoal-700"
+              : "text-surface-soft hover:bg-ink hover:text-white"
             : isOpen
-              ? "bg-white text-[#1F2220] shadow-sm ring-1 ring-[#E8E3D8]"
-              : "text-[#424541] hover:bg-white hover:text-[#1F2220]",
+              ? "bg-white text-ink shadow-sm ring-1 ring-line"
+              : "text-ink-soft hover:bg-white hover:text-ink",
         ].join(" ")}
       >
         <span
           className={[
             "text-xl transition-transform",
-            isBellPulsing ? "animate-bounce scale-125" : "",
+            isBellPulsing ? " scale-125" : "",
           ].join(" ")}
-        >
-          🔔
-        </span>
+        ><BellIcon size={16} /></span>
 
         {unreadCount > 0 && (
-          <span className="absolute -right-1 -top-1 flex min-w-5 items-center justify-center rounded-full bg-[#276B49] px-1.5 py-0.5 text-[11px] font-black text-white shadow-md ring-2 ring-white">
+          <span className="absolute -right-1 -top-1 flex min-w-5 items-center justify-center rounded-full bg-success px-1.5 py-0.5 text-[11px] font-black text-white shadow-sm ring-2 ring-white">
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}

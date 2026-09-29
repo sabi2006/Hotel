@@ -8,16 +8,16 @@ export interface BrandLogoProps extends ImgHTMLAttributes<HTMLImageElement> {
 }
 
 export const BRAND_LOGO_SRC = "/assets/spice-garden-logo.png";
-export const BRAND_NAME = "SPICE GARDEN";
-export const BRAND_TAGLINE = "HOSPITALITY & POS";
+export const BRAND_NAME = "Spice Garden";
+export const BRAND_TAGLINE = "Restaurant POS";
 
 const SIZE_CLASSES = {
   xs: "h-6 w-auto",
   sm: "h-8 w-auto",
   md: "h-11 w-auto",
   lg: "h-16 w-auto",
-  xl: "h-24 w-auto",
-  "2xl": "h-32 w-auto",
+  xl: "h-20 w-auto",
+  "2xl": "h-28 w-auto",
 };
 
 const MARK_SIZES = {
@@ -32,30 +32,28 @@ const MARK_SIZES = {
 export function BrandLogo({
   variant = "full",
   size = "md",
-  showTagline = true,
   stationTitle,
   className = "",
-  alt = "Spice Garden Restaurant Logo",
+  alt = "Spice Garden logo",
+  // Accepted for backwards compatibility; the simplified logo has no tagline toggle.
+  showTagline: _showTagline,
   ...rest
 }: BrandLogoProps) {
   if (variant === "sidebar") {
     return (
       <div className={`flex items-center gap-3 select-none ${className}`}>
-        <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#1E2120] to-[#111312] p-0.5 shadow-md shadow-black/50 ring-1 ring-[#D4BD9B]/40">
-          <img
-            src={BRAND_LOGO_SRC}
-            alt={alt}
-            className="size-full object-cover rounded-lg"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
+        <img
+          src={BRAND_LOGO_SRC}
+          alt={alt}
+          width={36}
+          height={36}
+          className="size-9 shrink-0 rounded-lg object-cover bg-ink"
+          decoding="async"
+        />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-black tracking-tight text-[#FAF8F5] font-sans">
-            {BRAND_NAME}
-          </p>
-          <p className="truncate text-[10px] font-bold text-brand-400 uppercase tracking-widest">
-            {stationTitle ? `${stationTitle} Station` : BRAND_TAGLINE}
+          <p className="truncate text-sm font-bold text-ink">{BRAND_NAME}</p>
+          <p className="truncate text-xs text-subtle">
+            {stationTitle ? `${stationTitle} workspace` : BRAND_TAGLINE}
           </p>
         </div>
       </div>
@@ -64,31 +62,22 @@ export function BrandLogo({
 
   if (variant === "badge" || variant === "mark") {
     return (
-      <div
-        className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-[#1E2120] to-[#111312] p-0.5 shadow-sm ring-1 ring-[#D4BD9B]/40 ${MARK_SIZES[size]} ${className}`}
-      >
-        <img
-          src={BRAND_LOGO_SRC}
-          alt={alt}
-          className="size-full object-cover rounded-lg"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
-    );
-  }
-
-  // Full image logo variant
-  return (
-    <div className={`inline-flex flex-col items-center select-none ${className}`}>
       <img
         src={BRAND_LOGO_SRC}
         alt={alt}
-        className={`${SIZE_CLASSES[size]} object-contain drop-shadow-md`}
-        loading="eager"
+        className={`shrink-0 rounded-lg object-cover bg-ink ${MARK_SIZES[size]} ${className}`}
         decoding="async"
-        {...rest}
       />
-    </div>
+    );
+  }
+
+  return (
+    <img
+      src={BRAND_LOGO_SRC}
+      alt={alt}
+      className={`${SIZE_CLASSES[size]} object-contain select-none ${className}`}
+      decoding="async"
+      {...rest}
+    />
   );
 }

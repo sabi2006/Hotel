@@ -56,11 +56,11 @@ export default function SettingsPage() {
       <header>
         <div className="flex items-center gap-2">
           <SettingsIcon size={24} className="text-brand-600" />
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Restaurant Configuration &amp; Legal Profile
           </h1>
         </div>
-        <p className="mt-0.5 text-xs font-medium text-slate-500">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Printed tax headers, GSTIN, WhatsApp message templates, and restaurant UPI QR codes.
         </p>
       </header>
@@ -70,9 +70,9 @@ export default function SettingsPage() {
 
       {/* Identity Card */}
       <section className="card p-6 space-y-4 shadow-sm">
-        <div className="border-b border-slate-100 pb-3">
-          <h2 className="text-base font-bold text-slate-900 font-sans">Restaurant Business Identity</h2>
-          <p className="text-xs text-slate-500">Details printed at the top of customer receipt invoices.</p>
+        <div className="border-b border-surface-sunken pb-3">
+          <h2 className="text-base font-bold text-ink font-sans">Restaurant Business Identity</h2>
+          <p className="text-xs text-muted">Details printed at the top of customer receipt invoices.</p>
         </div>
         
         <Input
@@ -123,9 +123,9 @@ export default function SettingsPage() {
 
       {/* Tax Registration */}
       <section className="card p-6 space-y-4 shadow-sm">
-        <div className="border-b border-slate-100 pb-3">
-          <h2 className="text-base font-bold text-slate-900 font-sans">Statutory &amp; Tax Registrations</h2>
-          <p className="text-xs text-slate-500">GSTIN and FSSAI numbers printed on bills for compliance.</p>
+        <div className="border-b border-surface-sunken pb-3">
+          <h2 className="text-base font-bold text-ink font-sans">Statutory &amp; Tax Registrations</h2>
+          <p className="text-xs text-muted">GSTIN and FSSAI numbers printed on bills for compliance.</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -147,13 +147,13 @@ export default function SettingsPage() {
       </section>
 
       {/* Restaurant UPI Payment */}
-      <section className="card p-6 space-y-4 shadow-sm bg-white border border-[#EBE7DF]">
-        <div className="border-b border-slate-100 pb-3">
+      <section className="card p-6 space-y-4 shadow-sm bg-white border border-line">
+        <div className="border-b border-surface-sunken pb-3">
           <div className="flex items-center gap-2">
             <CreditCardIcon size={20} className="text-brand-600" />
-            <h2 className="text-base font-bold text-slate-900 font-sans">Restaurant Digital UPI Collection</h2>
+            <h2 className="text-base font-bold text-ink font-sans">Restaurant Digital UPI Collection</h2>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-muted mt-0.5">
             Customers can scan this QR code on the Waiter / Settlement screen to pay their bill.
           </p>
         </div>
@@ -168,8 +168,8 @@ export default function SettingsPage() {
           />
 
           {/* Upload QR Image File */}
-          <div className="rounded-xl border border-dashed border-[#D4BD9B] bg-[#FAF8F5] p-4 sm:p-5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#424541] mb-2">
+          <div className="rounded-xl border border-dashed border-brand-300 bg-surface-soft p-4 sm:p-5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink-soft mb-2">
               Upload Official Merchant UPI QR Graphic
             </label>
             <div className="flex flex-wrap items-center gap-3">
@@ -196,27 +196,27 @@ export default function SettingsPage() {
               />
               <label
                 htmlFor="upi-qr-upload"
-                className="pressable inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-[#1F2220] ring-1 ring-[#E8E3D8] hover:bg-[#F3ECE0] hover:ring-[#D8CEBE] cursor-pointer shadow-2xs"
+                className="pressable inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-bold text-ink ring-1 ring-line hover:bg-brand-100 hover:ring-line-strong cursor-pointer shadow-2xs"
               >
-                <span>📷 Choose QR Image from Device</span>
+                <span>Choose QR Image from Device</span>
               </label>
 
               {isUploadingQr && (
-                <span className="text-xs font-bold text-brand-700 animate-pulse">Uploading QR...</span>
+                <span className="text-xs font-bold text-brand-700">Uploading QR...</span>
               )}
 
               {form.upiQrImage && (
                 <button
                   type="button"
                   onClick={() => update("upiQrImage", null)}
-                  className="pressable rounded-xl bg-red-50 px-3 py-2 text-xs font-bold text-red-700 hover:bg-red-100 transition"
+                  className="pressable rounded-xl bg-danger-soft px-3 py-2 text-xs font-bold text-danger hover:bg-danger-line transition"
                 >
                   Remove Uploaded Graphic
                 </button>
               )}
             </div>
 
-            <p className="mt-2 text-xs text-[#8E908C]">
+            <p className="mt-2 text-xs text-subtle">
               Supports PNG, JPG, or WEBP merchant Standee/QR photos.
             </p>
           </div>
@@ -225,9 +225,9 @@ export default function SettingsPage() {
           <div className="grid gap-4 sm:grid-cols-2 pt-2">
             {/* Dynamic UPI QR Preview */}
             {form.upiId ? (
-              <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E8E3D8] text-center shadow-2xs">
-                <p className="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg ring-1 ring-emerald-200 inline-block mb-3">
-                  ✨ Live Dynamic UPI QR (Auto-fills bill amount)
+              <div className="rounded-xl bg-white p-4 ring-1 ring-line text-center shadow-2xs">
+                <p className="text-xs font-bold text-success-strong bg-success-soft px-2.5 py-1 rounded-lg ring-1 ring-success-line inline-block mb-3">
+                  Live Dynamic UPI QR (Auto-fills bill amount)
                 </p>
                 <div className="flex justify-center">
                   <img
@@ -237,10 +237,10 @@ export default function SettingsPage() {
                       )}&cu=INR`,
                     )}`}
                     alt="Dynamic UPI QR preview"
-                    className="size-44 rounded-xl ring-1 ring-slate-200 shadow-sm p-1.5 bg-white object-contain"
+                    className="size-44 rounded-xl ring-1 ring-line shadow-sm p-1.5 bg-white object-contain"
                   />
                 </div>
-                <p className="mt-2 text-xs font-bold text-slate-800 font-mono">
+                <p className="mt-2 text-xs font-bold text-ink font-mono">
                   {form.upiId}
                 </p>
               </div>
@@ -248,15 +248,15 @@ export default function SettingsPage() {
 
             {/* Uploaded Static Graphic Preview */}
             {form.upiQrImage ? (
-              <div className="rounded-2xl bg-white p-4 ring-1 ring-[#E8E3D8] text-center shadow-2xs">
-                <p className="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg ring-1 ring-slate-200 inline-block mb-3">
-                  🖼️ Custom Merchant QR Graphic
+              <div className="rounded-xl bg-white p-4 ring-1 ring-line text-center shadow-2xs">
+                <p className="text-xs font-bold text-ink-soft bg-surface-sunken px-2.5 py-1 rounded-lg ring-1 ring-line inline-block mb-3">
+                  Custom Merchant QR Graphic
                 </p>
                 <div className="flex justify-center">
                   <img
                     src={resolveImageUrl(form.upiQrImage) ?? form.upiQrImage}
                     alt="Uploaded UPI QR"
-                    className="max-h-44 rounded-xl ring-1 ring-slate-200 shadow-sm object-contain"
+                    className="max-h-44 rounded-xl ring-1 ring-line shadow-sm object-contain"
                   />
                 </div>
               </div>
@@ -267,9 +267,9 @@ export default function SettingsPage() {
 
       {/* Receipt Customization */}
       <section className="card p-6 space-y-4 shadow-sm">
-        <div className="border-b border-slate-100 pb-3">
-          <h2 className="text-base font-bold text-slate-900 font-sans">Bill Receipt Customization</h2>
-          <p className="text-xs text-slate-500">Custom greetings and footer notes.</p>
+        <div className="border-b border-surface-sunken pb-3">
+          <h2 className="text-base font-bold text-ink font-sans">Bill Receipt Customization</h2>
+          <p className="text-xs text-muted">Custom greetings and footer notes.</p>
         </div>
 
         <Input

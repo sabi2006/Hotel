@@ -325,3 +325,59 @@ export function EditIcon({ size = 20, className = "", ...props }: IconProps) {
   );
 }
 
+
+export function AlertCircleIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" x2="12" y1="8" y2="12" />
+      <line x1="12" x2="12.01" y1="16" y2="16" />
+    </svg>
+  );
+}
+
+export function InfoIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </svg>
+  );
+}
+
+export function CheckCircleIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
+export function MenuIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <line x1="4" x2="20" y1="6" y2="6" />
+      <line x1="4" x2="20" y1="12" y2="12" />
+      <line x1="4" x2="20" y1="18" y2="18" />
+    </svg>
+  );
+}
+
+export function InboxIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+      <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+    </svg>
+  );
+}
+
+export function FlameIcon({ size = 20, className = "", ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} {...defaultProps} className={className} {...props}>
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+    </svg>
+  );
+}

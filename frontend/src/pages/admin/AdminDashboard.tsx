@@ -101,16 +101,16 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1F2220] font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Executive Dashboard
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-[#6F716D]">
-            Welcome, <span className="font-bold text-[#1F2220]">{user?.name}</span> · Live hospitality analytics &amp; revenue summary.
+          <p className="mt-0.5 text-xs font-medium text-muted">
+            Welcome, <span className="font-bold text-ink">{user?.name}</span> · Live hospitality analytics &amp; revenue summary.
           </p>
         </div>
         <Link
           to="/admin/reports"
-          className="flex items-center gap-1.5 text-xs font-bold text-brand-800 hover:text-brand-900 bg-[#FAF6EE] px-3.5 py-2 rounded-xl ring-1 ring-[#E8DCB8] transition shadow-2xs"
+          className="flex items-center gap-1.5 text-xs font-bold text-brand-800 hover:text-brand-900 bg-surface-soft px-3.5 py-2 rounded-xl ring-1 ring-warning-line transition shadow-2xs"
         >
           <BarChartIcon size={14} />
           <span>Full Analytics Reports →</span>
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
               label="Collected Revenue"
               value={formatCurrency(today.totalCollected)}
               tone="emerald"
-              icon={<CreditCardIcon size={20} className="text-[#276B49]" />}
+              icon={<CreditCardIcon size={20} className="text-success" />}
               hint={
                 today.pendingAmount > 0
                   ? `${formatCurrency(today.pendingAmount)} balance pending`
@@ -147,14 +147,14 @@ export default function AdminDashboard() {
               label="Average Order Value"
               value={formatCurrency(today.averageOrderValue)}
               tone="sky"
-              icon={<UtensilsIcon size={20} className="text-[#365D7B]" />}
+              icon={<UtensilsIcon size={20} className="text-info" />}
               hint={`${today.itemsSold} items sold today`}
             />
             <StatCard
               label="Staff Tips Collected"
               value={formatCurrency(today.totalTips)}
               tone="amber"
-              icon={<HandCoinsIcon size={20} className="text-[#9E6523]" />}
+              icon={<HandCoinsIcon size={20} className="text-warning" />}
               hint="Direct staff gratuity"
             />
           </div>
@@ -168,7 +168,7 @@ export default function AdminDashboard() {
               label="Table Occupancy"
               value={setup ? `${setup.tables - setup.freeTables} / ${setup.tables}` : "-"}
               tone="purple"
-              icon={<ArmchairIcon size={20} className="text-[#6B4F8C]" />}
+              icon={<ArmchairIcon size={20} className="text-purple" />}
               hint={setup ? `${setup.freeTables} tables free now` : ""}
             />
           </div>
@@ -180,10 +180,10 @@ export default function AdminDashboard() {
 
           {/* Setup Checklist */}
           {remaining.length > 0 && (
-            <section className="card p-6 space-y-4 shadow-sm select-none bg-white border border-[#EBE7DF]">
+            <section className="card p-6 space-y-4 shadow-sm select-none bg-white border border-line">
               <div>
-                <h2 className="text-base font-bold text-[#1F2220] font-sans">Restaurant Setup Guide</h2>
-                <p className="mt-0.5 text-xs text-[#6F716D]">
+                <h2 className="text-base font-bold text-ink font-sans">Restaurant Setup Guide</h2>
+                <p className="mt-0.5 text-xs text-muted">
                   Complete these initial setup steps before taking customer orders on the floor.
                 </p>
               </div>
@@ -193,19 +193,19 @@ export default function AdminDashboard() {
                     key={step.to}
                     className={`flex items-center justify-between p-3.5 rounded-xl ring-1 transition ${
                       step.done
-                        ? "bg-[#EBF5EE]/60 ring-[#BCE2CD]"
-                        : "bg-[#FAF8F5] ring-[#E8E3D8] hover:bg-white hover:ring-brand-400"
+                        ? "bg-success-soft/60 ring-success-line"
+                        : "bg-surface-soft ring-line hover:bg-white hover:ring-brand-400"
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <span
                         className={`flex size-6 items-center justify-center rounded-lg text-xs font-bold ${
-                          step.done ? "bg-[#276B49] text-white" : "bg-[#FAF8F5] text-[#5F615D] ring-1 ring-[#E8E3D8]"
+                          step.done ? "bg-success text-white" : "bg-surface-soft text-muted ring-1 ring-line"
                         }`}
                       >
                         {step.done ? "✓" : "•"}
                       </span>
-                      <span className={`text-xs font-bold ${step.done ? "text-[#8E908C] line-through" : "text-[#1F2220]"}`}>
+                      <span className={`text-xs font-bold ${step.done ? "text-subtle line-through" : "text-ink"}`}>
                         {step.label}
                       </span>
                     </div>

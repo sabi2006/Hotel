@@ -7,7 +7,7 @@
  */
 
 export function Skeleton({ className = "" }: { className?: string }) {
-  return <div aria-hidden className={`animate-pulse rounded-md bg-slate-200/80 ${className}`} />;
+  return <div aria-hidden className={`animate-pulse rounded-md bg-line/80 ${className}`} />;
 }
 
 export function SkeletonStatCards({ count = 4 }: { count?: number }) {
@@ -44,10 +44,10 @@ export function SkeletonTiles({ count = 8 }: { count?: number }) {
 export function SkeletonRows({ rows = 6, columns = 5 }: { rows?: number; columns?: number }) {
   return (
     <div className="card overflow-hidden">
-      <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
+      <div className="border-b border-line bg-surface-soft px-4 py-3">
         <Skeleton className="h-3 w-32" />
       </div>
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-surface-sunken">
         {Array.from({ length: rows }, (_, rowIndex) => (
           <div key={rowIndex} className="flex items-center gap-4 px-4 py-3.5">
             {Array.from({ length: columns }, (_, columnIndex) => (
@@ -87,7 +87,7 @@ export function SkeletonCards({ count = 6 }: { count?: number }) {
         <div key={index} className="card flex flex-col justify-between p-5 space-y-4">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
-              <Skeleton className="size-12 rounded-2xl" />
+              <Skeleton className="size-12 rounded-xl" />
               <div className="space-y-1.5">
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="h-3 w-16" />
@@ -95,12 +95,12 @@ export function SkeletonCards({ count = 6 }: { count?: number }) {
             </div>
             <Skeleton className="h-6 w-28 rounded-full" />
           </div>
-          <div className="space-y-2 rounded-xl bg-slate-50 p-3">
+          <div className="space-y-2 rounded-xl bg-surface-soft p-3">
             <Skeleton className="h-3 w-20" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-3/4" />
           </div>
-          <div className="flex items-center justify-between border-t border-slate-100 pt-3">
+          <div className="flex items-center justify-between border-t border-surface-sunken pt-3">
             <Skeleton className="h-8 w-24 rounded-xl" />
             <Skeleton className="h-8 w-32 rounded-xl" />
           </div>

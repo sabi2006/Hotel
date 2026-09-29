@@ -89,11 +89,11 @@ export default function WaiterDashboard() {
       {/* Header Bar */}
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#1F2220] font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Waiter Station
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-[#6F716D]">
-            Welcome back, <span className="font-bold text-[#1F2220]">{user?.name}</span> · Real-time service control center.
+          <p className="mt-0.5 text-xs font-medium text-muted">
+            Welcome back, <span className="font-bold text-ink">{user?.name}</span> · Real-time service control center.
           </p>
         </div>
         <div className="flex items-center gap-2.5">
@@ -118,7 +118,7 @@ export default function WaiterDashboard() {
               label="Free Tables"
               value={snapshot.freeTables}
               tone="emerald"
-              icon={<ArmchairIcon size={20} className="text-[#276B49]" />}
+              icon={<ArmchairIcon size={20} className="text-success" />}
               hint="Ready for seating"
             />
             <StatCard
@@ -132,21 +132,21 @@ export default function WaiterDashboard() {
               label="Food Ready"
               value={snapshot.readyOrders.length}
               tone="amber"
-              icon={<ChefHatIcon size={20} className="text-[#9E6523]" />}
+              icon={<ChefHatIcon size={20} className="text-warning" />}
               hint={snapshot.readyOrders.length > 0 ? "Ready in Order Ready section" : "Kitchen preparing"}
             />
             <StatCard
               label="My Shift Sales"
               value={formatCurrency(snapshot.todaySales)}
               tone="sky"
-              icon={<HandCoinsIcon size={20} className="text-[#365D7B]" />}
+              icon={<HandCoinsIcon size={20} className="text-info" />}
               hint={`${snapshot.todayOrders} total orders today`}
             />
           </div>
 
           {/* Quick Hub Navigation Cards */}
           <section className="space-y-3 pt-2">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[#8E908C]">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-subtle">
               Quick Navigation &amp; Operations
             </h2>
 
@@ -154,87 +154,87 @@ export default function WaiterDashboard() {
               {/* Take Order Card */}
               <Link
                 to="/waiter/tables"
-                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-md transition select-none bg-white border-[#EBE7DF]"
+                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-sm transition select-none bg-white border-line"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-[#F0F7F3] text-[#276B49] ring-1 ring-[#CFE7D9]">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-success-soft text-success ring-1 ring-success-line">
                       <UtensilsIcon size={20} />
                     </div>
-                    <span className="text-xs font-bold text-[#8E908C] group-hover:text-brand-700 transition">
+                    <span className="text-xs font-bold text-subtle group-hover:text-brand-700 transition">
                       Start →
                     </span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-[#1F2220] font-sans">
+                  <h3 className="mt-3.5 text-base font-bold text-ink font-sans">
                     Take Order
                   </h3>
-                  <p className="mt-1 text-xs text-[#6F716D] leading-relaxed">
+                  <p className="mt-1 text-xs text-muted leading-relaxed">
                     Select a table and take customer food orders.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-[#F0EBE1] flex items-center justify-between text-xs font-semibold text-[#5F615D]">
+                <div className="mt-4 pt-3 border-t border-surface-sunken flex items-center justify-between text-xs font-semibold text-muted">
                   <span>Available</span>
-                  <span className="font-bold text-[#276B49]">{snapshot.freeTables} Tables</span>
+                  <span className="font-bold text-success">{snapshot.freeTables} Tables</span>
                 </div>
               </Link>
 
               {/* Orders Directory Card */}
               <Link
                 to="/waiter/orders"
-                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-md transition select-none bg-white border-[#EBE7DF]"
+                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-sm transition select-none bg-white border-line"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-[#F0F5F9] text-[#365D7B] ring-1 ring-[#CFE0ED]">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-info-soft text-info ring-1 ring-info-line">
                       <ReceiptIcon size={20} />
                     </div>
-                    <span className="text-xs font-bold text-[#8E908C] group-hover:text-brand-700 transition">
+                    <span className="text-xs font-bold text-subtle group-hover:text-brand-700 transition">
                       Manage →
                     </span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-[#1F2220] font-sans">
+                  <h3 className="mt-3.5 text-base font-bold text-ink font-sans">
                     All Orders
                   </h3>
-                  <p className="mt-1 text-xs text-[#6F716D] leading-relaxed">
+                  <p className="mt-1 text-xs text-muted leading-relaxed">
                     Track in-flight order tickets &amp; items.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-[#F0EBE1] flex items-center justify-between text-xs font-semibold text-[#5F615D]">
+                <div className="mt-4 pt-3 border-t border-surface-sunken flex items-center justify-between text-xs font-semibold text-muted">
                   <span>Running</span>
-                  <span className="font-bold text-[#365D7B]">{snapshot.openOrders.length} Tickets</span>
+                  <span className="font-bold text-info">{snapshot.openOrders.length} Tickets</span>
                 </div>
               </Link>
 
               {/* Order Ready Card */}
               <Link
                 to="/waiter/order-ready"
-                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-md transition select-none bg-white border-[#EBE7DF]"
+                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-sm transition select-none bg-white border-line"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-[#FEF7EE] text-[#9E6523] ring-1 ring-[#FADFB8]">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-warning-soft text-warning ring-1 ring-warning-line">
                       <BellIcon size={20} />
                     </div>
                     {snapshot.readyOrders.length > 0 ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#276B49] px-2.5 py-0.5 text-[11px] font-extrabold text-white shadow-xs animate-pulse">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-success px-2.5 py-0.5 text-[11px] font-extrabold text-white shadow-xs">
                         {snapshot.readyOrders.length} Ready
                       </span>
                     ) : (
-                      <span className="text-xs font-bold text-[#8E908C] group-hover:text-brand-700 transition">
+                      <span className="text-xs font-bold text-subtle group-hover:text-brand-700 transition">
                         Open →
                       </span>
                     )}
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-[#1F2220] font-sans">
+                  <h3 className="mt-3.5 text-base font-bold text-ink font-sans">
                     Order Ready
                   </h3>
-                  <p className="mt-1 text-xs text-[#6F716D] leading-relaxed">
+                  <p className="mt-1 text-xs text-muted leading-relaxed">
                     Deliver kitchen-prepared food to tables.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-[#F0EBE1] flex items-center justify-between text-xs font-semibold text-[#5F615D]">
+                <div className="mt-4 pt-3 border-t border-surface-sunken flex items-center justify-between text-xs font-semibold text-muted">
                   <span>Ready Food</span>
-                  <span className={`font-bold ${snapshot.readyOrders.length > 0 ? "text-[#276B49]" : "text-[#8E908C]"}`}>
+                  <span className={`font-bold ${snapshot.readyOrders.length > 0 ? "text-success" : "text-subtle"}`}>
                     {snapshot.readyOrders.length > 0 ? `${snapshot.readyOrders.length} to Serve` : "None"}
                   </span>
                 </div>
@@ -243,25 +243,25 @@ export default function WaiterDashboard() {
               {/* Close Order Card */}
               <Link
                 to="/waiter/close-order"
-                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-md transition select-none bg-white border-[#EBE7DF]"
+                className="card group flex flex-col justify-between p-5 hover:border-brand-400 hover:shadow-sm transition select-none bg-white border-line"
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-[#FAF6EE] text-brand-800 ring-1 ring-[#E8DCB8]">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-surface-soft text-brand-800 ring-1 ring-warning-line">
                       <CreditCardIcon size={20} />
                     </div>
-                    <span className="text-xs font-bold text-[#8E908C] group-hover:text-brand-700 transition">
+                    <span className="text-xs font-bold text-subtle group-hover:text-brand-700 transition">
                       Open →
                     </span>
                   </div>
-                  <h3 className="mt-3.5 text-base font-bold text-[#1F2220] font-sans">
+                  <h3 className="mt-3.5 text-base font-bold text-ink font-sans">
                     Close Order
                   </h3>
-                  <p className="mt-1 text-xs text-[#6F716D] leading-relaxed">
+                  <p className="mt-1 text-xs text-muted leading-relaxed">
                     Collect payments, tips &amp; free tables.
                   </p>
                 </div>
-                <div className="mt-4 pt-3 border-t border-[#F0EBE1] flex items-center justify-between text-xs font-semibold text-[#5F615D]">
+                <div className="mt-4 pt-3 border-t border-surface-sunken flex items-center justify-between text-xs font-semibold text-muted">
                   <span>Settlement</span>
                   <span className="font-bold text-brand-700">Pay &amp; Close</span>
                 </div>

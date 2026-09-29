@@ -5,10 +5,11 @@ import { Alert } from "@/components/Alert";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { FoodTypeDot } from "@/components/FoodTypeDot";
-import { ChefHatIcon, RefreshCwIcon, Volume2Icon, VolumeXIcon } from "@/components/Icons";
+import { BellIcon, CheckCircleIcon, ChefHatIcon, FlameIcon, InboxIcon, RefreshCwIcon, Volume2Icon, VolumeXIcon } from "@/components/Icons";
 import { Select } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { Spinner } from "@/components/Spinner";
+import { usePolling } from "@/hooks/usePolling";
 import { useRealtime } from "@/hooks/useRealtime";
 import { useRipple } from "@/hooks/useRipple";
 import { useToast } from "@/hooks/useToast";
@@ -23,18 +24,18 @@ import { soundManager } from "@/utils/sound";
 const EMPTY_BOARD: KitchenBoard = { new: [], preparing: [], ready: [], completed: [] };
 
 const COLUMNS = [
-  { key: "new" as const, title: "New Orders", badgeBg: "bg-[#4A6B82]", accent: "border-t-[#4A6B82]", icon: "📥" },
-  { key: "preparing" as const, title: "In Preparation", badgeBg: "bg-[#C58A3A]", accent: "border-t-[#C58A3A]", icon: "🍳" },
-  { key: "ready" as const, title: "Ready for Pickup", badgeBg: "bg-[#276B49]", accent: "border-t-[#276B49]", icon: "🔔" },
-  { key: "completed" as const, title: "Served & Done", badgeBg: "bg-[#8E908C]", accent: "border-t-[#8E908C]", icon: "✅" },
+  { key: "new" as const, title: "New Orders", badgeBg: "bg-info", accent: "border-t-info", icon: <InboxIcon size={16} /> },
+  { key: "preparing" as const, title: "In Preparation", badgeBg: "bg-warning", accent: "border-t-warning", icon: <FlameIcon size={16} /> },
+  { key: "ready" as const, title: "Ready for Pickup", badgeBg: "bg-success", accent: "border-t-success", icon: <BellIcon size={16} /> },
+  { key: "completed" as const, title: "Served & Done", badgeBg: "bg-subtle", accent: "border-t-subtle", icon: <CheckCircleIcon size={16} /> },
 ];
 
 const ITEM_STATUS_CLASSES: Record<string, string> = {
-  PENDING: "bg-[#FAF8F5] text-[#5F615D] ring-1 ring-[#E8E3D8]",
-  PREPARING: "bg-[#FEF7EE] text-[#9E6523] ring-1 ring-[#FADFB8]",
-  READY: "bg-[#EBF5EE] text-[#276B49] ring-1 ring-[#BCE2CD] font-bold",
-  SERVED: "bg-[#FAF6EE] text-[#805C2B] ring-1 ring-[#E8DCB8]",
-  CANCELLED: "bg-[#FDF2F1] text-[#C24138] line-through ring-1 ring-[#F7C6C3]",
+  PENDING: "bg-surface-soft text-muted ring-1 ring-line",
+  PREPARING: "bg-warning-soft text-warning ring-1 ring-warning-line",
+  READY: "bg-success-soft text-success ring-1 ring-success-line font-bold",
+  SERVED: "bg-surface-soft text-brand-700 ring-1 ring-warning-line",
+  CANCELLED: "bg-danger-soft text-danger line-through ring-1 ring-danger-line",
 };
 
 /** How long the ticket has been with the kitchen. */
@@ -92,7 +93,7 @@ export default function KitchenDashboard() {
           void soundManager.playNewOrderChime(first._id);
           toast.push({
             tone: "info",
-            title: `🔔 New Order · Table ${first.tableNumber}`,
+            title: `New Order · Table ${first.tableNumber}`,
             description: `Order #${first.orderNumber || first.invoiceNumber || ""} from ${first.waiterName || "Waiter"} (${first.items?.length || 0} items)`,
             duration: 7000,
           });
@@ -112,13 +113,11 @@ export default function KitchenDashboard() {
     void load();
     soundManager.unlockAudio();
     setIsLive(true);
-
-    const pollInterval = setInterval(() => {
-      void load();
-    }, 2500);
-
-    return () => clearInterval(pollInterval);
   }, [load]);
+
+  // Safety-net poll for hosts where the WebSocket cannot stay open. It pauses
+  // while the tab is hidden and refreshes as soon as the screen is back.
+  usePolling(() => void load(), 4000);
 
   useEffect(() => {
     const timer = setInterval(() => setTick((value) => value + 1), 60_000);
@@ -141,7 +140,7 @@ export default function KitchenDashboard() {
       // Show toast
       toast.push({
         tone: "info",
-        title: `🔔 New Order · Table ${payload.tableNumber}`,
+        title: `New Order · Table ${payload.tableNumber}`,
         description: `Order #${payload.orderNumber || payload.invoiceNumber || ""} from ${payload.waiterName || "Waiter"} (${payload.itemCount || 0} items)`,
         duration: 7000,
       });
@@ -189,15 +188,15 @@ export default function KitchenDashboard() {
   return (
     <div className="space-y-5 select-none">
       {/* Header */}
-      <header className="card flex flex-wrap items-center justify-between gap-4 p-4 sm:p-5 shadow-xs bg-white border border-[#EBE7DF]">
+      <header className="card flex flex-wrap items-center justify-between gap-4 p-4 sm:p-5 shadow-xs bg-white border border-line">
         <div>
           <div className="flex items-center gap-2">
             <ChefHatIcon size={24} className="text-brand-700" />
-            <h1 className="text-2xl font-extrabold tracking-tight text-[#1F2220] font-sans">
+            <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
               Kitchen Display System (KDS)
             </h1>
           </div>
-          <p className="mt-0.5 text-xs font-medium text-[#6F716D]">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Real-time ticket arrival · Touch-friendly action cards
           </p>
         </div>
@@ -210,8 +209,8 @@ export default function KitchenDashboard() {
             className={[
               "pressable flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition ring-1",
               isSoundEnabled
-                ? "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD] hover:bg-[#D4EBDC]"
-                : "bg-[#FAF8F5] text-[#8E908C] ring-[#E8E3D8] hover:bg-[#F3ECE0]",
+                ? "bg-success-soft text-success ring-success-line hover:bg-success-line"
+                : "bg-surface-soft text-subtle ring-line hover:bg-brand-100",
             ].join(" ")}
           >
             {isSoundEnabled ? <Volume2Icon size={16} /> : <VolumeXIcon size={16} />}
@@ -222,19 +221,19 @@ export default function KitchenDashboard() {
             type="button"
             onClick={() => soundManager.testKitchenSound()}
             title="Test notification sound chime"
-            className="pressable rounded-xl bg-[#FEF7EE] px-3.5 py-2 text-xs font-bold text-[#9E6523] ring-1 ring-[#FADFB8] hover:bg-[#FDEED9] transition"
+            className="pressable rounded-xl bg-warning-soft px-3.5 py-2 text-xs font-bold text-warning ring-1 ring-warning-line hover:bg-warning-soft transition"
           >
-            🔔 Test Chime
+            Test Chime
           </button>
 
           <span
             className={[
               "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ring-1",
-              isLive ? "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD]" : "bg-[#FAF8F5] text-[#5F615D] ring-[#E8E3D8]",
+              isLive ? "bg-success-soft text-success ring-success-line" : "bg-surface-soft text-muted ring-line",
             ].join(" ")}
           >
             <span
-              className={`size-2 rounded-full ${isLive ? "animate-pulse bg-[#276B49]" : "bg-[#8E908C]"}`}
+              className={`size-2 rounded-full ${isLive ? " bg-success" : "bg-subtle"}`}
             />
             {isLive ? "Live Kitchen" : "Connecting"}
           </span>
@@ -256,8 +255,8 @@ export default function KitchenDashboard() {
           className={[
             "pressable flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition",
             activeColumnFilter === "ALL"
-              ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-              : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+              ? "bg-ink text-white shadow-sm"
+              : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
           ].join(" ")}
         >
           <span>All Stages</span>
@@ -276,11 +275,11 @@ export default function KitchenDashboard() {
               className={[
                 "pressable flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition",
                 activeColumnFilter === column.key
-                  ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-                  : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                  ? "bg-ink text-white shadow-sm"
+                  : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
               ].join(" ")}
             >
-              <span>{column.icon} {column.title}</span>
+              <span className="flex items-center gap-1.5">{column.icon} {column.title}</span>
               <span className={`rounded-full px-1.5 py-0.2 text-[10px] font-extrabold text-white ${column.badgeBg}`}>
                 {count}
               </span>
@@ -300,12 +299,12 @@ export default function KitchenDashboard() {
             return (
               <section
                 key={column.key}
-                className={`card flex flex-col border-t-4 p-4 shadow-sm min-h-[400px] lg:min-h-[calc(100dvh-240px)] lg:max-h-[calc(100dvh-240px)] bg-white border border-[#EBE7DF] ${column.accent}`}
+                className={`card flex flex-col border-t-4 p-4 shadow-sm min-h-[400px] lg:min-h-[calc(100dvh-240px)] lg:max-h-[calc(100dvh-240px)] bg-white border border-line ${column.accent}`}
               >
-                <div className="mb-4 flex items-center justify-between border-b border-[#F0EBE1] pb-2.5">
+                <div className="mb-4 flex items-center justify-between border-b border-surface-sunken pb-2.5">
                   <div className="flex items-center gap-2">
                     <span>{column.icon}</span>
-                    <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#424541] font-sans">
+                    <h2 className="text-sm font-extrabold uppercase tracking-wider text-ink-soft font-sans">
                       {column.title}
                     </h2>
                   </div>
@@ -383,7 +382,7 @@ export default function KitchenDashboard() {
         }
       >
         <div className="space-y-4">
-          <p className="text-xs text-[#5F615D] leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Cancel <strong>{cancelTarget?.item.name}</strong> from Table{" "}
             {cancelTarget?.order.tableNumber}? The bill will be adjusted automatically.
           </p>
@@ -433,46 +432,46 @@ function Ticket({
     <article
       style={{ "--stagger-index": index } as CSSProperties}
       className={[
-        "rounded-2xl p-4 ring-1 transition-all duration-200 select-none",
+        "rounded-xl p-4 ring-1 transition-all duration-200 select-none",
         isFlashing
-          ? "animate-attention bg-[#FEF7EE] ring-2 ring-[#C58A3A] shadow-lg"
-          : "bg-[#FAF8F5] ring-[#E8E3D8] shadow-2xs hover:bg-white hover:shadow-md",
+          ? " bg-warning-soft ring-2 ring-warning shadow-lg"
+          : "bg-surface-soft ring-line shadow-2xs hover:bg-white hover:shadow-sm",
       ].join(" ")}
     >
-      <header className="flex items-start justify-between gap-2 border-b border-[#E8E3D8] pb-2.5">
+      <header className="flex items-start justify-between gap-2 border-b border-line pb-2.5">
         <div>
           <div className="flex items-center gap-2">
-            <span className="flex size-7 items-center justify-center rounded-lg bg-[#202322] text-white font-extrabold text-xs">
+            <span className="flex size-7 items-center justify-center rounded-lg bg-ink text-white font-extrabold text-xs">
               T{order.tableNumber}
             </span>
-            <p className="text-base font-extrabold text-[#1F2220] font-sans">
+            <p className="text-base font-extrabold text-ink font-sans">
               Table {order.tableNumber}
             </p>
           </div>
-          <p className="text-xs text-[#8E908C] font-medium mt-1">
-            #{order.orderNumber || ""} · Waiter: <span className="font-bold text-[#1F2220]">{order.waiterName}</span>
+          <p className="text-xs text-subtle font-medium mt-1">
+            #{order.orderNumber || ""} · Waiter: <span className="font-bold text-ink">{order.waiterName}</span>
           </p>
         </div>
-        <span className="shrink-0 text-[11px] font-bold text-[#5F615D] bg-white px-2 py-0.5 rounded-md ring-1 ring-[#E8E3D8]">
+        <span className="shrink-0 text-[11px] font-bold text-muted bg-white px-2 py-0.5 rounded-md ring-1 ring-line">
           {elapsedSince(order.sentToKitchenAt)}
         </span>
       </header>
 
       <ul className="mt-3 space-y-2">
         {sentItems.map((item) => (
-          <li key={item.itemId} className="flex items-start gap-2 bg-white p-2.5 rounded-xl ring-1 ring-[#E8E3D8] shadow-2xs">
+          <li key={item.itemId} className="flex items-start gap-2 bg-white p-2.5 rounded-xl ring-1 ring-line shadow-2xs">
             <FoodTypeDot foodType={item.foodType} />
             <div className="min-w-0 flex-1">
               <p
                 className={`text-xs font-bold leading-tight ${
                   item.kitchenStatus === "CANCELLED"
-                    ? "text-[#8E908C] line-through"
-                    : "text-[#1F2220]"
+                    ? "text-subtle line-through"
+                    : "text-ink"
                 }`}
               >
                 {item.name} <span className="text-brand-700 font-extrabold">× {item.quantity}</span>
               </p>
-              {item.notes && <p className="text-[11px] italic text-[#9E6523] font-medium mt-0.5">Note: {item.notes}</p>}
+              {item.notes && <p className="text-[11px] italic text-warning font-medium mt-0.5">Note: {item.notes}</p>}
               <span
                 className={`mt-1 inline-flex rounded-full px-2 py-0.2 text-[10px] font-bold ${
                   ITEM_STATUS_CLASSES[item.kitchenStatus]
@@ -489,7 +488,7 @@ function Ticket({
                 onClick={() => onItemReady(item)}
                 disabled={isBusy}
                 title="Mark just this item ready"
-                className="ripple-host pressable shrink-0 rounded-lg bg-[#EBF5EE] px-2.5 py-1 text-xs font-bold text-[#276B49] hover:bg-[#D4EBDC] disabled:opacity-50 ring-1 ring-[#BCE2CD]"
+                className="ripple-host pressable shrink-0 rounded-lg bg-success-soft px-2.5 py-1 text-xs font-bold text-success hover:bg-success-line disabled:opacity-50 ring-1 ring-success-line"
               >
                 Ready
               </button>
@@ -500,7 +499,7 @@ function Ticket({
                 onClick={() => onCancelItem(item)}
                 disabled={isBusy}
                 title="Cannot cook this item"
-                className="pressable shrink-0 rounded-lg px-2 py-1 text-xs font-bold text-[#C24138] hover:bg-red-50 disabled:opacity-50"
+                className="pressable shrink-0 rounded-lg px-2 py-1 text-xs font-bold text-danger hover:bg-danger-soft disabled:opacity-50"
               >
                 ✕
               </button>
@@ -527,8 +526,8 @@ function Ticket({
         </Button>
       )}
       {column === "ready" && (
-        <div className="mt-3.5 rounded-xl bg-[#EBF5EE] py-2.5 text-center text-xs font-bold text-[#276B49] ring-1 ring-[#BCE2CD]">
-          🔔 Assigned Waiter Notified
+        <div className="mt-3.5 rounded-xl bg-success-soft py-2.5 text-center text-xs font-bold text-success ring-1 ring-success-line">
+          Assigned Waiter Notified
         </div>
       )}
     </article>

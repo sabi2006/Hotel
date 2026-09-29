@@ -44,7 +44,7 @@ const EMPTY_EDIT_FORM: EditFormState = {
 const ROLE_BADGE_STYLES: Record<string, string> = {
   ADMIN: "bg-purple-50 text-purple-700 ring-purple-200",
   WAITER: "bg-brand-50 text-brand-700 ring-brand-200",
-  KITCHEN: "bg-amber-50 text-amber-700 ring-amber-200",
+  KITCHEN: "bg-warning-soft text-warning ring-warning-line",
 };
 
 export default function StaffPage() {
@@ -181,10 +181,10 @@ export default function StaffPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Staff Directory
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-slate-500">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Manage waiter floor accounts, kitchen display terminals, and administrators.
           </p>
         </div>
@@ -201,11 +201,11 @@ export default function StaffPage() {
       {isFormOpen && (
         <form
           onSubmit={handleCreate}
-          className="card p-6 space-y-4 shadow-md bg-white border border-brand-200"
+          className="card p-6 space-y-4 shadow-sm bg-white border border-brand-200"
         >
-          <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-base font-bold text-slate-900 font-sans">Create Staff Account</h2>
-            <p className="text-xs text-slate-500 font-medium">Add credentials for a waiter, chef, or administrator.</p>
+          <div className="border-b border-surface-sunken pb-3">
+            <h2 className="text-base font-bold text-ink font-sans">Create Staff Account</h2>
+            <p className="text-xs text-muted font-medium">Add credentials for a waiter, chef, or administrator.</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -298,10 +298,10 @@ export default function StaffPage() {
           icon={<UsersIcon size={28} />}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Staff Member</th>
                   <th className="px-5 py-3.5">Assigned Role</th>
@@ -311,52 +311,52 @@ export default function StaffPage() {
                   <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {users.map((staff) => (
-                  <tr key={staff._id} className="hover:bg-[#FAF8F5] transition-colors">
+                  <tr key={staff._id} className="hover:bg-surface-soft transition-colors">
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-3">
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[#FAF8F5] font-bold text-[#1F2220] ring-1 ring-[#E8E3D8]">
+                        <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-surface-soft font-bold text-ink ring-1 ring-line">
                           {initialsOf(staff.name)}
                         </span>
                         <div>
-                          <p className="font-bold text-[#1F2220]">{staff.name}</p>
-                          <p className="text-xs text-[#6F716D] font-normal">{staff.email}</p>
+                          <p className="font-bold text-ink">{staff.name}</p>
+                          <p className="text-xs text-muted font-normal">{staff.email}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3.5">
                       <span
                         className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-bold ring-1 ${
-                          ROLE_BADGE_STYLES[staff.role] ?? "bg-slate-100 text-slate-700 ring-slate-200"
+                          ROLE_BADGE_STYLES[staff.role] ?? "bg-surface-sunken text-ink-soft ring-line"
                         }`}
                       >
                         {humanizeEnum(staff.role)}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 font-medium text-slate-600">
-                      {staff.phone ? <span>{staff.phone}</span> : <span className="text-slate-400">—</span>}
+                    <td className="px-5 py-3.5 font-medium text-muted">
+                      {staff.phone ? <span>{staff.phone}</span> : <span className="text-subtle">—</span>}
                     </td>
                     <td className="px-5 py-3.5">
                       <span
                         className={[
                           "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1",
                           staff.isActive
-                            ? "bg-emerald-50 text-emerald-700 ring-emerald-200"
-                            : "bg-slate-100 text-slate-500 ring-slate-200",
+                            ? "bg-success-soft text-success ring-success-line"
+                            : "bg-surface-sunken text-muted ring-line",
                         ].join(" ")}
                       >
-                        <span className={`size-1.5 rounded-full ${staff.isActive ? "bg-emerald-500" : "bg-slate-400"}`} />
+                        <span className={`size-1.5 rounded-full ${staff.isActive ? "bg-success" : "bg-subtle"}`} />
                         {staff.isActive ? "Active" : "Disabled"}
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-slate-500 font-medium">{formatDateTime(staff.createdAt)}</td>
+                    <td className="px-5 py-3.5 text-muted font-medium">{formatDateTime(staff.createdAt)}</td>
                     <td className="px-5 py-3.5 text-right">
                       <div className="flex justify-end items-center gap-1.5">
                         <Button
                           size="xs"
                           variant="secondary"
-                          className="gap-1 bg-amber-50 text-amber-800 ring-1 ring-amber-200 hover:bg-amber-100 font-semibold"
+                          className="gap-1 bg-warning-soft text-warning-strong ring-1 ring-warning-line hover:bg-warning-line font-semibold"
                           onClick={() => openEditModal(staff)}
                         >
                           <EditIcon size={12} />

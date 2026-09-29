@@ -60,10 +60,10 @@ export default function WaiterOrdersPage() {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-extrabold tracking-tight text-[#1F2220] font-sans">
+        <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
           All Orders Directory
         </h1>
-        <p className="mt-0.5 text-xs font-medium text-[#6F716D]">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Real-time order logs, table allocations, and billing status.
         </p>
       </header>
@@ -71,7 +71,7 @@ export default function WaiterOrdersPage() {
       {error && <Alert tone="error">{error}</Alert>}
 
       {/* Filter controls */}
-      <div className="card p-4 flex flex-wrap gap-4 items-end shadow-2xs bg-white border border-[#EBE7DF]">
+      <div className="card p-4 flex flex-wrap gap-4 items-end shadow-2xs bg-white border border-line">
         <div className="min-w-64 flex-1">
           <Input
             label="Search Orders"
@@ -105,10 +105,10 @@ export default function WaiterOrdersPage() {
           icon={<ReceiptIcon size={28} />}
         />
       ) : (
-        <div className="card overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card overflow-hidden shadow-xs bg-white border border-line">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[#F0EBE1] text-xs sm:text-sm select-none">
-              <thead className="bg-[#FAF8F5] text-left text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+            <table className="min-w-full divide-y divide-surface-sunken text-xs sm:text-sm select-none">
+              <thead className="bg-surface-soft text-left text-[11px] font-bold uppercase tracking-wider text-subtle">
                 <tr>
                   <th className="px-5 py-3.5">Invoice &amp; Customer</th>
                   <th className="px-5 py-3.5">Table</th>
@@ -118,28 +118,28 @@ export default function WaiterOrdersPage() {
                   <th className="px-5 py-3.5">Created Time</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#F0EBE1] bg-white">
+              <tbody className="divide-y divide-surface-sunken bg-white">
                 {visible.map((order) => (
                   <tr
                     key={order._id}
                     onClick={() => navigate(`/waiter/order/${order._id}`)}
-                    className="cursor-pointer hover:bg-[#FAF8F5] transition-colors"
+                    className="cursor-pointer hover:bg-surface-soft transition-colors"
                   >
                     <td className="px-5 py-3.5">
-                      <div className="font-bold text-[#1F2220]">{order.invoiceNumber}</div>
+                      <div className="font-bold text-ink">{order.invoiceNumber}</div>
                       {order.customer.name && (
-                        <div className="text-xs text-[#6F716D] font-medium">{order.customer.name}</div>
+                        <div className="text-xs text-muted font-medium">{order.customer.name}</div>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 font-bold text-[#424541]">Table {order.tableNumber}</td>
-                    <td className="px-5 py-3.5 text-[#5F615D] font-medium">{order.items.length} items</td>
+                    <td className="px-5 py-3.5 font-bold text-ink-soft">Table {order.tableNumber}</td>
+                    <td className="px-5 py-3.5 text-muted font-medium">{order.items.length} items</td>
                     <td className="px-5 py-3.5">
                       <OrderStatusBadge status={order.orderStatus} />
                     </td>
-                    <td className="px-5 py-3.5 text-right font-extrabold text-[#1F2220] tabular-nums">
+                    <td className="px-5 py-3.5 text-right font-extrabold text-ink tabular-nums">
                       {formatCurrency(order.grandTotal)}
                     </td>
-                    <td className="px-5 py-3.5 text-[#8E908C] font-medium">{formatDateTime(order.createdAt)}</td>
+                    <td className="px-5 py-3.5 text-subtle font-medium">{formatDateTime(order.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>

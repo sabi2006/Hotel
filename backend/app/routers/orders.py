@@ -4,6 +4,8 @@ Table lifecycle enforced here: FREE -> OCCUPIED when an order opens, and back to
 FREE when it is cancelled or closed. A table never holds two active orders.
 """
 
+import asyncio
+
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Query, status
 
@@ -151,11 +153,15 @@ async def list_orders(
         query["waiterId"] = to_object_id(waiterId, "Waiter not found")
 
     db = get_database()
-    total = await db.orders.count_documents(query)
-    cursor = (
-        db.orders.find(query).sort("createdAt", -1).skip((page - 1) * pageSize).limit(pageSize)
-    )
-    items = [OrderPublic.model_validate(document) async for document in cursor]
+
+    async def fetch_items() -> list[OrderPublic]:
+        cursor = (
+            db.orders.find(query).sort("createdAt", -1).skip((page - 1) * pageSize).limit(pageSize)
+        )
+        return [OrderPublic.model_validate(document) async for document in cursor]
+
+    # Count and page are independent reads; run them together to halve latency.
+    total, items = await asyncio.gather(db.orders.count_documents(query), fetch_items())
     return Page[OrderPublic](items=items, total=total, page=page, pageSize=pageSize)
 
 

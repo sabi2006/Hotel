@@ -112,10 +112,10 @@ export default function TablesPage() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             Dining Tables
           </h1>
-          <p className="mt-0.5 text-xs font-medium text-slate-500">
+          <p className="mt-0.5 text-xs font-medium text-muted">
             Configure floor capacity, table numbering, and service status.
           </p>
         </div>
@@ -132,21 +132,21 @@ export default function TablesPage() {
         <StatCard
           label="Total Tables"
           value={tables.length}
-          icon={<ArmchairIcon size={20} className="text-slate-600" />}
+          icon={<ArmchairIcon size={20} className="text-muted" />}
           hint="Dining room configuration"
         />
         <StatCard
           label="Free & Ready"
           value={freeCount}
           tone="emerald"
-          icon={<ArmchairIcon size={20} className="text-emerald-600" />}
+          icon={<ArmchairIcon size={20} className="text-success" />}
           hint="Available for guests"
         />
         <StatCard
           label="Occupied Tables"
           value={occupiedCount}
           tone="amber"
-          icon={<ArmchairIcon size={20} className="text-amber-600" />}
+          icon={<ArmchairIcon size={20} className="text-warning" />}
           hint="Active party seated"
         />
       </div>
@@ -168,21 +168,21 @@ export default function TablesPage() {
               <div
                 key={table._id}
                 className={[
-                  "card-interactive flex flex-col justify-between p-4.5 ring-1 relative overflow-hidden bg-white border border-[#EBE7DF]",
+                  "card-interactive flex flex-col justify-between p-4.5 ring-1 relative overflow-hidden bg-white border border-line",
                   !table.isActive
-                    ? "bg-[#FAF8F5] ring-[#E8E3D8] opacity-60"
+                    ? "bg-surface-soft ring-line opacity-60"
                     : isOccupied
-                      ? "bg-gradient-to-br from-[#FEF7EE]/60 to-white ring-[#FADFB8]"
-                      : "bg-white ring-[#E8E3D8] hover:ring-brand-400",
+                      ? "bg-warning-soft ring-warning-line"
+                      : "bg-white ring-line hover:ring-brand-400",
                 ].join(" ")}
               >
                 <div>
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8E908C]">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-subtle">
                         Table
                       </span>
-                      <p className="text-2xl font-extrabold text-[#1F2220] font-sans leading-none mt-0.5">
+                      <p className="text-2xl font-extrabold text-ink font-sans leading-none mt-0.5">
                         {table.tableNumber}
                       </p>
                     </div>
@@ -191,24 +191,24 @@ export default function TablesPage() {
                       className={[
                         "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold ring-1",
                         isOccupied
-                          ? "bg-[#FEF7EE] text-[#9E6523] ring-[#FADFB8]"
-                          : "bg-[#EBF5EE] text-[#276B49] ring-[#BCE2CD]",
+                          ? "bg-warning-soft text-warning ring-warning-line"
+                          : "bg-success-soft text-success ring-success-line",
                       ].join(" ")}
                     >
-                      <span className={`size-1.5 rounded-full ${isOccupied ? "bg-[#9E6523]" : "bg-[#276B49]"}`} />
+                      <span className={`size-1.5 rounded-full ${isOccupied ? "bg-warning" : "bg-success"}`} />
                       {table.status}
                     </span>
                   </div>
 
-                  <p className="mt-2 text-xs font-semibold text-[#6F716D]">
-                    Capacity: <span className="text-[#1F2220] font-bold">{table.capacity} Guests</span>
+                  <p className="mt-2 text-xs font-semibold text-muted">
+                    Capacity: <span className="text-ink font-bold">{table.capacity} Guests</span>
                   </p>
                   {!table.isActive && (
-                    <p className="mt-1 text-[11px] font-bold text-[#C24138]">Out of Service</p>
+                    <p className="mt-1 text-[11px] font-bold text-danger">Out of Service</p>
                   )}
                 </div>
 
-                <div className="mt-5 flex gap-2 pt-3 border-t border-[#F0EBE1]">
+                <div className="mt-5 flex gap-2 pt-3 border-t border-surface-sunken">
                   <Button
                     size="xs"
                     variant="secondary"
@@ -271,12 +271,12 @@ export default function TablesPage() {
             placeholder="4"
             hint="Number of guest seats"
           />
-          <label className="flex items-center gap-3 text-xs font-bold text-slate-700 select-none cursor-pointer pt-1">
+          <label className="flex items-center gap-3 text-xs font-bold text-ink-soft select-none cursor-pointer pt-1">
             <input
               type="checkbox"
               checked={form.isActive ?? true}
               onChange={(e) => setForm({ ...form, isActive: e.target.checked })}
-              className="size-4 rounded-md border-slate-300 text-brand-600 focus:ring-brand-600"
+              className="size-4 rounded-md border-line-strong text-brand-600 focus:ring-brand-600"
             />
             <span>Active in Service for Seating</span>
           </label>

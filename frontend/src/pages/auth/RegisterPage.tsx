@@ -64,8 +64,8 @@ export default function RegisterPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       <div>
-        <h2 className="text-xl font-bold text-slate-900">Create staff account</h2>
-        <p className="mt-1 text-sm text-slate-500">
+        <h2 className="text-xl font-bold text-ink">Create staff account</h2>
+        <p className="mt-1 text-sm text-muted">
           Waiter and kitchen accounts only. Admins are created from the admin panel.
         </p>
       </div>
@@ -125,7 +125,7 @@ export default function RegisterPage() {
         Create account
       </Button>
 
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-muted">
         Already have an account?{" "}
         <Link to="/login" className="font-semibold text-brand-600 hover:text-brand-700">
           Sign in

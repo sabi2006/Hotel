@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { NotificationContext } from "@/context/notification-context";
 import { useAuth } from "@/hooks/useAuth";
+import { usePolling } from "@/hooks/usePolling";
 import { useToast } from "@/hooks/useToast";
 import { paymentsService } from "@/services/billing";
 import { notificationsService } from "@/services/notifications";
@@ -38,62 +39,75 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  const loadReadyOrders = useCallback(async () => {
+  // One request feeds both the "ready" and the "to close" lists: they are two
+  // filters over the same set of this waiter's open orders.
+  const inFlightWaiterOrders = useRef<Promise<void> | null>(null);
+  const rerunWaiterOrders = useRef(false);
+  const loadWaiterOrdersRef = useRef<() => Promise<void>>(async () => {});
+  const loadWaiterOrders = useCallback(async (): Promise<void> => {
     if (!user || user.role !== "WAITER") {
       setReadyOrders([]);
-      return;
-    }
-    try {
-      const res = await ordersService.list({ openOnly: true, pageSize: 200 });
-      // Filter for READY orders assigned to this logged-in waiter
-      const filtered = res.items.filter(
-        (order) => order.orderStatus === "READY" && (!user._id || order.waiterId === user._id),
-      );
-      setReadyOrders(filtered);
-    } catch {
-      // Gracefully handle failure
-    }
-  }, [user]);
-
-  const loadCloseOrders = useCallback(async () => {
-    if (!user || user.role !== "WAITER") {
       setCloseOrders([]);
       return;
     }
-    try {
-      const res = await ordersService.list({ openOnly: true, pageSize: 200 });
-      // Filter for SERVED, PAYMENT_PENDING, or PAID orders assigned to this logged-in waiter
-      const filtered = res.items.filter((order) => {
-        const isMine = !user._id || order.waiterId === user._id;
-        const isClosePending =
-          order.orderStatus === "SERVED" ||
-          order.orderStatus === "PAYMENT_PENDING" ||
-          order.orderStatus === "PAID";
-        return isMine && isClosePending;
-      });
-      setCloseOrders(filtered);
-    } catch {
-      // Gracefully handle failure
+    // Collapse bursts (poll + several realtime events) into one request, but
+    // remember that a newer refresh was asked for so the result is never stale.
+    if (inFlightWaiterOrders.current) {
+      rerunWaiterOrders.current = true;
+      return inFlightWaiterOrders.current;
     }
+
+    const run = (async () => {
+      try {
+        const res = await ordersService.list({
+          openOnly: true,
+          pageSize: 200,
+          ...(user._id ? { waiterId: user._id } : {}),
+        });
+        const mine = res.items.filter((order) => !user._id || order.waiterId === user._id);
+        setReadyOrders(mine.filter((order) => order.orderStatus === "READY"));
+        setCloseOrders(
+          mine.filter(
+            (order) =>
+              order.orderStatus === "SERVED" ||
+              order.orderStatus === "PAYMENT_PENDING" ||
+              order.orderStatus === "PAID",
+          ),
+        );
+      } catch {
+        // Keep the last known lists; the next poll retries.
+      } finally {
+        inFlightWaiterOrders.current = null;
+        if (rerunWaiterOrders.current) {
+          rerunWaiterOrders.current = false;
+          void loadWaiterOrdersRef.current();
+        }
+      }
+    })();
+    inFlightWaiterOrders.current = run;
+    return run;
   }, [user]);
 
   useEffect(() => {
+    loadWaiterOrdersRef.current = loadWaiterOrders;
+  }, [loadWaiterOrders]);
+
+  // Kept as separate names for the context API; both refresh the shared list.
+  const loadReadyOrders = loadWaiterOrders;
+  const loadCloseOrders = loadWaiterOrders;
+
+  const refreshAll = useCallback(() => {
     void loadNotifications();
-    if (user?.role === "WAITER") {
-      void loadReadyOrders();
-      void loadCloseOrders();
-    }
+    if (user?.role === "WAITER") void loadWaiterOrders();
+  }, [loadNotifications, loadWaiterOrders, user?.role]);
 
-    const interval = setInterval(() => {
-      void loadNotifications();
-      if (user?.role === "WAITER") {
-        void loadReadyOrders();
-        void loadCloseOrders();
-      }
-    }, 8000);
+  useEffect(() => {
+    refreshAll();
+  }, [refreshAll]);
 
-    return () => clearInterval(interval);
-  }, [loadNotifications, loadReadyOrders, loadCloseOrders, user?.role]);
+  // Live events push changes immediately; this poll is only the safety net for
+  // hosts where the WebSocket cannot stay open (e.g. serverless).
+  usePolling(refreshAll, 10_000, Boolean(user));
 
   useEffect(() => {
     return () => {
@@ -229,7 +243,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           const orderIdentifier = invoiceNumber || (orderNumber ? `#${orderNumber}` : "");
           toast.push({
             tone: "success",
-            title: "🔔 Order Ready to Serve",
+            title: "Order Ready to Serve",
             description: customMessage || `Table ${tableNumber} · ${orderIdentifier} is ready!`,
             duration: 6000,
           });

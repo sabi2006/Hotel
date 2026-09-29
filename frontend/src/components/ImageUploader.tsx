@@ -129,7 +129,7 @@ export function ImageUploader({
 
   return (
     <div className="space-y-1.5 select-none">
-      <label className="block text-xs font-bold text-slate-700">
+      <label className="block text-xs font-bold text-ink-soft">
         {label}
       </label>
 
@@ -147,8 +147,8 @@ export function ImageUploader({
       {/* Main Upload Box */}
       {displayUrl ? (
         /* Image Preview Box */
-        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-2 shadow-xs transition-all">
-          <div className="relative aspect-video sm:aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-900/5">
+        <div className="relative overflow-hidden rounded-xl border border-line bg-surface-soft p-2 shadow-xs transition-all">
+          <div className="relative aspect-video sm:aspect-[4/3] w-full overflow-hidden rounded-xl bg-ink/5">
             <img
               src={displayUrl}
               alt="Dish photo preview"
@@ -157,7 +157,7 @@ export function ImageUploader({
             />
 
             {isUploading && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/60 backdrop-blur-xs text-white">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-ink/60 text-white">
                 <span className="size-6 animate-spin rounded-full border-2 border-white border-t-transparent" />
                 <span className="mt-2 text-xs font-bold">Uploading image...</span>
               </div>
@@ -165,8 +165,8 @@ export function ImageUploader({
           </div>
 
           <div className="mt-2 flex items-center justify-between gap-2 px-1 py-1">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700">
-              <span className="size-2 rounded-full bg-emerald-500" />
+            <div className="flex items-center gap-1.5 text-xs font-bold text-success">
+              <span className="size-2 rounded-full bg-success" />
               <span>Dish photo selected</span>
             </div>
 
@@ -206,35 +206,35 @@ export function ImageUploader({
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={[
-            "group relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 text-center transition-all cursor-pointer focus-ring",
+            "group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed p-6 text-center transition-all cursor-pointer focus-ring",
             isDragging
-              ? "border-brand-500 bg-brand-50/70 scale-[1.01] shadow-md ring-2 ring-brand-400"
-              : "border-slate-200 bg-slate-50/60 hover:border-brand-400 hover:bg-slate-50 hover:shadow-xs",
+              ? "border-brand-500 bg-brand-50/70 scale-[1.01] shadow-sm ring-2 ring-brand-400"
+              : "border-line bg-surface-soft/60 hover:border-brand-400 hover:bg-surface-soft hover:shadow-xs",
             disabled ? "opacity-50 cursor-not-allowed" : "",
           ].join(" ")}
         >
-          <div className="flex size-13 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm ring-1 ring-slate-200 group-hover:scale-105 group-hover:text-brand-600 transition-all">
-            <span className="text-2xl">📷</span>
+          <div className="flex size-13 items-center justify-center rounded-xl bg-white text-muted shadow-sm ring-1 ring-line group-hover:text-brand-600 transition-all">
+            <PlusIcon size={22} />
           </div>
 
-          <p className="mt-3 text-sm font-bold text-slate-800">
+          <p className="mt-3 text-sm font-bold text-ink">
             {isDragging ? "Drop image here" : "Add dish photo"}
           </p>
 
-          <p className="mt-0.5 text-xs text-slate-500 font-medium">
+          <p className="mt-0.5 text-xs text-muted font-medium">
             {isDragging ? "Release to upload immediately" : "Drag & drop an image here, or"}
           </p>
 
           {!isDragging && (
             <div className="mt-2.5">
-              <span className="inline-flex items-center gap-1 rounded-xl bg-white px-3.5 py-1.5 text-xs font-bold text-brand-700 shadow-2xs ring-1 ring-slate-200 group-hover:bg-brand-50 group-hover:text-brand-800 transition">
+              <span className="inline-flex items-center gap-1 rounded-xl bg-white px-3.5 py-1.5 text-xs font-bold text-brand-700 shadow-2xs ring-1 ring-line group-hover:bg-brand-50 group-hover:text-brand-800 transition">
                 <PlusIcon size={14} />
                 <span>Choose Image</span>
               </span>
             </div>
           )}
 
-          <p className="mt-3 text-[11px] font-semibold text-slate-400">
+          <p className="mt-3 text-[11px] font-semibold text-subtle">
             PNG, JPG, JPEG, WEBP · Maximum file size: 5MB
           </p>
         </div>

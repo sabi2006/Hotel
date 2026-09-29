@@ -33,11 +33,11 @@ import type { CancellationReason, Category, Order, OrderItem, Product } from "@/
 import { formatCurrency } from "@/utils/format";
 
 const ITEM_STATUS_CLASSES: Record<string, string> = {
-  PENDING: "bg-slate-100 text-slate-700 ring-slate-200",
-  PREPARING: "bg-amber-50 text-amber-800 ring-amber-200",
-  READY: "bg-emerald-50 text-emerald-800 ring-emerald-300 font-bold animate-pulse",
-  SERVED: "bg-teal-50 text-teal-800 ring-teal-200",
-  CANCELLED: "bg-red-50 text-red-800 line-through ring-red-200",
+  PENDING: "bg-surface-sunken text-ink-soft ring-line",
+  PREPARING: "bg-warning-soft text-warning-strong ring-warning-line",
+  READY: "bg-success-soft text-success-strong ring-success-line font-bold",
+  SERVED: "bg-success-soft text-success-strong ring-success-line",
+  CANCELLED: "bg-danger-soft text-danger-strong line-through ring-danger-line",
 };
 
 export default function OrderPage() {
@@ -118,7 +118,7 @@ export default function OrderPage() {
   useRealtime((message) => {
     if (message.payload?.orderId !== orderId) return;
     if (message.event === RealtimeEvent.ORDER_READY) {
-      setNotice("🔔 The kitchen says this order is ready to serve!");
+      setNotice("The kitchen says this order is ready to serve!");
     }
     void loadOrder();
   });
@@ -260,19 +260,19 @@ export default function OrderPage() {
         <div className="flex items-center gap-3.5">
           <button
             onClick={() => navigate("/waiter/tables")}
-            className="pressable flex size-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 text-sm font-bold"
+            className="pressable flex size-9 items-center justify-center rounded-xl bg-surface-sunken text-ink-soft hover:bg-line text-sm font-bold"
             title="Back to Take Order"
           >
             ←
           </button>
           <div>
             <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-extrabold text-slate-900 font-sans">
+              <h1 className="text-xl font-extrabold text-ink font-sans">
                 Table {order.tableNumber}
               </h1>
               <OrderStatusBadge status={order.orderStatus} />
             </div>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
+            <p className="text-xs text-muted font-medium mt-0.5">
               {order.invoiceNumber || (order.orderNumber ? `#${order.orderNumber}` : "")} · Waiter: {order.waiterName}
               {order.customer.name ? ` · Customer: ${order.customer.name}` : ""}
             </p>
@@ -281,7 +281,7 @@ export default function OrderPage() {
 
         <div className="flex items-center gap-2">
           <Button variant="secondary" size="sm" onClick={openCustomerModal} disabled={isSettled}>
-            👤 Customer &amp; Discount
+            Customer &amp; Discount
           </Button>
 
           {order.orderStatus === "DRAFT" && order.sentToKitchenAt === null ? (
@@ -305,7 +305,7 @@ export default function OrderPage() {
       {notice && <Alert tone="success">{notice}</Alert>}
       {readyItems.length > 0 && (
         <Alert tone="success">
-          🔔 {readyItems.length} item{readyItems.length === 1 ? " is" : "s are"} ready to serve!
+          {readyItems.length} item{readyItems.length === 1 ? " is" : "s are"} ready to serve!
         </Alert>
       )}
 
@@ -315,7 +315,7 @@ export default function OrderPage() {
         <section className="space-y-4 lg:col-span-3">
           {/* Search bar */}
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#9E9F9B]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-subtle">
               <SearchIcon size={18} />
             </div>
             <input
@@ -323,13 +323,13 @@ export default function OrderPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search dishes, drinks, appetizers..."
-              className="w-full rounded-xl bg-white pl-10 pr-4 py-2.5 text-sm font-medium text-[#1F2220] ring-1 ring-[#E8E3D8] shadow-2xs placeholder:text-[#9E9F9B] focus-ring"
+              className="w-full rounded-xl bg-white pl-10 pr-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line shadow-2xs placeholder:text-subtle focus-ring"
             />
             {search && (
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-xs text-[#8E908C] hover:text-[#1F2220]"
+                className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-xs text-subtle hover:text-ink"
               >
                 Clear
               </button>
@@ -343,8 +343,8 @@ export default function OrderPage() {
               className={[
                 "pressable flex shrink-0 items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition select-none",
                 activeCategory === ""
-                  ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-                  : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                  ? "bg-ink text-white shadow-sm"
+                  : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
               ].join(" ")}
             >
               All Items
@@ -356,8 +356,8 @@ export default function OrderPage() {
                 className={[
                   "pressable flex shrink-0 items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition select-none",
                   activeCategory === cat._id
-                    ? "bg-[#202322] text-white shadow-md shadow-charcoal-950/20"
-                    : "bg-white text-[#5F615D] ring-1 ring-[#E8E3D8] hover:bg-[#FAF8F3] hover:text-[#1F2220]",
+                    ? "bg-ink text-white shadow-sm"
+                    : "bg-white text-muted ring-1 ring-line hover:bg-surface-soft hover:text-ink",
                 ].join(" ")}
               >
                 {cat.name}
@@ -388,17 +388,17 @@ export default function OrderPage() {
                     )
                   }
                   className={[
-                    "card-interactive group flex flex-col justify-between p-3 sm:p-3.5 text-left select-none relative overflow-hidden bg-white border border-[#EBE7DF] min-h-[92px]",
+                    "card-interactive group flex flex-col justify-between p-3 sm:p-3.5 text-left select-none relative overflow-hidden bg-white border border-line min-h-[92px]",
                     "hover:border-brand-400 hover:ring-1 hover:ring-brand-300/40 disabled:opacity-60",
                   ].join(" ")}
                 >
                   <div className="flex items-start gap-3 w-full">
-                    <div className="size-16 sm:size-18 shrink-0 overflow-hidden rounded-xl ring-1 ring-[#E8E3D8] group-hover:scale-105 transition-transform duration-200 bg-[#FAF8F5]">
+                    <div className="size-16 sm:size-18 shrink-0 overflow-hidden rounded-xl ring-1 ring-line transition-transform duration-200 bg-surface-soft">
                       <ProductImage
                         src={product.image}
                         alt={product.name}
                         className="size-full object-cover"
-                        fallbackClassName="size-full flex items-center justify-center bg-[#FAF6EE] text-2xl"
+                        fallbackClassName="size-full flex items-center justify-center bg-surface-soft text-2xl"
                       />
                     </div>
 
@@ -406,21 +406,21 @@ export default function OrderPage() {
                       <div>
                         <div className="flex items-center gap-1.5">
                           <FoodTypeDot foodType={product.foodType} />
-                          <p className="truncate font-bold text-[#1F2220] text-sm leading-snug">
+                          <p className="truncate font-bold text-ink text-sm leading-snug">
                             {product.name}
                           </p>
                         </div>
 
-                        <p className="mt-0.5 text-xs text-[#8E908C] line-clamp-1 font-normal">
+                        <p className="mt-0.5 text-xs text-subtle line-clamp-1 font-normal">
                           {product.description || "Freshly prepared"}
                         </p>
                       </div>
 
                       <div className="mt-2 flex items-center justify-between gap-2">
-                        <span className="text-sm sm:text-base font-extrabold text-[#1F2220] tabular-nums">
+                        <span className="text-sm sm:text-base font-extrabold text-ink tabular-nums">
                           {formatCurrency(product.price)}
                         </span>
-                        <span className="flex size-7 sm:size-8 items-center justify-center rounded-lg bg-[#FAF6EE] text-brand-800 ring-1 ring-[#E8DCB8] font-bold text-base group-hover:bg-brand-600 group-hover:text-white transition-colors shadow-2xs">
+                        <span className="flex size-7 sm:size-8 items-center justify-center rounded-lg bg-surface-soft text-brand-800 ring-1 ring-warning-line font-bold text-base group-hover:bg-brand-600 group-hover:text-white transition-colors shadow-2xs">
                           +
                         </span>
                       </div>
@@ -434,13 +434,13 @@ export default function OrderPage() {
 
         {/* Right: Sticky Cart Panel (Desktop only) */}
         <section className="hidden lg:block lg:col-span-2">
-          <div className="card p-5 lg:sticky lg:top-20 space-y-4 shadow-sm select-none bg-white border border-[#EBE7DF]">
-            <div className="flex items-center justify-between border-b border-[#F0EBE1] pb-3">
+          <div className="card p-5 lg:sticky lg:top-20 space-y-4 shadow-sm select-none bg-white border border-line">
+            <div className="flex items-center justify-between border-b border-surface-sunken pb-3">
               <div className="flex items-center gap-2">
                 <ReceiptIcon size={18} className="text-brand-700" />
-                <h2 className="text-base font-bold text-[#1F2220] font-sans">Current Ticket</h2>
+                <h2 className="text-base font-bold text-ink font-sans">Current Ticket</h2>
               </div>
-              <span className="rounded-full bg-[#FAF6EE] px-2.5 py-0.5 text-xs font-bold text-brand-800 ring-1 ring-[#E8DCB8]">
+              <span className="rounded-full bg-surface-soft px-2.5 py-0.5 text-xs font-bold text-brand-800 ring-1 ring-warning-line">
                 {order.items.length} items
               </span>
             </div>
@@ -457,7 +457,7 @@ export default function OrderPage() {
                   {/* Unsent items */}
                   {unsentItems.length > 0 && (
                     <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#9E6523] bg-[#FEF7EE] px-2.5 py-1 rounded-lg ring-1 ring-[#FADFB8]">
+                      <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-warning bg-warning-soft px-2.5 py-1 rounded-lg ring-1 ring-warning-line">
                         <span>New Items (Ready to Send)</span>
                         <span>{unsentItems.length}</span>
                       </div>
@@ -481,7 +481,7 @@ export default function OrderPage() {
                   {/* Sent to kitchen items */}
                   {sentItems.length > 0 && (
                     <div className="space-y-1.5 pt-2">
-                      <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#5F615D] bg-[#FAF8F5] px-2.5 py-1 rounded-lg ring-1 ring-[#E8E3D8]">
+                      <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted bg-surface-soft px-2.5 py-1 rounded-lg ring-1 ring-line">
                         <span>With Kitchen</span>
                         <span>{sentItems.length}</span>
                       </div>
@@ -493,22 +493,22 @@ export default function OrderPage() {
                 </div>
 
                 {/* Price Breakdown */}
-                <dl className="space-y-1.5 border-t border-[#F0EBE1] pt-3 text-xs">
-                  <div className="flex justify-between text-[#5F615D]">
+                <dl className="space-y-1.5 border-t border-surface-sunken pt-3 text-xs">
+                  <div className="flex justify-between text-muted">
                     <dt>Subtotal</dt>
-                    <dd className="font-semibold tabular-nums text-[#1F2220]">{formatCurrency(order.subtotal)}</dd>
+                    <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.subtotal)}</dd>
                   </div>
-                  <div className="flex justify-between text-[#5F615D]">
+                  <div className="flex justify-between text-muted">
                     <dt>GST Tax</dt>
-                    <dd className="font-semibold tabular-nums text-[#1F2220]">{formatCurrency(order.gstAmount)}</dd>
+                    <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.gstAmount)}</dd>
                   </div>
                   {order.discount > 0 && (
-                    <div className="flex justify-between text-[#276B49] font-medium">
+                    <div className="flex justify-between text-success font-medium">
                       <dt>Discount</dt>
                       <dd className="font-bold tabular-nums">−{formatCurrency(order.discount)}</dd>
                     </div>
                   )}
-                  <div className="flex justify-between border-t border-[#E8E3D8] pt-2 text-base font-extrabold text-[#1F2220]">
+                  <div className="flex justify-between border-t border-line pt-2 text-base font-extrabold text-ink">
                     <dt>Grand Total</dt>
                     <dd className="tabular-nums text-brand-700 font-sans">{formatCurrency(order.grandTotal)}</dd>
                   </div>
@@ -526,7 +526,7 @@ export default function OrderPage() {
                 onClick={() => void handleSend()}
                 isLoading={isSending}
                 disabled={unsentItems.length === 0 || isSettled}
-                className="gap-2 shadow-md shadow-brand-950/20"
+                className="gap-2 shadow-sm"
               >
                 <SendIcon size={18} />
                 <span>
@@ -552,8 +552,8 @@ export default function OrderPage() {
             </div>
 
             {order.amountPaid > 0 && (
-              <p className="text-center text-xs font-bold text-[#276B49] bg-[#EBF5EE] py-1.5 rounded-lg ring-1 ring-[#BCE2CD]">
-                ✅ {formatCurrency(order.amountPaid)} already collected
+              <p className="text-center text-xs font-bold text-success bg-success-soft py-1.5 rounded-lg ring-1 ring-success-line">
+                {formatCurrency(order.amountPaid)} already collected
               </p>
             )}
           </div>
@@ -561,25 +561,25 @@ export default function OrderPage() {
       </div>
 
       {/* Floating Bottom Cart Bar for Mobile & Tablets (< 1024px) */}
-      <div className="fixed inset-x-0 bottom-0 z-40 bg-[#161817] text-[#FAF8F5] px-4 py-3 border-t border-[#2A2D2C] shadow-2xl lg:hidden flex items-center justify-between gap-3 pb-safe">
+      <div className="fixed inset-x-0 bottom-0 z-40 bg-ink text-surface-soft px-4 py-3 border-t border-charcoal-800 shadow-lg lg:hidden flex items-center justify-between gap-3 pb-safe">
         <button
           type="button"
           onClick={() => setIsMobileCartOpen(true)}
           className="flex items-center gap-3 text-left focus:outline-none min-w-0 flex-1"
         >
-          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm ring-1 ring-brand-400/40">
+          <div className="relative flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white shadow-sm ring-1 ring-brand-400/40">
             <ReceiptIcon size={20} />
             {order.items.length > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full bg-emerald-500 text-[11px] font-extrabold text-white shadow-xs">
+              <span className="absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full bg-success text-[11px] font-extrabold text-white shadow-xs">
                 {order.items.length}
               </span>
             )}
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-[#FAF8F5] truncate">Ticket</span>
+              <span className="text-xs font-bold text-surface-soft truncate">Ticket</span>
               {unsentItems.length > 0 && (
-                <span className="text-[10px] font-extrabold uppercase tracking-wide bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded shrink-0">
+                <span className="text-[10px] font-extrabold uppercase tracking-wide bg-warning/20 text-warning-line px-1.5 py-0.2 rounded shrink-0">
                   {unsentItems.length} New
                 </span>
               )}
@@ -635,7 +635,7 @@ export default function OrderPage() {
                 {/* Unsent items */}
                 {unsentItems.length > 0 && (
                   <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#9E6523] bg-[#FEF7EE] px-2.5 py-1 rounded-lg ring-1 ring-[#FADFB8]">
+                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-warning bg-warning-soft px-2.5 py-1 rounded-lg ring-1 ring-warning-line">
                       <span>New Items (Ready to Send)</span>
                       <span>{unsentItems.length}</span>
                     </div>
@@ -659,7 +659,7 @@ export default function OrderPage() {
                 {/* Sent to kitchen items */}
                 {sentItems.length > 0 && (
                   <div className="space-y-1.5 pt-2">
-                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-[#5F615D] bg-[#FAF8F5] px-2.5 py-1 rounded-lg ring-1 ring-[#E8E3D8]">
+                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted bg-surface-soft px-2.5 py-1 rounded-lg ring-1 ring-line">
                       <span>With Kitchen</span>
                       <span>{sentItems.length}</span>
                     </div>
@@ -671,22 +671,22 @@ export default function OrderPage() {
               </div>
 
               {/* Price Breakdown */}
-              <dl className="space-y-1.5 border-t border-[#F0EBE1] pt-3 text-xs">
-                <div className="flex justify-between text-[#5F615D]">
+              <dl className="space-y-1.5 border-t border-surface-sunken pt-3 text-xs">
+                <div className="flex justify-between text-muted">
                   <dt>Subtotal</dt>
-                  <dd className="font-semibold tabular-nums text-[#1F2220]">{formatCurrency(order.subtotal)}</dd>
+                  <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.subtotal)}</dd>
                 </div>
-                <div className="flex justify-between text-[#5F615D]">
+                <div className="flex justify-between text-muted">
                   <dt>GST Tax</dt>
-                  <dd className="font-semibold tabular-nums text-[#1F2220]">{formatCurrency(order.gstAmount)}</dd>
+                  <dd className="font-semibold tabular-nums text-ink">{formatCurrency(order.gstAmount)}</dd>
                 </div>
                 {order.discount > 0 && (
-                  <div className="flex justify-between text-[#276B49] font-medium">
+                  <div className="flex justify-between text-success font-medium">
                     <dt>Discount</dt>
                     <dd className="font-bold tabular-nums">−{formatCurrency(order.discount)}</dd>
                   </div>
                 )}
-                <div className="flex justify-between border-t border-[#E8E3D8] pt-2 text-base font-extrabold text-[#1F2220]">
+                <div className="flex justify-between border-t border-line pt-2 text-base font-extrabold text-ink">
                   <dt>Grand Total</dt>
                   <dd className="tabular-nums text-brand-700 font-sans">{formatCurrency(order.grandTotal)}</dd>
                 </div>
@@ -802,7 +802,7 @@ export default function OrderPage() {
         }
       >
         <div className="space-y-4">
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <p className="text-xs text-muted leading-relaxed">
             Cancelling this order will record the cancellation reason in the audit log and instantly free Table {order.tableNumber}.
           </p>
           <Select
@@ -852,18 +852,18 @@ function CartRow({
   onChangeQuantity?: (quantity: number) => void;
 }) {
   return (
-    <div className="animate-rise flex items-center justify-between gap-3 rounded-xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 hover:bg-slate-100/80 transition">
+    <div className=" flex items-center justify-between gap-3 rounded-xl bg-surface-soft/80 p-2.5 ring-1 ring-surface-sunken hover:bg-surface-sunken/80 transition">
       <div className="flex items-center gap-2 min-w-0">
         <FoodTypeDot foodType={item.foodType} />
         <div className="min-w-0">
-          <p className="truncate text-xs font-bold text-slate-900">{item.name}</p>
-          <p className="text-[11px] text-slate-500 font-medium">
+          <p className="truncate text-xs font-bold text-ink">{item.name}</p>
+          <p className="text-[11px] text-muted font-medium">
             {formatCurrency(item.price)} × {item.quantity}
           </p>
           {!isEditable && (
             <span
               className={`mt-1 inline-flex rounded-full px-2 py-0.2 text-[10px] font-bold ring-1 ${
-                ITEM_STATUS_CLASSES[item.kitchenStatus] ?? "bg-slate-100 text-slate-700 ring-slate-200"
+                ITEM_STATUS_CLASSES[item.kitchenStatus] ?? "bg-surface-sunken text-ink-soft ring-line"
               }`}
             >
               {item.kitchenStatus}
@@ -873,7 +873,7 @@ function CartRow({
       </div>
 
       <div className="flex shrink-0 flex-col items-end gap-1">
-        <span className="text-xs font-extrabold text-slate-900 tabular-nums">
+        <span className="text-xs font-extrabold text-ink tabular-nums">
           {formatCurrency(item.total)}
         </span>
 
@@ -884,13 +884,13 @@ function CartRow({
               aria-label="Decrease quantity"
               disabled={isBusy}
               onClick={() => onChangeQuantity(item.quantity - 1)}
-              className="pressable flex size-6 items-center justify-center rounded-lg bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 hover:ring-slate-300 disabled:opacity-50 text-xs font-bold"
+              className="pressable flex size-6 items-center justify-center rounded-lg bg-white text-ink-soft ring-1 ring-line hover:bg-surface-sunken hover:ring-line-strong disabled:opacity-50 text-xs font-bold"
             >
-              {item.quantity === 1 ? <Trash2Icon size={12} className="text-red-500" /> : <MinusIcon size={12} />}
+              {item.quantity === 1 ? <Trash2Icon size={12} className="text-danger" /> : <MinusIcon size={12} />}
             </button>
             <span
               key={item.quantity}
-              className="w-5 animate-pop text-center text-xs font-bold tabular-nums text-slate-800"
+              className="w-5 text-center text-xs font-bold tabular-nums text-ink"
             >
               {item.quantity}
             </span>
@@ -899,7 +899,7 @@ function CartRow({
               aria-label="Increase quantity"
               disabled={isBusy}
               onClick={() => onChangeQuantity(item.quantity + 1)}
-              className="pressable flex size-6 items-center justify-center rounded-lg bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 hover:ring-slate-300 disabled:opacity-50 text-xs font-bold"
+              className="pressable flex size-6 items-center justify-center rounded-lg bg-white text-ink-soft ring-1 ring-line hover:bg-surface-sunken hover:ring-line-strong disabled:opacity-50 text-xs font-bold"
             >
               <PlusIcon size={12} />
             </button>

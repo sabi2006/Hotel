@@ -72,48 +72,48 @@ export default function ProfilePage() {
       <header>
         <div className="flex items-center gap-2">
           <UserCheckIcon size={24} className="text-brand-600" />
-          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+          <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
             User Account &amp; Staff Profile
           </h1>
         </div>
-        <p className="mt-0.5 text-xs font-medium text-slate-500">
+        <p className="mt-0.5 text-xs font-medium text-muted">
           Personal credentials, security settings, and digital tip configuration.
         </p>
       </header>
 
       {/* User Information Card */}
       <section className="card p-6 shadow-sm bg-white space-y-5">
-        <div className="flex items-center gap-4 border-b border-slate-100 pb-4">
-          <span className="flex size-14 items-center justify-center rounded-2xl bg-brand-600 text-white font-extrabold text-lg shadow-md shadow-brand-950/20">
+        <div className="flex items-center gap-4 border-b border-surface-sunken pb-4">
+          <span className="flex size-14 items-center justify-center rounded-xl bg-brand-600 text-white font-extrabold text-lg shadow-sm">
             {user ? initialsOf(user.name) : "U"}
           </span>
           <div>
             <div className="flex items-center gap-2.5">
-              <h2 className="text-lg font-extrabold text-slate-900 font-sans">{user?.name}</h2>
+              <h2 className="text-lg font-extrabold text-ink font-sans">{user?.name}</h2>
               <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-bold text-brand-700 ring-1 ring-brand-200">
                 {user ? humanizeEnum(user.role) : ""}
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">{user?.email}</p>
+            <p className="text-xs text-muted font-medium mt-0.5">{user?.email}</p>
           </div>
         </div>
 
         <dl className="grid gap-4 sm:grid-cols-2 text-xs sm:text-sm">
           <div>
-            <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Staff Role</dt>
-            <dd className="mt-1 font-bold text-slate-900">{user ? humanizeEnum(user.role) : "—"}</dd>
+            <dt className="text-[10px] font-bold uppercase tracking-wider text-subtle">Staff Role</dt>
+            <dd className="mt-1 font-bold text-ink">{user ? humanizeEnum(user.role) : "—"}</dd>
           </div>
           <div>
-            <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Mobile Phone</dt>
-            <dd className="mt-1 font-bold text-slate-900">{user?.phone ?? "Not configured"}</dd>
+            <dt className="text-[10px] font-bold uppercase tracking-wider text-subtle">Mobile Phone</dt>
+            <dd className="mt-1 font-bold text-ink">{user?.phone ?? "Not configured"}</dd>
           </div>
           <div>
-            <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Email Address</dt>
-            <dd className="mt-1 font-bold text-slate-900">{user?.email}</dd>
+            <dt className="text-[10px] font-bold uppercase tracking-wider text-subtle">Email Address</dt>
+            <dd className="mt-1 font-bold text-ink">{user?.email}</dd>
           </div>
           <div>
-            <dt className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Account Created</dt>
-            <dd className="mt-1 font-bold text-slate-900">{user ? formatDateTime(user.createdAt) : "—"}</dd>
+            <dt className="text-[10px] font-bold uppercase tracking-wider text-subtle">Account Created</dt>
+            <dd className="mt-1 font-bold text-ink">{user ? formatDateTime(user.createdAt) : "—"}</dd>
           </div>
         </dl>
       </section>
@@ -124,9 +124,9 @@ export default function ProfilePage() {
           onSubmit={handleSaveTipQr}
           className="card p-6 space-y-4 shadow-sm bg-white"
         >
-          <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-base font-bold text-slate-900 font-sans">Personal UPI Tip QR Code</h2>
-            <p className="text-xs text-slate-500">
+          <div className="border-b border-surface-sunken pb-3">
+            <h2 className="text-base font-bold text-ink font-sans">Personal UPI Tip QR Code</h2>
+            <p className="text-xs text-muted">
               When guests tip at table checkout, your personal QR code will be presented.
             </p>
           </div>
@@ -142,8 +142,8 @@ export default function ProfilePage() {
           />
 
           {/* Upload File */}
-          <div className="rounded-xl border border-dashed border-[#D4BD9B] bg-[#FAF8F5] p-4">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#424541] mb-2">
+          <div className="rounded-xl border border-dashed border-brand-300 bg-surface-soft p-4">
+            <label className="block text-xs font-bold uppercase tracking-wider text-ink-soft mb-2">
               Upload Personal UPI QR Graphic
             </label>
             <div className="flex flex-wrap items-center gap-3">
@@ -170,20 +170,20 @@ export default function ProfilePage() {
               />
               <label
                 htmlFor="tip-qr-upload"
-                className="pressable inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-[#1F2220] ring-1 ring-[#E8E3D8] hover:bg-[#F3ECE0] hover:ring-[#D8CEBE] cursor-pointer shadow-2xs"
+                className="pressable inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-bold text-ink ring-1 ring-line hover:bg-brand-100 hover:ring-line-strong cursor-pointer shadow-2xs"
               >
-                <span>📷 Upload QR Graphic from Device</span>
+                <span>Upload QR Graphic from Device</span>
               </label>
 
               {isUploadingTipQr && (
-                <span className="text-xs font-bold text-brand-700 animate-pulse">Uploading...</span>
+                <span className="text-xs font-bold text-brand-700">Uploading...</span>
               )}
 
               {tipQrImage && (
                 <button
                   type="button"
                   onClick={() => setTipQrImage("")}
-                  className="pressable rounded-xl bg-red-50 px-3 py-1.5 text-xs font-bold text-red-700 hover:bg-red-100 transition"
+                  className="pressable rounded-xl bg-danger-soft px-3 py-1.5 text-xs font-bold text-danger hover:bg-danger-line transition"
                 >
                   Remove Graphic
                 </button>
@@ -194,9 +194,9 @@ export default function ProfilePage() {
           {/* Previews */}
           <div className="grid gap-4 sm:grid-cols-2 pt-2">
             {tipUpiId && (
-              <div className="rounded-2xl bg-white p-3.5 ring-1 ring-[#E8E3D8] text-center shadow-2xs">
-                <p className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md inline-block mb-2">
-                  ✨ Live Personal Tip QR
+              <div className="rounded-xl bg-white p-3.5 ring-1 ring-line text-center shadow-2xs">
+                <p className="text-[11px] font-bold text-success-strong bg-success-soft px-2.5 py-0.5 rounded-md inline-block mb-2">
+                  Live Personal Tip QR
                 </p>
                 <div className="flex justify-center">
                   <img
@@ -206,23 +206,23 @@ export default function ProfilePage() {
                       )}&cu=INR&tn=${encodeURIComponent(`Tip for ${user?.name || "Waiter"}`)}`,
                     )}`}
                     alt="Live Tip QR preview"
-                    className="size-36 rounded-xl ring-1 ring-slate-200 shadow-sm p-1 bg-white object-contain"
+                    className="size-36 rounded-xl ring-1 ring-line shadow-sm p-1 bg-white object-contain"
                   />
                 </div>
-                <p className="mt-1.5 text-xs font-bold text-slate-800 font-mono">{tipUpiId}</p>
+                <p className="mt-1.5 text-xs font-bold text-ink font-mono">{tipUpiId}</p>
               </div>
             )}
 
             {tipQrImage && (
-              <div className="rounded-2xl bg-white p-3.5 ring-1 ring-[#E8E3D8] text-center shadow-2xs">
-                <p className="text-[11px] font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-md inline-block mb-2">
-                  🖼️ Uploaded QR Graphic
+              <div className="rounded-xl bg-white p-3.5 ring-1 ring-line text-center shadow-2xs">
+                <p className="text-[11px] font-bold text-ink-soft bg-surface-sunken px-2.5 py-0.5 rounded-md inline-block mb-2">
+                  Uploaded QR Graphic
                 </p>
                 <div className="flex justify-center">
                   <img
                     src={resolveImageUrl(tipQrImage) ?? tipQrImage}
                     alt="Tip QR preview"
-                    className="max-h-36 rounded-xl ring-1 ring-slate-200 shadow-sm object-contain"
+                    className="max-h-36 rounded-xl ring-1 ring-line shadow-sm object-contain"
                   />
                 </div>
               </div>
@@ -242,9 +242,9 @@ export default function ProfilePage() {
         onSubmit={handleSubmit}
         className="card p-6 space-y-4 shadow-sm bg-white"
       >
-        <div className="border-b border-slate-100 pb-3">
-          <h2 className="text-base font-bold text-slate-900 font-sans">Change Account Password</h2>
-          <p className="text-xs text-slate-500">Update your security passkey for logging into POS portals.</p>
+        <div className="border-b border-surface-sunken pb-3">
+          <h2 className="text-base font-bold text-ink font-sans">Change Account Password</h2>
+          <p className="text-xs text-muted">Update your security passkey for logging into POS portals.</p>
         </div>
 
         {error && <Alert tone="error">{error}</Alert>}

@@ -5,16 +5,7 @@ import { Alert } from "@/components/Alert";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { FoodTypeDot } from "@/components/FoodTypeDot";
-import {
-  BellIcon,
-  CheckIcon,
-  ClockIcon,
-  ReceiptIcon,
-  RefreshCwIcon,
-  UtensilsIcon,
-  Volume2Icon,
-  VolumeXIcon,
-} from "@/components/Icons";
+import { BellIcon, CheckCircleIcon, CheckIcon, ClockIcon, CreditCardIcon, ReceiptIcon, RefreshCwIcon, UtensilsIcon, Volume2Icon, VolumeXIcon } from "@/components/Icons";
 import { Modal } from "@/components/Modal";
 import { SkeletonCards } from "@/components/Skeleton";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -124,19 +115,19 @@ export default function OrderReadyPage() {
       <header className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex size-8 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 shadow-xs">
+            <span className="flex size-8 items-center justify-center rounded-xl bg-success-line text-success shadow-xs">
               <BellIcon size={18} />
             </span>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 font-sans">
+            <h1 className="text-2xl font-extrabold tracking-tight text-ink font-sans">
               Order Ready
             </h1>
             {readyOrdersCount > 0 && (
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500 text-white shadow-xs animate-pulse tabular-nums">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-success text-white shadow-xs tabular-nums">
                 {readyOrdersCount} {readyOrdersCount === 1 ? "Order" : "Orders"}
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs font-medium text-slate-500">
+          <p className="mt-1 text-xs font-medium text-muted">
             Orders prepared by the kitchen and ready to be served.
           </p>
         </div>
@@ -152,11 +143,11 @@ export default function OrderReadyPage() {
             className={[
               "ripple-host pressable inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ring-1 cursor-pointer",
               isSoundEnabled
-                ? "bg-emerald-50 text-emerald-800 ring-emerald-300 hover:bg-emerald-100 shadow-xs"
-                : "bg-slate-100 text-slate-600 ring-slate-200 hover:bg-slate-200",
+                ? "bg-success-soft text-success-strong ring-success-line hover:bg-success-line shadow-xs"
+                : "bg-surface-sunken text-muted ring-line hover:bg-line",
             ].join(" ")}
           >
-            {isSoundEnabled ? <Volume2Icon size={15} className="text-emerald-600" /> : <VolumeXIcon size={15} />}
+            {isSoundEnabled ? <Volume2Icon size={15} className="text-success" /> : <VolumeXIcon size={15} />}
             <span>{isSoundEnabled ? "Sound ON" : "Sound OFF"}</span>
           </button>
 
@@ -193,44 +184,38 @@ export default function OrderReadyPage() {
 
       {/* Summary Metrics Bar (when ready orders exist) */}
       {readyOrdersCount > 0 && (
-        <div className="card grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#F0EBE1] overflow-hidden shadow-xs bg-white border border-[#EBE7DF]">
+        <div className="card grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-surface-sunken overflow-hidden shadow-xs bg-white border border-line">
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[#276B49] text-white shadow-md shadow-emerald-950/20 text-lg font-bold">
-              🔔
-            </div>
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-success text-white shadow-sm text-lg font-bold"><BellIcon size={20} /></div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Ready to Serve
               </p>
-              <p className="text-2xl font-black tabular-nums text-[#1F2220] font-sans">
+              <p className="text-2xl font-black tabular-nums text-ink font-sans">
                 {readyOrdersCount} {readyOrdersCount === 1 ? "Ticket" : "Tickets"}
               </p>
             </div>
           </div>
 
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[#FAF8F5] text-[#5F615D] ring-1 ring-[#E8E3D8] text-lg font-bold">
-              🍽️
-            </div>
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-surface-soft text-muted ring-1 ring-line text-lg font-bold"><UtensilsIcon size={20} /></div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Prepared Items
               </p>
-              <p className="text-2xl font-black tabular-nums text-[#1F2220] font-sans">
+              <p className="text-2xl font-black tabular-nums text-ink font-sans">
                 {totalItems} {totalItems === 1 ? "Dish" : "Dishes"}
               </p>
             </div>
           </div>
 
           <div className="p-4 sm:p-5 flex items-center gap-4">
-            <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-[#EBF5EE] text-[#276B49] ring-1 ring-[#BCE2CD] text-lg font-bold">
-              💰
-            </div>
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-success-soft text-success ring-1 ring-success-line text-lg font-bold"><CreditCardIcon size={20} /></div>
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                 Total Value
               </p>
-              <p className="text-2xl font-black tabular-nums text-[#276B49] font-sans">
+              <p className="text-2xl font-black tabular-nums text-success font-sans">
                 {formatCurrency(totalSales)}
               </p>
             </div>
@@ -245,7 +230,7 @@ export default function OrderReadyPage() {
         <EmptyState
           title="No orders waiting to serve"
           description="Kitchen has no completed orders waiting for you. When an order is prepared, it will arrive here live."
-          icon={<span className="text-3xl">✅</span>}
+          icon={<CheckCircleIcon size={22} />}
           action={
             <div className="flex items-center gap-3">
               <Link to="/waiter/tables">
@@ -274,38 +259,38 @@ export default function OrderReadyPage() {
                 key={order._id}
                 className={[
                   "card group relative flex flex-col justify-between overflow-hidden p-5 transition-all duration-200 select-none bg-white",
-                  "border-2 border-[#BCE2CD] shadow-sm hover:border-[#8AC8A5] hover:shadow-lg",
+                  "border-2 border-success-line shadow-sm hover:border-success-line hover:shadow-sm",
                   "animate-[pop_0.3s_var(--ease-settle)_both]",
                 ].join(" ")}
               >
                 {/* Top Accent Bar */}
-                <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#276B49] via-[#3F8F68] to-teal-600" />
+                <div className="absolute inset-x-0 top-0 h-1.5 bg-success" />
 
                 <div>
                   {/* Card Header: Table & Invoice */}
-                  <div className="flex items-start justify-between gap-2 border-b border-[#F0EBE1] pb-3.5">
+                  <div className="flex items-start justify-between gap-2 border-b border-surface-sunken pb-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-[#276B49] text-white font-black text-base shadow-sm ring-2 ring-[#CFE7D9]">
+                      <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-success text-white font-black text-base shadow-sm ring-2 ring-success-line">
                         T{order.tableNumber}
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-base font-extrabold text-[#1F2220] font-sans truncate">
+                          <span className="text-base font-extrabold text-ink font-sans truncate">
                             Table {order.tableNumber}
                           </span>
                         </div>
-                        <p className="text-xs font-bold text-[#8E908C] truncate">
+                        <p className="text-xs font-bold text-subtle truncate">
                           {order.invoiceNumber || `#${order.orderNumber}`}
                         </p>
                       </div>
                     </div>
 
                     <div className="text-right shrink-0">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#EBF5EE] px-2.5 py-1 text-[11px] font-bold text-[#276B49] ring-1 ring-[#BCE2CD]">
-                        <span className="size-2 rounded-full bg-[#276B49] animate-ping" />
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-success-soft px-2.5 py-1 text-[11px] font-bold text-success ring-1 ring-success-line">
+                        <span className="size-2 rounded-full bg-success" />
                         READY TO SERVE
                       </span>
-                      <p className="mt-1 flex items-center justify-end gap-1 text-[11px] font-medium text-[#8E908C]">
+                      <p className="mt-1 flex items-center justify-end gap-1 text-[11px] font-medium text-subtle">
                         <ClockIcon size={12} />
                         <span>Ready {timeAgo(readyTimestamp)}</span>
                       </p>
@@ -314,11 +299,11 @@ export default function OrderReadyPage() {
 
                   {/* Food Items List */}
                   <div className="mt-3.5 space-y-2">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#8E908C]">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-subtle">
                       Dishes Ready ({order.items.length})
                     </p>
 
-                    <div className="divide-y divide-[#F0EBE1] rounded-xl bg-[#FAF8F5] p-2.5 ring-1 ring-[#E8E3D8] max-h-48 overflow-y-auto custom-scrollbar">
+                    <div className="divide-y divide-surface-sunken rounded-xl bg-surface-soft p-2.5 ring-1 ring-line max-h-48 overflow-y-auto custom-scrollbar">
                       {order.items.map((item) => (
                         <div
                           key={item.itemId}
@@ -326,14 +311,14 @@ export default function OrderReadyPage() {
                         >
                           <div className="flex items-center gap-2 min-w-0">
                             <FoodTypeDot foodType={item.foodType} />
-                            <span className="font-bold text-[#1F2220] truncate">
+                            <span className="font-bold text-ink truncate">
                               {item.name}
                             </span>
-                            <span className="shrink-0 rounded-md bg-white px-1.5 py-0.5 font-bold text-[#276B49] ring-1 ring-[#E8E3D8] text-[11px]">
+                            <span className="shrink-0 rounded-md bg-white px-1.5 py-0.5 font-bold text-success ring-1 ring-line text-[11px]">
                               × {item.quantity}
                             </span>
                           </div>
-                          <span className="shrink-0 font-extrabold text-[#5F615D] tabular-nums">
+                          <span className="shrink-0 font-extrabold text-muted tabular-nums">
                             {formatCurrency(item.total)}
                           </span>
                         </div>
@@ -342,7 +327,7 @@ export default function OrderReadyPage() {
                   </div>
 
                   {/* Financial Total */}
-                  <div className="mt-4 flex items-center justify-between rounded-xl bg-[#FAF6EE] px-3.5 py-2.5 ring-1 ring-[#E8DCB8]">
+                  <div className="mt-4 flex items-center justify-between rounded-xl bg-surface-soft px-3.5 py-2.5 ring-1 ring-warning-line">
                     <span className="text-xs font-bold text-brand-900">Grand Total</span>
                     <span className="text-base font-extrabold text-brand-900 tabular-nums font-sans">
                       {formatCurrency(order.grandTotal)}
@@ -351,7 +336,7 @@ export default function OrderReadyPage() {
                 </div>
 
                 {/* Card Action Buttons */}
-                <div className="mt-5 grid grid-cols-2 gap-2.5 border-t border-[#F0EBE1] pt-4">
+                <div className="mt-5 grid grid-cols-2 gap-2.5 border-t border-surface-sunken pt-4">
                   <Button
                     variant="secondary"
                     size="sm"
@@ -366,7 +351,7 @@ export default function OrderReadyPage() {
                     size="sm"
                     disabled={isDelivering}
                     onClick={(e) => void handleDeliver(order, e)}
-                    className="w-full justify-center bg-[#276B49] hover:bg-[#1E5C3B] text-white font-extrabold shadow-md shadow-emerald-950/20 text-xs gap-1.5"
+                    className="w-full justify-center bg-success hover:bg-success-strong text-white font-extrabold shadow-sm text-xs gap-1.5"
                   >
                     {isDelivering ? (
                       <span className="size-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
@@ -412,7 +397,7 @@ export default function OrderReadyPage() {
                   size="sm"
                   disabled={servingOrderId === selectedOrder._id}
                   onClick={() => void handleDeliver(selectedOrder)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5 font-bold"
+                  className="bg-success hover:bg-success text-white gap-1.5 font-bold"
                 >
                   <CheckIcon size={16} />
                   <span>Deliver to Table</span>
@@ -423,35 +408,35 @@ export default function OrderReadyPage() {
         >
           <div className="space-y-4">
             {/* Header info */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 rounded-xl bg-slate-50 p-3.5 text-xs">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 rounded-xl bg-surface-soft p-3.5 text-xs">
               <div>
-                <p className="text-slate-400 font-medium">Table</p>
-                <p className="font-bold text-slate-900 text-sm">Table {selectedOrder.tableNumber}</p>
+                <p className="text-subtle font-medium">Table</p>
+                <p className="font-bold text-ink text-sm">Table {selectedOrder.tableNumber}</p>
               </div>
               <div>
-                <p className="text-slate-400 font-medium">Waiter</p>
-                <p className="font-bold text-slate-900 truncate">{selectedOrder.waiterName || "Assigned"}</p>
+                <p className="text-subtle font-medium">Waiter</p>
+                <p className="font-bold text-ink truncate">{selectedOrder.waiterName || "Assigned"}</p>
               </div>
               <div>
-                <p className="text-slate-400 font-medium">Kitchen Status</p>
-                <span className="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
+                <p className="text-subtle font-medium">Kitchen Status</p>
+                <span className="inline-flex rounded-full bg-success-line px-2 py-0.5 text-[11px] font-bold text-success-strong">
                   READY
                 </span>
               </div>
               <div>
-                <p className="text-slate-400 font-medium">Order Placed</p>
-                <p className="font-semibold text-slate-700">{formatDateTime(selectedOrder.createdAt)}</p>
+                <p className="text-subtle font-medium">Order Placed</p>
+                <p className="font-semibold text-ink-soft">{formatDateTime(selectedOrder.createdAt)}</p>
               </div>
             </div>
 
             {/* Items Table */}
             <div>
-              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-subtle">
                 Itemized Dishes ({selectedOrder.items.length})
               </p>
-              <div className="overflow-hidden rounded-xl border border-slate-200">
-                <table className="min-w-full divide-y divide-slate-200 text-xs">
-                  <thead className="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
+              <div className="overflow-hidden rounded-xl border border-line">
+                <table className="min-w-full divide-y divide-line text-xs">
+                  <thead className="bg-surface-soft text-muted font-bold uppercase text-[10px]">
                     <tr>
                       <th className="px-3.5 py-2.5 text-left">Item</th>
                       <th className="px-3.5 py-2.5 text-center">Qty</th>
@@ -459,19 +444,19 @@ export default function OrderReadyPage() {
                       <th className="px-3.5 py-2.5 text-right">Total</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
+                  <tbody className="divide-y divide-surface-sunken bg-white">
                     {selectedOrder.items.map((item) => (
                       <tr key={item.itemId}>
-                        <td className="px-3.5 py-2.5 font-bold text-slate-900">
+                        <td className="px-3.5 py-2.5 font-bold text-ink">
                           <div className="flex items-center gap-2">
                             <FoodTypeDot foodType={item.foodType} />
                             <span>{item.name}</span>
                           </div>
-                          {item.notes && <p className="text-[11px] font-normal text-slate-400 italic">Note: {item.notes}</p>}
+                          {item.notes && <p className="text-[11px] font-normal text-subtle italic">Note: {item.notes}</p>}
                         </td>
-                        <td className="px-3.5 py-2.5 text-center font-bold text-slate-700">{item.quantity}</td>
-                        <td className="px-3.5 py-2.5 text-right text-slate-600 tabular-nums">{formatCurrency(item.price)}</td>
-                        <td className="px-3.5 py-2.5 text-right font-bold text-slate-900 tabular-nums">{formatCurrency(item.total)}</td>
+                        <td className="px-3.5 py-2.5 text-center font-bold text-ink-soft">{item.quantity}</td>
+                        <td className="px-3.5 py-2.5 text-right text-muted tabular-nums">{formatCurrency(item.price)}</td>
+                        <td className="px-3.5 py-2.5 text-right font-bold text-ink tabular-nums">{formatCurrency(item.total)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -480,24 +465,24 @@ export default function OrderReadyPage() {
             </div>
 
             {/* Financials Breakdown */}
-            <div className="rounded-xl bg-slate-50 p-3.5 space-y-1.5 text-xs">
-              <div className="flex justify-between text-slate-600">
+            <div className="rounded-xl bg-surface-soft p-3.5 space-y-1.5 text-xs">
+              <div className="flex justify-between text-muted">
                 <span>Subtotal</span>
                 <span className="tabular-nums font-semibold">{formatCurrency(selectedOrder.subtotal)}</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-muted">
                 <span>GST Tax</span>
                 <span className="tabular-nums font-semibold">{formatCurrency(selectedOrder.gstAmount)}</span>
               </div>
               {selectedOrder.discount > 0 && (
-                <div className="flex justify-between text-emerald-700 font-medium">
+                <div className="flex justify-between text-success font-medium">
                   <span>Discount</span>
                   <span className="tabular-nums">-{formatCurrency(selectedOrder.discount)}</span>
                 </div>
               )}
-              <div className="flex justify-between border-t border-slate-200 pt-2 text-sm font-extrabold text-slate-900 font-sans">
+              <div className="flex justify-between border-t border-line pt-2 text-sm font-extrabold text-ink font-sans">
                 <span>Grand Total</span>
-                <span className="tabular-nums text-emerald-900">{formatCurrency(selectedOrder.grandTotal)}</span>
+                <span className="tabular-nums text-success-strong">{formatCurrency(selectedOrder.grandTotal)}</span>
               </div>
             </div>
           </div>

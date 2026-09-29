@@ -24,32 +24,36 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { AppLayout } from "@/layouts/AppLayout";
 import type { NavItem } from "@/layouts/AppLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
-import ProfilePage from "@/pages/ProfilePage";
-import AdminDashboard from "@/pages/admin/AdminDashboard";
-import AuditPage from "@/pages/admin/AuditPage";
-import CategoriesPage from "@/pages/admin/CategoriesPage";
-import PaymentsPage from "@/pages/admin/PaymentsPage";
-import ProductsPage from "@/pages/admin/ProductsPage";
-import SettingsPage from "@/pages/admin/SettingsPage";
-import StaffPage from "@/pages/admin/StaffPage";
-import TablesPage from "@/pages/admin/TablesPage";
-import TipsPage from "@/pages/admin/TipsPage";
 import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import KitchenDashboard from "@/pages/kitchen/KitchenDashboard";
-import BillingPage from "@/pages/waiter/BillingPage";
-import CloseOrderPage from "@/pages/waiter/CloseOrderPage";
-import OrderPage from "@/pages/waiter/OrderPage";
-import OrderReadyPage from "@/pages/waiter/OrderReadyPage";
-import WaiterDashboard from "@/pages/waiter/WaiterDashboard";
-import WaiterOrdersPage from "@/pages/waiter/WaiterOrdersPage";
-import WaiterTablesPage from "@/pages/waiter/WaiterTablesPage";
 import { ProtectedRoute, PublicOnlyRoute } from "@/routes/ProtectedRoute";
 import { UserRole } from "@/types";
 
-// Recharts is a large dependency and only the reports screen needs it, so it
-// loads on demand rather than in the main bundle.
+// Every screen loads on demand, so a waiter's phone never downloads the admin
+// or kitchen code. AppLayout wraps the outlet in <Suspense>. Only the login
+// screen stays in the main bundle, because it is the first thing anyone sees.
+const RegisterPage = lazy(() => import("@/pages/auth/RegisterPage"));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
+
+const AdminDashboard = lazy(() => import("@/pages/admin/AdminDashboard"));
+const AuditPage = lazy(() => import("@/pages/admin/AuditPage"));
+const CategoriesPage = lazy(() => import("@/pages/admin/CategoriesPage"));
+const PaymentsPage = lazy(() => import("@/pages/admin/PaymentsPage"));
+const ProductsPage = lazy(() => import("@/pages/admin/ProductsPage"));
+const SettingsPage = lazy(() => import("@/pages/admin/SettingsPage"));
+const StaffPage = lazy(() => import("@/pages/admin/StaffPage"));
+const TablesPage = lazy(() => import("@/pages/admin/TablesPage"));
+const TipsPage = lazy(() => import("@/pages/admin/TipsPage"));
 const ReportsPage = lazy(() => import("@/pages/admin/ReportsPage"));
+
+const KitchenDashboard = lazy(() => import("@/pages/kitchen/KitchenDashboard"));
+
+const BillingPage = lazy(() => import("@/pages/waiter/BillingPage"));
+const CloseOrderPage = lazy(() => import("@/pages/waiter/CloseOrderPage"));
+const OrderPage = lazy(() => import("@/pages/waiter/OrderPage"));
+const OrderReadyPage = lazy(() => import("@/pages/waiter/OrderReadyPage"));
+const WaiterDashboard = lazy(() => import("@/pages/waiter/WaiterDashboard"));
+const WaiterOrdersPage = lazy(() => import("@/pages/waiter/WaiterOrdersPage"));
+const WaiterTablesPage = lazy(() => import("@/pages/waiter/WaiterTablesPage"));
 
 const ADMIN_NAV: NavItem[] = [
   { to: "/admin", label: "Dashboard", icon: <LayoutDashboardIcon size={18} />, end: true },
@@ -101,7 +105,14 @@ export function AppRoutes() {
       <Route element={<PublicOnlyRoute />}>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<FullScreenLoader label="Loading" />}>
+                <RegisterPage />
+              </Suspense>
+            }
+          />
         </Route>
       </Route>
 
